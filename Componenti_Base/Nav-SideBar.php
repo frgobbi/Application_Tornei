@@ -22,12 +22,12 @@ function navIndex() {
 
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="login-sinup-logout/Sing_up.php">
+                <a href="login-singup-logout/Sing_up.php">
                     <i class="fa fa-user" aria-hidden="true"></i> Sing Up
                 </a>
             </li>
             <li>
-                <a href="/login-sinup-logout/Login.php">
+                <a href="/login-singup-logout/Login.php">
                     <i class="fa fa-sign-in" aria-hidden="true"></i> Login
                 </a>
             </li>
@@ -55,12 +55,12 @@ function navUnLog(){
 
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="../login-sinup-logout/Sing_up.php">
+                <a href="../login-singup-logout/Sing_up.php">
                     <i class="fa fa-user" aria-hidden="true"></i> Sing Up
                 </a>
             </li>
             <li>
-                <a href="../login-sinup-logout/Login.php">
+                <a href="../login-singup-logout/Login.php">
                     <i class="fa fa-sign-in" aria-hidden="true"></i> Login
                 </a>
             </li>
