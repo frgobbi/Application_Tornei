@@ -20,7 +20,8 @@ $username = filter_input(INPUT_POST, "username_utente", FILTER_SANITIZE_STRING);
 $mail_utente = filter_input(INPUT_POST, "email_utente", FILTER_SANITIZE_STRING);
 $pwd = filter_input(INPUT_POST, "pass_utente", FILTER_SANITIZE_STRING);
 $pwd_criptata = password_hash($pwd, PASSWORD_BCRYPT);
-$telefono =filter_input(INPUT_POST, "tel_utente", FILTER_SANITIZE_STRING);
+$telefono = filter_input(INPUT_POST, "tel_utente", FILTER_SANITIZE_STRING);
+$sesso = filter_input(INPUT_POST, "sesso", FILTER_SANITIZE_STRING);
 
 
 //echo $nome."<br>".$cognome."<br>".$data_nascita."<br>".$luogo_nascita."<br>"
@@ -28,12 +29,12 @@ $telefono =filter_input(INPUT_POST, "tel_utente", FILTER_SANITIZE_STRING);
 
 include "../../connessione.php";
 try{
-    if(strcmp($telefono, "")!=0){
-        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`)"
-            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$residenza', '$mail_utente', NULL, '$pwd_criptata', '0', 'user.jpg', '3')");
+    if(strcmp($telefono, "")==0){
+        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`)"
+            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', NULL, '$pwd_criptata', '0', 'utente.gif', '4', NULL)");
     } else {
-        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`)"
-            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$residenza', '$mail_utente', '$telefono', '$pwd_criptata', '0', 'user.jpg', '3')");
+        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`)"
+            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', '$telefono', '$pwd_criptata', '0', 'utente.gif', '4', NULL)");
     }
 } catch (PDOException $e){
     echo"<script>alert('Non e\' stato possibile eseguire l\'iscrizione... Riprova piu\' tardi ');</script>";

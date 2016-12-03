@@ -81,6 +81,7 @@
                                           aria-hidden="true"></span>
                                 </div>
 
+
                                 <div id="Fluogo_utente" class="form-group">
                                     <label class="control-label" for="luogo_utente">Luogo di nascita:<i
                                             class="fa fa-asterisk text-danger" aria-hidden="true"></i></label>
@@ -90,6 +91,15 @@
                                           aria-hidden="true"></span>
                                     <span id="LOKluogo_utente" class="glyphicon glyphicon-ok form-control-feedback"
                                           aria-hidden="true"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label><input checked type="radio" name="sesso" value="M"><i class="fa fa-male" aria-hidden="true"></i> Maschio</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="sesso" value="F"><i class="fa fa-female" aria-hidden="true"></i> Femmina</label>
+                                    </div>
                                 </div>
 
                                 <div id="Fcodice_utente" class="form-group">

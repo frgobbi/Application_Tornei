@@ -6,26 +6,45 @@
  * Time: 15:10
  */
 ?>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
     <?php
     include '../Componenti_Base/Head.php';
     LibrerieUnLog()
     ?>
     <style type="text/css">
-        .glyphicon-ok, .glyphicon-remove {
-            display: none;
-        }
-
-        #alertF {
-            display: none;
-        }
-
-        #dati_login{
+        #errore{
             display: none;
         }
     </style>
-    <script type="text/javascript" src="./javascript/Controlli.js"></script>
+    <script type="text/javascript">
+        function accedi() {
+            $(document).ready(function() {
+                var user = $("#username").val();
+                var pwd = $("#pwd").val();
+                $.ajax({
+                    type: "POST",
+                    url: "metodi/accesso.php",
+                    data: "user=" + user + "&pwd=" + pwd,
+                    dataType: "html",
+                    success: function(risposta)
+                    {
+                        console.log(risposta);
+                        if(risposta==0){
+                            $('#errore').hide();
+                            window.location.href="../Home/home.php";
+                        } else{
+                            $('#errore').show();
+                        }
+                    },
+                    error: function()
+                    {
+                        alert("Chiamata fallita, si prega di riprovare...");
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 <body>
 <div id="wrapper">
@@ -60,15 +79,18 @@
                                     </div>
                                 </div>
                             </div>-->
+                            <div id="errore" class="alert alert-danger">
+                                <strong>Errore!</strong> Username e/o Password errati!
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-4 col-md-4">
-                                    <button type="submit" class="btn btn-block btn-primary">Accedi</button>
+                                    <button type="button" onclick="accedi()" class="btn btn-block btn-primary">Accedi</button>
                                 </div>
                             </div>
                             <hr>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-4 col-md-4">
-                                    <button type="button" onclick="" class="btn btn-link">Hai problemi con l'accesso?</button>
+                                    <button type="button" onclick="window.location.href='Reimposta.php'" class="btn btn-link">Hai problemi con l'accesso?</button>
                                 </div>
                             </div>
                         </form>
@@ -83,6 +105,3 @@
 <!-- /#wrapper -->
 </body>
 </html>
-
-
-
