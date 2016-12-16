@@ -114,12 +114,15 @@ if (!$_SESSION['login']) {
                     . "<li class=\"list-group-item\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i> $oggUtente->username</li>"
                     . "<li class=\"list-group-item\"><i class=\"fa fa-birthday-cake\" aria-hidden=\"true\"></i> $oggUtente->data_n</li>"
                     . "<li class=\"list-group-item\"><i class=\"fa fa-building\" aria-hidden=\"true\"></i> $oggUtente->luogo_nascita</li>";
-                if (strcmp($oggUtente->sesso, "M") == 0) {
-                    echo "<li class=\"list-group-item\"><i class=\"fa fa-male\" aria-hidden=\"true\"></i> Maschio</li>";
-                } else {
-                    echo "<li class=\"list-group-item\"><i class=\"fa fa-male\" aria-hidden=\"true\"></i> Femmina</li>";
+                if($oggUtente->sesso != NULL) {
+                    if (strcmp($oggUtente->sesso, "M") == 0) {
+                        echo "<li class=\"list-group-item\"><i class=\"fa fa-male\" aria-hidden=\"true\"></i> Maschio</li>";
+                    } else {
+                        echo "<li class=\"list-group-item\"><i class=\"fa fa-female\" aria-hidden=\"true\"></i> Femmina</li>";
+                    }
+                } else{
+                    echo "<li class=\"list-group-item\"><i class=\"fa fa-male\" aria-hidden=\"true\"></i> </li>";
                 }
-
                 echo "<li class=\"list-group-item\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i> $oggUtente->residenza</li>"
                     . "<li class=\"list-group-item\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i> $oggUtente->mail</li>"
                     . "<li class=\"list-group-item\"><i class=\"fa fa-phone\" aria-hidden=\"true\"></i> $oggUtente->tel</li>"

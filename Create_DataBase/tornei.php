@@ -25,6 +25,7 @@ $torneo = "CREATE TABLE torneo ("
     ."data_fine DATE,"
     ."logo_torneo TEXT,"
     ."color VARCHAR(255),"
+    ."info TEXT,"
     ."finished INT NOT NULL DEFAULT '0'"
 .")";
 
@@ -80,10 +81,13 @@ $squadra = "CREATE TABLE squadra ("
     ."id_girone INT,"
     ."FOREIGN KEY(id_girone) REFERENCES girone(id_girone),"
     ."id_torneo INT,"
-    ."FOREIGN KEY(id_torneo) REFERENCES torneo(id_torneo)"
+    ."FOREIGN KEY(id_torneo) REFERENCES torneo(id_torneo),"
+    ."iscritta INT NOT NULL DEFAULT '0',"
+    ."eliminata INT NOT NULL DEFAULT '0'"
 .")";
 
 $sq_utente = "CREATE TABLE sq_utente("
+    ."id_sq_utente INT PRIMARY KEY AUTO_INCREMENT,"
     ."username VARCHAR(255),"
     ."FOREIGN KEY(username) REFERENCES utente(username),"
     ."id_sq INT,"
@@ -91,6 +95,53 @@ $sq_utente = "CREATE TABLE sq_utente("
     ."make INT NOT NULL DEFAULT '0',"
     ."giocatore INT NOT NULL DEFAULT '1'"
 .")";
+
+$partita ="CREATE TABLE partita ("
+    ."id_partita INT PRIMARY KEY AUTO_INCREMENT,"
+    ."data_partita DATE,"
+    ."ora_partita TIME,"
+    ."luogo VARCHAR(255) NOT NULL DEFAULT 'Campo 1'"
+.")";
+
+$sq_partita = "CREATE TABLE sq_partita("
+    ."id_sq INT,"
+    ."FOREIGN KEY(id_sq) REFERENCES squadra(id_sq),"
+    ."id_partita INT,"
+    ."FOREIGN KEY(id_partita) REFERENCES partita(id_partita),"
+    ."vittoria INT NOT NULL DEFAULT '0',"
+    ."sconfitta INT NOT NULL DEFAULT '0',"
+    ."pareggio INT NOT NULL DEFAULT '0',"
+    ."sconfitta_punti INT NOT NULL DEFAULT '0',"
+    ."PRIMARY KEY(id_sq,id_partita)"
+.")";
+
+$tempo = "CREATE TABLE tempo("
+    ."id_tempo INT PRIMARY KEY AUTO_INCREMENT,"
+    ."descrizione VARCHAR(255)"
+.")";
+
+$sq_tempo = "CREATE TABLE sq_tempo("
+    ."id_sq INT,"
+    ."id_partita INT,"
+    ."id_tempo INT,"
+    ."FOREIGN KEY(id_sq) REFERENCES squadra(id_sq),"
+    ."FOREIGN KEY(id_partita) REFERENCES partita(id_partita),"
+    ."FOREIGN KEY(id_tempo) REFERENCES tempo(id_tempo),"
+    ."punti INT NOT NULL DEFAULT '0',"
+    ."PRIMARY KEY(id_sq,id_partita,id_tempo)"
+.")";
+
+$info_tempo = "CREATE TABLE info_tempo("
+    ."id_info INT PRIMARY KEY AUTO_INCREMENT,"
+    ."id_sq_utente INT,"
+    ."id_tempo INT,"
+    ."FOREIGN KEY(id_sq_utente) REFERENCES sq_utente(id_sq_utente),"
+    ."FOREIGN KEY(id_tempo) REFERENCES tempo(id_tempo),"
+    ."punto INT NOT NULL DEFAULT '0',"
+    ."cartellino_giallo INT NOT NULL DEFAULT '0',"
+    ."cartellino_rosso INT NOT NULL DEFAULT '0'"
+.")";
+
 include "../connessione.php";
 try{
     $connessione->exec($tipo_sport);
@@ -102,6 +153,11 @@ try{
     $connessione->exec($girone);
     $connessione->exec($squadra);
     $connessione->exec($sq_utente);
+    $connessione->exec($partita);
+    $connessione->exec($sq_partita);
+    $connessione->exec($tempo);
+    $connessione->exec($sq_tempo);
+    $connessione->exec($info_tempo);
 } catch (PDOException $e){
     echo "error: ".$e->getMessage();
 }

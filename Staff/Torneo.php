@@ -10,7 +10,7 @@ session_start();
 function mese($mese)
 {
     $StringMese = "";
-    $mese = ltrim($mese, '0');
+    //$mese = ltrim($mese, '0');
     switch ($mese) {
         case 1:
             $StringMese = "GEN";
@@ -119,7 +119,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                             <div class="form-group">
                                 <label for="Sport">Tipo Sport:</label>
                                 <!-- Select -->
-                                <select class="form-control" id="sel1">
+                                <select class="form-control" name="Sport" id="Sport">
                                     <?php
                                     include "../connessione.php";
                                     try{
@@ -134,6 +134,10 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                     $connessione = null;
                                     ?>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="info">Comment <small>(Massimo 500 caratteri)</small>:</label>
+                                <textarea maxlength="500" style="height: 100px; resize:none; overflow-y: auto;" class="form-control"  id="info" name="info"></textarea>
                             </div>
                             <hr>
                             <div class="form-group col-md-6">
@@ -156,7 +160,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                             <?php
                             include "../connessione.php";
                             try {
-                                foreach ($connessione->query("SELECT `id_torneo`,`nome_torneo`,`id_sport`,`data_inizio`,`data_fine`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine FROM `torneo` WHERE `finished` = 0") as $row) {
+                                foreach ($connessione->query("SELECT `id_torneo`,`nome_torneo`,`id_sport`,`data_inizio`,`data_fine`, DATE_FORMAT(data_inizio,'%d-%c-%Y') AS inizio, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine FROM `torneo` WHERE `finished` = 0 ORDER BY(data_inizio)") as $row) {
                                     $id = $row['id_torneo'];
                                     $nome = $row['nome_torneo'];
                                     $dataI = $row['data_inizio'];
@@ -168,7 +172,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                     $meseI = mese($componentiDataI[1]);
                                     $componentiDataF = explode("-", $dataF_F);
                                     $meseF = mese($componentiDataF[1]);
-                                    $tipoSport = $connessione->query("SELECT * FROM tipo_sport WHERE id_tipo_sport = '$id'")->fetch(PDO::FETCH_OBJ);
+                                    $tipoSport = $connessione->query("SELECT * FROM tipo_sport WHERE id_tipo_sport = '$id_sport'")->fetch(PDO::FETCH_OBJ);
                                     echo "<li>"
                                         . "<a href=\"Admin_Torneo.php?id=$id\">"
                                         . "<time class='i' datetime=\"$dataI\">"
@@ -178,14 +182,14 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                         . "<span class=\"time\">ALL DAY</span>"
                                         . "</time>"
                                         . "<time class='f' datetime=\"$dataF\">"
-                                        . "<span class=\"day\">" . $componentiDataI[00] . "</span>"
+                                        . "<span class=\"day\">" . $componentiDataF[00] . "</span>"
                                         . "<span class=\"month\">$meseF</span>"
-                                        . "<span class=\"year\">" . $componentiDataI[2] . "</span>"
+                                        . "<span class=\"year\">" . $componentiDataF[2] . "</span>"
                                         . "<span class=\"time\">ALL DAY</span>"
                                         . "</time>"
                                         . "<div class=\"info\">"
                                         . "<h2 class=\"title\">$nome</h2>"
-                                        . "<p class=\"desc\">$tipoSport->descrizione</p>."
+                                        . "<p class=\"desc\">$tipoSport->descrizione</p>"
                                         . "</div>"
                                         . "</a>"
                                         . "</li>";
@@ -229,14 +233,14 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                         . "<span class=\"time\">ALL DAY</span>"
                                         . "</time>"
                                         . "<time class=\"f\" datetime=\"$dataF\">"
-                                        . "<span class=\"day\">" . $componentiDataI[00] . "</span>"
+                                        . "<span class=\"day\">" . $componentiDataF[00] . "</span>"
                                         . "<span class=\"month\">$meseF</span>"
-                                        . "<span class=\"year\">" . $componentiDataI[2] . "</span>"
+                                        . "<span class=\"year\">" . $componentiDataF[2] . "</span>"
                                         . "<span class=\"time\">ALL DAY</span>"
                                         . "</time>"
                                         . "<div class=\"info\">"
                                         . "<h2 class=\"title\">$nome</h2>"
-                                        . "<p class=\"desc\">$tipoSport->descrizione</p>."
+                                        . "<p class=\"desc\">$tipoSport->descrizione</p>"
                                         . "</div>"
                                         . "</a>"
                                         . "</li>";
