@@ -15,9 +15,9 @@ $pass= "123456";
 $pass = password_hash($pass,PASSWORD_BCRYPT);
 
 $utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza` ,`mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`) "
-    ."VALUES "
-    ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL),"
-    ."('bar', 'barr', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '1', NULL),"
+    ."VALUES ('admin', 'admin', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '1', NULL),"
+    ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '2', NULL),"
+    ."('bar', 'bar', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL),"
     ."('francesco.gobbi', 'Francesco', 'Gobbi', '1997-06-03', 'GBBFNC97H03G478G', 'Perugia', 'M', 'Via Montiano 5 Corciano', 'gobbi03.fg@gmail.com', '3475057671', '$pass', '1', 'utente.gif', '4', NULL)";
 
 $funzioni = "INSERT INTO `funzioni`(`id_funzione`, `nome_funzione`, `colore`, `src`, `icona`) VALUES "
@@ -35,11 +35,12 @@ $tempo = "INSERT INTO `tempo` (`id_tempo`,`descrizione`) VALUES"
     ."(NULL, '2° Tempo'),"
     ."(NULL, '1° Tempo supplementare'),"
     ."(NULL, '2° Tempo supplementare'),"
+    ."(NULL, 'Rigori'),"
     ."(NULL, '1° Set'),"
     ."(NULL, '2° Set'),"
     ."(NULL, '3° Set'),"
     ."(NULL, '4° Set'),"
-    ."(NULL, '5° Set'),"
+    //."(NULL, '5° Set'),"
     ."(NULL, 'Tie Break')";
 
 $gironi ="INSERT INTO `girone` (`id_girone`, `nome_girone`) VALUES "

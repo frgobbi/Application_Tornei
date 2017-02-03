@@ -20,9 +20,15 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     LibrerieLogin();
     ?>
     <link rel="stylesheet" href="../Librerie/CSS/event-list.css">
+    <script src="Java-script/Partita.js"></script>
     <style type="text/css">
     </style>
     <script type="text/javascript">
+        function apriPopup(id_p, id_torneo){
+            creaPopup(id_p, id_torneo);
+            $('#partita').modal('show')
+        }
+        
         function downloadPDF(id, nome_torneo) {
             $.ajax({
                 // definisco il tipo della chiamata
@@ -73,6 +79,24 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 });
             }
         }
+
+
+        $(document).on('click', '.number-spinner button', function () {
+            var btn = $(this),
+                oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                newVal = 0;
+
+            if (btn.attr('data-dir') == 'up') {
+                newVal = parseInt(oldValue) + 1;
+            } else {
+                if (oldValue > 0) {
+                    newVal = parseInt(oldValue) - 1;
+                } else {
+                    newVal = 0;
+                }
+            }
+            btn.closest('.number-spinner').find('input').val(newVal);
+        });
     </script>
 </head>
 <body>
@@ -83,7 +107,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     $torneo = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
     include "../connessione.php";
     try {
-        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport "
+        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`"
             . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$torneo'";
         $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
@@ -115,9 +139,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 <?php
                 echo "<ul class=\"nav nav-tabs\">"
                     . "<li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Home Torneo</a></li>"
-                    . "<li><a href=\"#inizio\" data-toggle=\"tab\">Inizio Torneo</a></li>"
-                    . "<li><a href=\"#partite\" data-toggle=\"tab\">Partite</a></li>"
-                    . "<li><a href=\"#fine\" data-toggle=\"tab\">Fasi Finali</a></li>"
+                    . "<li><a href=\"#partite\" data-toggle=\"tab\">Gestione Partite</a></li>"
+                    . "<li><a href=\"#fine\" data-toggle=\"tab\">Gestione Risultati</a></li>"
                     . "</ul>"
                     . "<div id=\"myTabContent\" class=\"tab-content\">";
 
@@ -150,6 +173,11 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
 
                         echo "<div class=\"col-lg-4 col-md-4 col-sm-4 col-xs-12\">"
                             . "<ul class=\"list-group\">"
+                            . "<li class=\"list-group-item\"><strong>Anno minimo di et&agrave;: </strong>$oggTorneo->min_anno</li>"
+                            . "<li class=\"list-group-item\"><strong>Anno massimo di et&agrave;: </strong>$oggTorneo->max_anno</li>"
+                            . "</ul>"
+
+                            . "<ul class=\"list-group\">"
                                 . "<li class=\"list-group-item\"><strong>Squadre Iscritte: </strong>$squadre_iscritte->numero</li>"
                                 . "<li class=\"list-group-item\"><strong>Squadre Incomplete: </strong>$proposte_sqaudre->numero</li>"
                                 . "<li class=\"list-group-item\"><strong>Giocatori Iscritti: </strong>$giocatori->numero</li>"
@@ -166,7 +194,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                             . "<div class=\"panel panel-primary\">"
                                 . "<div class=\"panel-heading\">"
                                         . "<h4 class=\"panel-title\">"
-                                            . "Collapsible panel"
+                                            . "Menu'"
                                         . "</h4>"
                                     ."</div>"
                                     . "<div style=\"padding:0px;\" class=\"panel-body\">"
@@ -175,7 +203,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                             . "<a href=\"#\" onclick=\"$('#squadre').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-shield\" aria-hidden=\"true\"></i> Squadre Iscritte</a>"
                                             . "<a href=\"#\" onclick=\"$('#giocatori').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Lista Giocatori</a>"
                                             . "<a href=\"#\" onclick=\"downloadPDF('".$torneo."','".$oggTorneo->nome_torneo."');\" class=\"list-group-item\"><i class=\"fa fa-file-pdf-o\" aria-hidden=\"true\"></i> Scarica Lista Giocatori</a>"
-                                            . "<a href=\"#\" onclick=\"elimina_torneo('".$torneo."','".$oggTorneo->inizio."');\" class=\"list-group-item\"><i class=\"fa fa-calendar-times-o\" aria-hidden=\"true\"></i> Cancella Informatica</a>"
+                                            . "<a href=\"#\" onclick=\"elimina_torneo('".$torneo."','".$oggTorneo->inizio."');\" class=\"list-group-item\"><i class=\"fa fa-calendar-times-o\" aria-hidden=\"true\"></i> Cancella Torneo</a>"
                                         . "</div>"
                                 . "</div>"
                             . "</div>"
@@ -188,7 +216,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 //chiusura home
                 echo "</div>";
 
-                echo "<div style='padding-top: 30px;' class=\"tab-pane fade\" id=\"inizio\">";
+                echo "<div style='padding-top: 30px;' class=\"tab-pane fade\" id=\"partite\">";
                     echo "<div class='row'>";
                         echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>";
                             echo "<div class=\"panel panel-primary\">"
@@ -202,35 +230,106 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                             ."<label for=\"num_sq\">Numero Squadre per Squadra:</label>"
                                             ."<input type=\"number\" class=\"form-control\" id=\"num_sq\" name='num_sq'>"
                                         ."</div>"
-                                        ."<div class=\"form-group\">"
-                                            ."<button type='submit' class='btn btn-primary btn-block'>Crea Gironi</button>"
-                                        ."</div>"
+                                        ."<div class=\"form-group\">";
+                                            $esito = 0;
+                                            include "../connessione.php";
+                                            try{
+                                                foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = '$torneo'") as $row){
+                                                    if($row['id_girone'] == NULL){
+                                                        $esito = 1;
+                                                    }
+                                                }
+                                            } catch (PDOException $e){echo "error: ".$e->getMessage();}
+                                            $connessione = null;
+                                            if($esito == 1){
+                                                echo"<button type='submit' class='btn btn-primary btn-block'>Crea Gironi</button>";
+                                            } else{
+                                                echo"<button type='button' class=\"btn btn-primary disabled btn-block\">Crea Gironi</button>";
+                                            }
+
+                                        echo"</div>"
                                     ."</form>"
                                 ."</div>"
                                 ."</div>";
                         echo "</div>";
-                        echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>";
-                            echo "<div class=\"panel panel-default\">"
-                                ."<div class=\"panel-heading text-center\">"
-                                    ."<h4>Partite Gironi</h4>"
-                                ."</div>"
-                                ."<div class=\"panel-body\">";
-                                $sql = "SELECT partita.id_partita,"
-                                    ."DATE_FORMAT(partita.data_partita,%d-%m-%Y') AS data,"
+                        echo "<div class='col-lg-5 col-md-5 col-sm-12 col-xs-12'>";
+                            echo "<div class=\"panel panel-primary\">"
+                                ."<div style='padding: 0px; height:225px; overflow-y: auto' class=\"panel-body table-responsive\">";
+                                $sql = "SELECT partita.id_partita, partita.luogo,"
+                                    ."DATE_FORMAT(partita.data_partita,'%d-%m-%Y') AS data,"
                                     ."DATE_FORMAT(partita.ora_partita,'%H:%i') AS ora "
-                                    ."FROM `partita` INNER JOIN sq_partita ON sq_partita.id_partita = partita.id_partita"
+                                    ."FROM `partita` INNER JOIN sq_partita ON sq_partita.id_partita = partita.id_partita "
                                     ."INNER JOIN squadra ON sq_partita.id_sq = squadra.id_sq "
                                     ."WHERE id_torneo = '$torneo' GROUP BY(partita.id_partita)";
-                                foreach ($connessione->query($sql) as $row){
-                                    
-                                }
+
+                                echo "<table class=\"table table-bordered table-hover\">"
+                                        ."<thead>"
+                                            ."<tr>"
+                                                ."<th>Squadra 1</th>"
+                                                ."<th>  </th>"
+                                                ."<th>Squadra 2</th>"
+                                                ."<th>Data</th>"
+                                                ."<th>Ora</th>"
+                                                ."<th>Luogo</th>"
+                                            ."</tr>"
+                                        ."</thead>"
+                                        ."<body>";
+                                            include "../connessione.php";
+                                            try{
+                                                foreach ($connessione->query($sql) as $row){
+                                                    $ora = $row['ora'];
+                                                    $data = $row['data'];
+                                                    $luogo = $row['luogo'];
+                                                    $id_p = $row['id_partita'];
+                                                    $sq = array();
+                                                    foreach ($connessione->query("SELECT squadra.id_sq, squadra.nome_sq FROM `sq_partita` INNER JOIN squadra ON sq_partita.id_sq = squadra.id_sq WHERE id_partita = $id_p") as $riga){
+                                                        $sq[] = array($riga['id_sq'],$riga['nome_sq']);
+                                                    }
+
+
+                                                    echo"<tr onclick=\"apriPopup($id_p, $torneo)\">"
+                                                        ."<td>".$sq[0][1]."</td>"
+                                                        ."<td>VS</td>"
+                                                        ."<td>".$sq[1][1]."</td>"
+                                                        ."<td>$data</td>"
+                                                        ."<td>$ora</td>"
+                                                        ."<td>$luogo</td>"
+                                                        ."</tr>";
+                                                }
+                                            }
+                                            catch (PDOException $e){
+                                                echo $e->getMessage();
+                                            }
+                                            $connessione = null;
+                                        echo"</body>"
+                                        ."</table>";
                                 echo"</div>"
                                 ."</div>";
+
+
                         echo "</div>";
+                            //terza parte
+                            echo "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-12\">"
+                                . "<div class=\"panel-group\">"
+                                . "<div class=\"panel panel-primary\">"
+                                . "<div class=\"panel-heading\">"
+                                . "<h4 class=\"panel-title\">"
+                                . "Collapsible panel"
+                                . "</h4>"
+                                ."</div>"
+                                . "<div style=\"padding:0px;\" class=\"panel-body\">"
+                                . "<div class=\"list-group\">"
+                                . "<a href=\"#\" onclick=\"window.location.href='metodi/crea_partite.php?id=$torneo'\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>"
+                                . "<a href=\"#\" onclick=\"$('#new_partita').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>"
+                                . "<a href=\"#\" onclick=\"\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>"
+                                //. "<a href=\"#\" onclick=\"\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>"
+                                . "</div>"
+                                . "</div>"
+                                . "</div>"
+                                . "</div>"
+                                . "</div>";
                     echo "</div>";
                 echo "</div>";
-                echo "<div class=\"tab-pane fade\" id=\"partite\">"
-                    . "</div>";
                 echo "<div class=\"tab-pane fade\" id=\"fine\">"
                     . "</div>";
                 echo "</div>";
@@ -262,7 +361,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     try{
         foreach ($connessione->query("SELECT * FROM squadra WHERE id_torneo = '$torneo' ORDER BY(iscritta) DESC") as $row){
             $squadra = $row['id_sq'];
-            $sql = "SELECT nome,cognome FROM `sq_utente` INNER JOIN utente ON sq_utente.username = utente.username WHERE sq_utente.make = 1 AND sq_utente.id_sq = '$squadra'";
+            $sql = "SELECT * FROM `sq_utente` INNER JOIN utente ON sq_utente.username = utente.username WHERE sq_utente.make = 1 AND sq_utente.id_sq = '$squadra'";
             $oggMake = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
             $nome = $row['nome_sq'];
             $creatore = $oggMake->nome." ".$oggMake->cognome;
@@ -300,7 +399,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
         . "<h4 class=\"modal-title\">Modifica Torneo</h4>"
         . "</div>"
-        . "<div class=\"modal-body\">"
+        . "<div style='overflow-y:auto;' class=\"modal-body\">"
         . "<form method='post' action='metodi/modifica_torneo.php?id=$torneo'>"
         ."<div class=\"form-group\">"
         . "<label for=\"nome\">Name:</label>"
@@ -330,13 +429,22 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "<label for=\"num\">Numero Giocatori Per Squadra:</label>"
         . "<input type=\"number\" class=\"form-control\" id=\"num\" name='num' value='$oggTorneo->num_giocatori' required>"
         . "</div>"
+        . "<div class=\"alert alert-warning\">Se non ci sono vincoli di et&agrave;, Canella i dati esistenti!</div>"
+        . "<div class=\"form-group col-md-6\">"
+        . "<label for=\"eta_min\">Anno di nascita minimo (et&agrave; pi&ugrave; piccola):</label>"
+        . "<input type=\"number\" class=\"form-control\" value=\"$oggTorneo->min_anno\" name=\"eta_min\" id=\"eta_min\">"
+        . "</div>"
+        . "<div class=\"form-group col-md-6\">"
+        . "<label for=\"eta_max\">Anno di nascita minimo (et&agrave; pi&ugrave; grande):</label>"
+        . "<input type=\"number\" class=\"form-control\" value=\"$oggTorneo->max_anno\" name=\"eta_max\" id=\"eta_max\">"
+        . "</div>"
         . "<div class=\"form-group\">"
         . "<label for=\"info\">Comment <small>(Massimo 500 caratteri)</small>:</label>"
         . "<textarea maxlength=\"500\" style=\"height: 100px; resize:none; overflow-y: auto;\" class=\"form-control\"  id=\"info\" name=\"info\">$oggTorneo->info</textarea>"
         . "</div>"
         . "<hr>"
         . "<div class=\"form-group col-md-6\">"
-        . "<button type=\"submit\" class=\"btn btn-success btn-block\">Crea Torneo</button>"
+        . "<button type=\"submit\" class=\"btn btn-success btn-block\">Modifica Torneo</button>"
         . "</div>"
         . "<div class=\"form-group col-md-6\">"
         . "<button type=\"reset\" class=\"btn btn-danger btn-block\">Reset</button>"
@@ -409,7 +517,111 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "</div>"
         . "</div>"
         . "</div>";
-    ?>
+    //END MODAL GIOCATORI
 
+    //MODAL NUOVA PARTITA
+    echo "<div id=\"new_partita\" class=\"modal fade\" role=\"dialog\">"
+          ."<div class=\"modal-dialog modal-lg\">"
+    ."<div class=\"modal-content\">"
+      ."<div class=\"modal-header\">"
+        ."<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
+        ."<h4 class=\"modal-title\">Nuova Partita</h4>"
+      ."</div>"
+      ."<div class=\"modal-body\">"
+
+        ."<form method='post' action='metodi/new_partita.php?id=$torneo'>"
+            ."<div class=\"form-group\">"
+            ."<label for=\"data\">Data Partita:</label>"
+            ."<input type=\"date\" class=\"form-control\" id=\"data\" name='data' required>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+            ."<label for=\"ora\">Data Partita:</label>"
+            ."<input type=\"time\" class=\"form-control\" id=\"ora\" name='ora' required>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+            ."<label for=\"luogo\">Data Partita:</label>"
+            ."<input type=\"text\" class=\"form-control\" id=\"luogo\" name='luogo' required value='Campo 1'>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+                ."<label for=\"sq1\">Squadra 1:</label>"
+                ."<select class=\"form-control\" id=\"sq1\" name='sq1'>";
+                include "../connessione.php";
+                try{
+                    foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = $torneo") as $row){
+                        $id_sq = $row['id_sq'];
+                        $nome_sq = $row['nome_sq'];
+                        echo "<option value='$id_sq'>$nome_sq</option>";
+                    }
+                } catch (PDOException $e){echo $e->getMessage();}
+                $connessione = null;
+                echo "</select>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+                ."<label for=\"sq1\">Squadra 1:</label>"
+                ."<select class=\"form-control\" id=\"sq1\" name='sq2'>";
+                    include "../connessione.php";
+                    try{
+                        foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = $torneo") as $row){
+                            $id_sq = $row['id_sq'];
+                            $nome_sq = $row['nome_sq'];
+                            echo "<option value='$id_sq'>$nome_sq</option>";
+                        }
+                    } catch (PDOException $e){echo $e->getMessage();}
+                    $connessione = null;
+                 echo "</select>"
+            ."</div>"
+
+            ."<div class='form-group'>"
+                ."<label class=\"radio-inline\">"
+                    ."<input type=\"radio\" name=\"tipo_partita\" checked value='0'>Fase gironi"
+                ."</label>"
+                ."<label class=\"radio-inline\">"
+                    ."<input type=\"radio\" name=\"tipo_partita\" value='1'>Fase Finale"
+                ."</label>"
+                ."<label class=\"radio-inline\">"
+                   ."<input type=\"radio\" name=\"tipo_partita\" value='2'>Amichevole"
+                ."</label>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+                 ."<button type='submit' class='btn btn-primary btn-block'>Crea Partita</button>"
+            ."</div>"
+
+            ."<div class=\"form-group\">"
+                 ."<button type='reset' class='btn btn-danger btn-block'>Reset</button>" 
+            ."</div>"
+
+        ."</form>"
+      ."</div>"
+      ."<div class=\"modal-footer\">"
+        ."<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>"
+      ."</div>"
+    ."</div>"
+  ."</div>"
+."</div>"; 
+//end modal partita
+
+    //modal gestione partita
+    echo "<div class=\"modal fade\" id=\"partita\" role=\"dialog\">"
+        ."<div class=\"modal-dialog modal-lg\">"
+              ."<div class=\"modal-content\">"
+                    ."<div class=\"modal-header\" id='headerPartita'>"
+                      ."<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
+                      ."<h4 id='titoloPartita' class=\"modal-title\">Modal Header</h4>"
+                    ."</div>"
+                    ."<div style='overflow-y:hidden;' class=\"modal-body\" id='bodyPartita'>"
+
+                    ."</div>"
+                    ."<div class=\"modal-footer\" id='footerPartita'>"
+                      ."<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>"
+                    ."</div>"
+              ."</div>"
+        ."</div>"
+  ."</div>";
+?>
 </body>
 </html>

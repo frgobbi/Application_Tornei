@@ -13,8 +13,19 @@ $iscrizioni = filter_input(INPUT_POST,"iscrizioni",FILTER_SANITIZE_STRING);
 $fine = filter_input(INPUT_POST, "fine", FILTER_SANITIZE_STRING);
 $min_sq = filter_input(INPUT_POST,"min_sq",FILTER_SANITIZE_STRING);
 $max_sq = filter_input(INPUT_POST, "max_sq", FILTER_SANITIZE_STRING);
-$num_giocatori = filter_input(INPUT_POST,"num_giocatori", FILTER_SANITIZE_STRING);
+$num_giocatori = filter_input(INPUT_POST,"num", FILTER_SANITIZE_STRING);
 $info = filter_input(INPUT_POST, "info" , FILTER_SANITIZE_STRING);
+$eta_min = filter_input(INPUT_POST,"eta_min",FILTER_SANITIZE_STRING);
+$eta_max = filter_input(INPUT_POST,"eta_max",FILTER_SANITIZE_STRING);
+
+if(strcmp($eta_min,"")==0){
+    $eta_min = 0;
+}
+
+if(strcmp($eta_max,"")==0){
+    $eta_max = 0;
+}
+
 
 $sql_modifica = "UPDATE `torneo` SET "
     ."`nome_torneo`='$nome',"
@@ -24,9 +35,11 @@ $sql_modifica = "UPDATE `torneo` SET "
     ."`data_inizio`='$inizio',"
     ."`data_f_iscrizioni`='$iscrizioni',"
     ."`data_fine`='$fine',"
-    ."`info`='$info'"
+    ."`info`='$info',"
+    ."`min_anno`='$eta_min',"
+    ."`max_anno`='$eta_max'"
     ."WHERE id_torneo = '$torneo'";
-echo $sql_modifica;
+//echo $sql_modifica;
 include "../../connessione.php";
 try{
     $connessione->exec($sql_modifica);

@@ -33,7 +33,7 @@ if (!$_SESSION['login']) {
             include "../connessione.php";
             try {
                 $cat = $_SESSION['tipo_utente'];
-                foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona`,`colore`  FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $cat") as $row) {
+                foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona`,`colore`  FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $cat AND funzioni_cat_utente.abilitato = 1") as $row) {
                     $src = $row['src'];
                     $n_funzione = $row['nome_funzione'];
                     $icona = $row['icona'];

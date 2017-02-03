@@ -116,6 +116,19 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 <label for="giocatori_sq">Numero Giocatori Per Squadra:</label>
                                 <input type="number" class="form-control" name="giocatori_sq" id="giocatori_sq" required>
                             </div>
+
+                            <div class="alert alert-warning">Se non ci sono vincoli di et&agrave;, non inserire nulla!</div>
+
+                            <div class="form-group col-md-6">
+                                <label for="eta_min">Anno di nascita minimo (et&agrave; pi&ugrave; piccola):</label>
+                                <input type="number" class="form-control" name="eta_min" id="eta_min">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="eta_max">Anno di nascita minimo (et&agrave; pi&ugrave; grande):</label>
+                                <input type="number" class="form-control" name="eta_max" id="eta_max">
+                            </div>
+
                             <div class="form-group">
                                 <label for="Sport">Tipo Sport:</label>
                                 <!-- Select -->

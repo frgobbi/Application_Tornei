@@ -25,8 +25,8 @@ function LibrerieLogin() {
     ."<script src=\"../Librerie/vendor/bootstrap/js/bootstrap.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/metisMenu/metisMenu.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/raphael/raphael.min.js\"></script>"
-    ."<script src=\"../Librerie/vendor/morrisjs/morris.min.js\"></script>"
-    ."<script src=\"../Librerie/Java-script/morris-data.js\"></script>"
+    //."<script src=\"../Librerie/vendor/morrisjs/morris.min.js\"></script>"
+    //."<script src=\"../Librerie/Java-script/morris-data.js\"></script>"
     ."<script src=\"../Librerie/Java-script/sb-admin-2.js\"></script>";
 }
 
@@ -41,8 +41,8 @@ function index() {
     echo "<link href=\"Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
     . "<link href=\"Librerie/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">"
     . "<link href=\"Librerie/CSS/sb-admin-2-unlog.css\" rel=\"stylesheet\">"
-    . "<link href=\"Librerie/vendor/morrisjs/morris.css\" rel=\"stylesheet\">"
-        . "<link rel=\"stylesheet\" href=\"Librerie/vendor/font-awesome/css/font-awesome.min.css\">"
+    //. "<link href=\"Librerie/vendor/morrisjs/morris.css\" rel=\"stylesheet\">"
+    . "<link rel=\"stylesheet\" href=\"Librerie/vendor/font-awesome/css/font-awesome.min.css\">"
     . "<script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>"
     . "<script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>";
     
@@ -50,8 +50,8 @@ function index() {
     ."<script src=\"Librerie/vendor/bootstrap/js/bootstrap.min.js\"></script>"
     ."<script src=\"Librerie/vendor/metisMenu/metisMenu.min.js\"></script>"
     ."<script src=\"Librerie/vendor/raphael/raphael.min.js\"></script>"
-    ."<script src=\"Librerie/vendor/morrisjs/morris.min.js\"></script>"
-    ."<script src=\"Librerie/Java-script/morris-data.js\"></script>"
+    //."<script src=\"Librerie/vendor/morrisjs/morris.min.js\"></script>"
+    //."<script src=\"Librerie/Java-script/morris-data.js\"></script>"
     ."<script src=\"Librerie/Java-script/sb-admin-2.js\"></script>";
 }
 
@@ -66,7 +66,7 @@ function LibrerieUnLog(){
     echo "<link href=\"../Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
     . "<link href=\"../Librerie/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">"
     . "<link href=\"../Librerie/CSS/sb-admin-2-unlog.css\" rel=\"stylesheet\">"
-    . "<link href=\"../Librerie/vendor/morrisjs/morris.css\" rel=\"stylesheet\">"
+    //. "<link href=\"../Librerie/vendor/morrisjs/morris.css\" rel=\"stylesheet\">"
         . "<link rel=\"stylesheet\" href=\"../Librerie/vendor/font-awesome/css/font-awesome.min.css\">"
     . "<script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>"
     . "<script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>";
@@ -75,7 +75,7 @@ function LibrerieUnLog(){
     ."<script src=\"../Librerie/vendor/bootstrap/js/bootstrap.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/metisMenu/metisMenu.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/raphael/raphael.min.js\"></script>"
-    ."<script src=\"../Librerie/vendor/morrisjs/morris.min.js\"></script>"
-    ."<script src=\"../Librerie/Java-script/morris-data.js\"></script>"
+    //."<script src=\"../Librerie/vendor/morrisjs/morris.min.js\"></script>"
+    //."<script src=\"../Librerie/Java-script/morris-data.js\"></script>"
     ."<script src=\"../Librerie/Java-script/sb-admin-2.js\"></script>";
 }
