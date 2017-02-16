@@ -42,14 +42,27 @@ try{
             $tempi[]= $row['id_tempo'];
     }
     echo "],";
+
     echo "\"punti_tempo_sq1\" : [0";
-    foreach ($connessione->query("SELECT sq_tempo.punti FROM `tempo` LEFT JOIN `sq_tempo` ON tempo.id_tempo = sq_tempo.id_tempo WHERE id_partita = '$id_partita' AND sq_tempo.id_sq = '$id_sq1'") as $row){
-        echo ",".$row['punti'];
+    for($i =0;$i<count($tempi);$i++){
+        $oggP = $connessione->query("SELECT COUNT(*) AS gol FROM `info_tempo` INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente INNER JOIN `utente` ON utente.username = sq_utente.username WHERE `id_tempo` ='$tempi[$i]' AND `id_partita`='$id_partita' AND `id_sq` = '$id_sq1' AND punto = 1")->fetch(PDO::FETCH_OBJ);
+        echo ",".$oggP->gol;
     }
     echo "],";
     echo "\"punti_tempo_sq2\" : [0";
-    foreach ($connessione->query("SELECT sq_tempo.punti FROM `tempo` LEFT JOIN `sq_tempo` ON tempo.id_tempo = sq_tempo.id_tempo WHERE id_partita = '$id_partita' AND sq_tempo.id_sq = '$id_sq2'") as $row){
-        echo ",".$row['punti'];
+    for($i =0;$i<count($tempi);$i++){
+        $oggP = $connessione->query("SELECT COUNT(*) AS gol FROM `info_tempo` INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente INNER JOIN `utente` ON utente.username = sq_utente.username WHERE `id_tempo` ='$tempi[$i]' AND `id_partita`='$id_partita' AND `id_sq` = '$id_sq2' AND punto = 1")->fetch(PDO::FETCH_OBJ);
+        echo ",".$oggP->gol;
+    }
+    echo "],";
+    echo "\"close_tempo_sq1\" : [0";
+    foreach ($connessione->query("SELECT sq_tempo.conclused FROM `tempo` LEFT JOIN `sq_tempo` ON tempo.id_tempo = sq_tempo.id_tempo WHERE id_partita = '$id_partita' AND sq_tempo.id_sq = '$id_sq1'") as $row){
+        echo ",".$row['conclused'];
+    }
+    echo "],";
+    echo "\"close_tempo_sq2\" : [0";
+    foreach ($connessione->query("SELECT sq_tempo.conclused FROM `tempo` LEFT JOIN `sq_tempo` ON tempo.id_tempo = sq_tempo.id_tempo WHERE id_partita = '$id_partita' AND sq_tempo.id_sq = '$id_sq2'") as $row){
+        echo ",".$row['conclused'];
     }
     echo "],";
     echo "\"sq1\" : {";
@@ -165,6 +178,52 @@ try{
         }
         echo"]";
         echo"}";
+    }
+    echo "],";
+
+    echo "\"gol_sq1\" : [";
+    for($j=0;$j<count($tempi);$j++){
+        if($j==0){
+            echo"{";
+        } else {
+            echo",{";
+        }
+        echo "\"id_tempo\":".$tempi[$j].",";
+        echo "\"giocatore\": [\"0\"";
+        $sql_gol1 = "SELECT nome, cognome FROM `info_tempo`"
+            ." INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente "
+            ."INNER JOIN `utente` ON utente.username = sq_utente.username "
+            ." WHERE `id_tempo` ='$tempi[$j]' AND `id_partita`='$id_partita' AND `id_sq` = '$id_sq1' AND punto = 1";
+
+        foreach ($connessione->query($sql_gol1) as $row){
+            $g = $row['nome']." ".$row['cognome'];
+            echo ",\"".$g."\"";
+        }
+        echo "]";
+        echo "}";
+    }
+    echo "],";
+
+    echo "\"gol_sq2\" : [";
+    for($j=0;$j<count($tempi);$j++){
+        if($j==0){
+            echo"{";
+        } else {
+            echo",{";
+        }
+        echo "\"id_tempo\":".$tempi[$j].",";
+        echo "\"giocatore\": [\"0\"";
+        $sql_gol1 = "SELECT nome, cognome FROM `info_tempo`"
+            ." INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente "
+            ."INNER JOIN `utente` ON utente.username = sq_utente.username "
+            ." WHERE `id_tempo` ='$tempi[$j]' AND `id_partita`='$id_partita' AND `id_sq` = '$id_sq2' AND punto = 1";
+
+        foreach ($connessione->query($sql_gol1) as $row){
+            $g = $row['nome']." ".$row['cognome'];
+            echo ",\"".$g."\"";
+        }
+        echo "]";
+        echo "}";
     }
     echo "]";
 

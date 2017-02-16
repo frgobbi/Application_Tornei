@@ -22,9 +22,13 @@ function creaPopup(id_partita, id_torneo) {
                 "<div class='row'>"
                 + "<div class=\"panel-group\">"
                 + "<div class=\"panel panel-default\">"
-                + "<div class=\"panel-heading\">"
-                + "<a data-toggle=\"collapse\" href=\"#form\">"
-                + "<h4 class=\"panel-title\">"
+                + "<div class=\"panel-heading\">";
+                if(dati.finish==0){
+                    codice+= "<a data-toggle=\"collapse\" href=\"#form\">";
+                } else {
+                    codice+= "<a data-toggle=\"collapse\" class='disabled' href=\"#\">";
+                }
+                codice += "<h4 class=\"panel-title\">"
                 + "Modifica Partita"
                 + "</h4>"
                 + "</a>"
@@ -53,6 +57,56 @@ function creaPopup(id_partita, id_torneo) {
                 + "</div>"
                 + "</div>"
                 + "</div>";
+            if(dati.finish ==1){
+                codice += "<div id='esito_punti'><div class='row'>"
+                    + "<div class=\"panel panel-primary\">"
+                    //+"<div class=\"panel-heading\">"+dati_tempo.nomi_tempi[i-1]+"</div>"
+                    + "<div class=\"panel-body\">"
+                    /*Parte prima squadra*/
+                    + "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                    //Nome Prima SQ
+                    + "<div class='row'>"
+                    + "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                    + "<ul class=\"list-group\">"
+                    + "<li class=\"list-group-item list-group-item-info text-center text-uppercase\">" + dati.nome_sq1 + "</li>"
+                    + "</ul>"
+                    + "</div>"
+                    + "</div>"
+                    //Fino Nome Prima SQ
+                    //Contatore Gol SQ1
+                    + "<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                    + "<div class=\"btn-group-vertical\">"
+                    + "<input type=\"text\" disabled style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"" + dati.esito[0] + "\">"
+                    + "</div>"
+                    + "</div>"
+                    //Fine Contatore Gol SQ1
+
+                    //Fine Parte assegnazione Gol/Cartellini SQ1
+                    + "</div>";
+                //Fine Prima Squadra
+
+                codice += "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                    //Nome Sqconda SQ
+                    + "<div class='row'>"
+                    + "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                    + "<ul class=\"list-group\">"
+                    + "<li class=\"list-group-item list-group-item-info text-center text-uppercase\">" + dati.nome_sq2 + "</li>"
+                    + "</ul>"
+                    + "</div>"
+                    + "</div>"
+                    //Fino Nome Seconda SQ
+                    //Contatore Gol SQ2
+                    + "<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                    + "<div class=\"btn-group-vertical\">"
+                    + "<input type=\"text\" disabled style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"" + dati.esito[1] + "\">"
+                    + "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"
+                    +"</div>"
+                    + "</div>";
+                //Fine Contatore Gol SQ2
+            }
             codice += "<div id='dati_partita'></div>";
             codice += "<div class='col-lg-8 col-lg-offset-2 col-md-6 col-md-offset-3 col-sm-12 col-xs-12' id='esito_partita'></div>";
             codice += "</div>";
@@ -69,10 +123,14 @@ function creaPopup(id_partita, id_torneo) {
                      Questo trasfoma il json in oggetto
                      */
                     var dati_tempo = $.parseJSON(risposta);
-                    var codice = "";
+                    var codice_sq1 = "";
+                    var codice_sq2 = "";
+                    codice = "";
                     for(var i=0; i<dati_tempo.tempi_partita.length;i++){
+                        codice_sq1 = "";
+                        codice_sq2 = "";
                         if(dati_tempo.tempi_partita[i]!=0){
-
+                                
                             var id_sq1 = "punti_"+dati.id_sq1+"-"+dati_tempo.tempi_partita[i];
                             var id_gol_tempo1 = "giocatori_"+dati.id_sq1+"-"+dati_tempo.tempi_partita[i];
                             var id_sq2 = "punti_"+dati.id_sq2+"-"+dati_tempo.tempi_partita[i];
@@ -89,139 +147,269 @@ function creaPopup(id_partita, id_torneo) {
                             var id_option_sq2_G = "G"+dati.id_sq2+"-"+dati_tempo.tempi_partita[i];
                             var id_option_sq1_R = "R"+dati.id_sq1+"-"+dati_tempo.tempi_partita[i];
                             var id_option_sq2_R = "R"+dati.id_sq2+"-"+dati_tempo.tempi_partita[i];
+                            var id_tbody_sq1 = "Tb_"+dati.id_sq1+"-"+dati_tempo.tempi_partita[i];
+                            var id_tbody_sq2 = "Tb_"+dati.id_sq2+"-"+dati_tempo.tempi_partita[i];
 
 
-                            codice += "<div class='row'>"
-                                +"<div class=\"panel panel-primary\">"
-                                +"<div class=\"panel-heading\">"+dati_tempo.nomi_tempi[i-1]+"</div>"
-                                +"<div class=\"panel-body\">"
-                                /*Parte prima squadra*/
-                                +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
-                                //Nome Prima SQ
-                                +"<div class='row'>"
-                                +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
-                                +"<ul class=\"list-group\">"
-                                +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq1+"</li>"
-                                +"</ul>"
-                                +"</div>"
-                                +"</div>"
-                            //Fino Nome Prima SQ
-                            //Contatore Gol SQ1
-                                +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
-                                +"<div class=\"btn-group-vertical\">"
-                                +"<button class=\"btn btn-primary\" data-dir=\"up\" onclick='assegna_punti(\""+dati.id_sq1+"\",\""+dati_tempo.tempi_partita[i]+"\")'><span class=\"glyphicon glyphicon-plus\"></span></button>"
-                                +"<input type=\"text\" id=\""+id_sq1+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq1[i]+"\">"
-                                +"<button class=\"btn btn-primary\" onclick='assegna_punti(\""+dati.id_sq1+"\",\""+dati_tempo.tempi_partita[i]+"\")' data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-                                +"</div>"
-                                +"</div>"
-                                //Fine Contatore Gol SQ1
-                                //Parte assegnazione Gol/cartellini SQ1
-                                +"<div class='row'>"
-                                +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo1+"\">Info Tempo</button>"
-                                +"<div style='padding-top:10px;' id=\""+id_gol_tempo1+"\" class=\"collapse\">"
-                                +"<div class='row' id=\""+id_area_punti1+"\"></div>";
-                            codice +="<div class='row' id=\""+id_area_cart1+"\">" +
-                                "<div id=\"cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
-                                "<table class=\"table table-bordered table-hovered\">"+
-                                "<thead>"+
-                                "<tr>"+
-                                "<th>Giocatore</th>"+
-                                "<th>Cartellino</th>"+
-                                "<th></th>"+
-                                "</tr>"+
-                                "</thead>"+
-                                "<tbody>";
+                            if(dati_tempo.close_tempo_sq1[i]==0){
+                                codice_sq1 += "<div class='row'>"
+                                    +"<div class=\"panel panel-primary\">"
+                                    +"<div class=\"panel-heading\">"+dati_tempo.nomi_tempi[i-1]+"</div>"
+                                    +"<div class=\"panel-body\">"
+                                    /*Parte prima squadra*/
+                                    +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                                    //Nome Prima SQ
+                                    +"<div class='row'>"
+                                    +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                                    +"<ul class=\"list-group\">"
+                                    +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq1+"</li>"
+                                    +"</ul>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fino Nome Prima SQ
+                                    //Contatore Gol SQ1
+                                    +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                                    +"<div class=\"btn-group-vertical\">"
+                                    +"<button class=\"btn btn-primary\" data-dir=\"up\" id=\""+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\"><span class=\"glyphicon glyphicon-plus\"></span></button>"
+                                    +"<input type=\"text\" id=\""+id_sq1+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq1[i]+"\">"
+                                    +"<button class=\"btn btn-primary\" id=\""+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Contatore Gol SQ1
+                                    //Parte assegnazione Gol/cartellini SQ1
+                                    +"<div class='row'>"
+                                    +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo1+"\">Info Tempo</button>"
+                                    +"<div style='padding-top:10px;' id=\""+id_gol_tempo1+"\" class=\"collapse\">"
+                                    +"<div class='row' id=\""+id_area_punti1+"\"></div>";
+                                codice_sq1 +="<div class='row' id=\""+id_area_cart1+"\">" +
+                                    "<div id=\"cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<table class=\"table table-bordered table-hovered\">"+
+                                    "<thead>"+
+                                    "<tr>"+
+                                    "<th>Giocatore</th>"+
+                                    "<th>Cartellino</th>"+
+                                    "<th></th>"+
+                                    "</tr>"+
+                                    "</thead>"+
+                                    "<tbody id=\""+id_tbody_sq1+"\">";
 
-                            $.each(dati_tempo.cartellini_sq1, function(idx, obj){
-                                //console.log(idx);
-                                //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
-                                if(obj.id_tempo == dati_tempo.tempi_partita[i]){
-                                    console.log("ci sono");
-                                    for(var z=1;z<obj.id_cartellini.length;z++){
-                                        //console.log(z);
-                                        //console.log(obj.colore_cartellini[z].localeCompare("G"));
-                                        if(obj.colore_cartellini[z].localeCompare("G")==0){
-                                            codice+= "<tr class='warning'>";
-                                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                                            codice+="<td>Giallo</td>";
-                                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                                            codice+="</tr>";
-                                        } else {
-                                            codice+= "<tr class='danger'>"
-                                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                                            codice+="<td>Rosso</td>";
-                                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                                            codice+="</tr>";
+                                $.each(dati_tempo.cartellini_sq1, function(idx, obj){
+                                    //console.log(idx);
+                                    //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
+                                    if(obj.id_tempo == dati_tempo.tempi_partita[i]){
+                                        //console.log("ci sono");
+                                        for(var z=1;z<obj.id_cartellini.length;z++){
+                                            //console.log(z);
+                                            //console.log(obj.colore_cartellini[z].localeCompare("G"));
+                                            var id_tr = "TR_"+obj.id_cartellini[z];
+                                            if(obj.colore_cartellini[z].localeCompare("G")==0){
+                                                codice_sq1+= "<tr id=\""+id_tr+"\" class='warning'>";
+                                                codice_sq1+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq1+="<td>Giallo</td>";
+                                                codice_sq1+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq1+="</tr>";
+                                            } else {
+                                                codice_sq1+= "<tr id=\""+id_tr+"\" class='danger'>"
+                                                codice_sq1+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq1+="<td>Rosso</td>";
+                                                codice_sq1+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq1+="</tr>";
+                                            }
+
                                         }
-
                                     }
+                                });
+
+
+                                codice_sq1+="</tbody>"+
+                                    "</table>" +
+                                    "</div>"+
+                                    "<div id=\"new_cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<div class='panel panel-primary'>" +
+                                    "<div class='panel-heading'>Assegna Cartellini</div>" +
+                                    "<div class='panel-body'>"+
+                                    "<div class='form-group'>"
+                                    +"<label for=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">Giocatore:</label>"
+                                    +"<select class=\"form-control\" id=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">" +
+                                    "<option value=\"nessuno\">Scegli Giocatore...</option>";
+                                for(var j = 1; j<dati_tempo.sq1.id_giocatori.length;j++){
+                                    codice_sq1 += "<option value=\""+dati_tempo.sq1.id_giocatori[j]+"\">"+dati_tempo.sq1.nomi_giocatori[j]+"</option>"
                                 }
-                            });
+                                codice_sq1+= "</select>" +
+                                    "</div>" +
+                                    "<div class='form-group text-center'>" +
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq1_G+"\" checked type=\"radio\" value='G' name=\""+name_option_sq1+"\">Giallo</label>"+
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq1_R+"\" type=\"radio\" value='R' name=\""+name_option_sq1+"\">Rosso</label>" +
+                                    "</div>" +
+                                    "<div class='form-group'>" +
+                                    "<button type='button' onclick='aggiungi_cartellino("+dati.id_sq1+","+dati_tempo.tempi_partita[i]+","+id_partita+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"+
+                                    "</div>";
+                                codice_sq1 +="<div class='row' id=\""+id_area_conf1+"\">"
+                                    +"<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\""+dati.id_sq1+"\",\""+dati_tempo.tempi_partita[i]+"\",\""+id_partita+"\",\""+id_torneo+"\")'>Conferma dati Tempo</button>"
 
-
-                            codice+="</tbody>"+
-                                "</table>" +
-                                "</div>"+
-                                "<div id=\"new_cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
-                                "<div class='panel panel-primary'>" +
-                                "<div class='panel-heading'>Assegna Cartellini</div>" +
-                                "<div class='panel-body'>"+
-                                "<div class='form-group'>"
-                                +"<label for=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">Giocatore:</label>"
-                                +"<select class=\"form-control\" id=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">" +
-                                "<option value=\"0\">Scegli Giocatore...</option>";
-                            for(var j = 1; j<dati_tempo.sq1.id_giocatori.length;j++){
-                                codice += "<option value=\""+dati_tempo.sq1.id_giocatori[j]+"\">"+dati_tempo.sq1.nomi_giocatori[j]+"</option>"
-                            }
-                            codice+= "</select>" +
-                                "</div>" +
-                                "<div class='form-group text-center'>" +
-                                "<label class=\"radio-inline\"><input id=\""+id_option_sq1_G+"\" type=\"radio\" value='G' name=\""+name_option_sq1+"\">Giallo</label>"+
-                                "<label class=\"radio-inline\"><input id=\""+id_option_sq1_R+"\" type=\"radio\" value='R' name=\""+name_option_sq1+"\">Rosso</label>" +
-                                "</div>" +
-                                "<div class='form-group'>" +
-                                "<button type='button' onclick='aggiungi_cartellino("+dati.id_sq1+","+dati_tempo.tempi_partita[i]+","+id_p+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
-                                "</div>" +
-                                "</div>" +
-                                "</div>" +
-                                "</div>"+
-                                "</div>";
-                            codice +="<div class='row' id=\""+id_area_conf1+"\">"
-                                +"<button type='button' class='btn btn-success btn-block' onclick='chiuditempo(\""+dati.id_sq1+"\",\""+dati_tempo.tempi_partita[i]+"\")'>Conferma dati Tempo</button>"
-
-                                +"</div>"
-                                +"</div>"
-                                +"</div>"
-                                //Fine Parte assegnazione Gol/Cartellini SQ1
-                                +"</div>"
+                                    +"</div>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Parte assegnazione Gol/Cartellini SQ1
+                                    +"</div>"
                                 //Fine Prima Squadra
+                            }
+                            else{
+                                codice_sq1 += "<div class='row'>"
+                                    +"<div class=\"panel panel-primary\">"
+                                    +"<div class=\"panel-heading\">"+dati_tempo.nomi_tempi[i-1]+"</div>"
+                                    +"<div class=\"panel-body\">"
+                                    /*Parte prima squadra*/
+                                    +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                                    //Nome Prima SQ
+                                    +"<div class='row'>"
+                                    +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                                    +"<ul class=\"list-group\">"
+                                    +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq1+"</li>"
+                                    +"</ul>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fino Nome Prima SQ
+                                    //Contatore Gol SQ1
+                                    +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                                    +"<div class=\"btn-group-vertical\">"
+                                    +"<button class=\"btn btn-primary disabled\" disabled data-dir=\"up\" id=\""+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\"><span class=\"glyphicon glyphicon-plus\"></span></button>"
+                                    +"<input type=\"text\" disabled id=\""+id_sq1+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq1[i]+"\">"
+                                    +"<button class=\"btn btn-primary disabled\" disabled id=\""+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Contatore Gol SQ1
+                                    //Parte assegnazione Gol/cartellini SQ1
+                                    +"<div class='row'>"
+                                    +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo1+"\">Info Tempo</button>"
+                                    +"<div style='padding-top:10px;' id=\""+id_gol_tempo1+"\" class=\"collapse\">"
+                                    +"<div class='row' id=\""+id_area_punti1+"\">";
+                                        $.each(dati_tempo.gol_sq1, function(idx, obj) {
+                                            if(obj.id_tempo == dati_tempo.tempi_partita[i]) {
+                                                if(obj.giocatore.length>1){
+                                                    codice_sq1 +="<div class='panel panel-primary'>"
+                                                    +"<div class='panel-body'>"
+                                                        codice_sq1+="<ul class='list-group'>";
+                                                            for(var z =1;z<obj.giocatore.length;z++){
+                                                                codice_sq1+="<li class='list-group-item'><label>Gol "+parseInt(z)+":</label> "+obj.giocatore[z]+"</li>";
+                                                                console.log(obj.giocatore[z]);
+                                                            }
+                                                        codice_sq1+="</ul>"
+                                                    +"</div>"
+                                                    +"</div>";
+                                                }
 
+                                            }
+                                        });
+                                    codice_sq1+="</div>";
+                                codice_sq1 +="<div class='row' id=\""+id_area_cart1+"\">" +
+                                    "<div id=\"cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<table class=\"table table-bordered table-hovered\">"+
+                                    "<thead>"+
+                                    "<tr>"+
+                                    "<th>Giocatore</th>"+
+                                    "<th>Cartellino</th>"+
+                                    "<th></th>"+
+                                    "</tr>"+
+                                    "</thead>"+
+                                    "<tbody id=\""+id_tbody_sq1+"\">";
+
+                                $.each(dati_tempo.cartellini_sq1, function(idx, obj){
+                                    //console.log(idx);
+                                    //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
+                                    if(obj.id_tempo == dati_tempo.tempi_partita[i]){
+                                        //console.log("ci sono");
+                                        for(var z=1;z<obj.id_cartellini.length;z++){
+                                            //console.log(z);
+                                            //console.log(obj.colore_cartellini[z].localeCompare("G"));
+                                            var id_tr = "TR_"+obj.id_cartellini[z];
+                                            if(obj.colore_cartellini[z].localeCompare("G")==0){
+                                                codice_sq1+= "<tr id=\""+id_tr+"\" class='warning'>";
+                                                codice_sq1+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq1+="<td>Giallo</td>";
+                                                codice_sq1+="<td><button type='button' disabled onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger disabled'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq1+="</tr>";
+                                            } else {
+                                                codice_sq1+= "<tr id=\""+id_tr+"\" class='danger'>"
+                                                codice_sq1+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq1+="<td>Rosso</td>";
+                                                codice_sq1+="<td><button type='button' disabled onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger disabled'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq1+="</tr>";
+                                            }
+
+                                        }
+                                    }
+                                });
+
+
+                                codice_sq1+="</tbody>"+
+                                    "</table>" +
+                                    "</div>";
+                                /*codice_sq1+="<div id=\"new_cartellino_"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<div class='panel panel-primary'>" +
+                                    "<div class='panel-heading'>Assegna Cartellini</div>" +
+                                    "<div class='panel-body'>"+
+                                    "<div class='form-group'>"
+                                    +"<label for=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">Giocatore:</label>"
+                                    +"<select class=\"form-control\" id=\"SG"+dati.id_sq1+"_"+dati_tempo.tempi_partita[i]+"\">" +
+                                    "<option value=\"0\">Scegli Giocatore...</option>";
+                                for(var j = 1; j<dati_tempo.sq1.id_giocatori.length;j++){
+                                    codice_sq1 += "<option value=\""+dati_tempo.sq1.id_giocatori[j]+"\">"+dati_tempo.sq1.nomi_giocatori[j]+"</option>"
+                                }
+                                codice_sq1+= "</select>" +
+                                    "</div>" +
+                                    "<div class='form-group text-center'>" +
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq1_G+"\" checked type=\"radio\" value='G' name=\""+name_option_sq1+"\">Giallo</label>"+
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq1_R+"\" type=\"radio\" value='R' name=\""+name_option_sq1+"\">Rosso</label>" +
+                                    "</div>" +
+                                    "<div class='form-group'>" +
+                                    "<button type='button' disabled onclick='aggiungi_cartellino("+dati.id_sq1+","+dati_tempo.tempi_partita[i]+","+id_partita+")' class='btn btn-primary btn-block disabled'>Aggiungi Cartellino</button>"+
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>";*/
+                                codice_sq1+="</div>";
+                                /*codice_sq1 +="<div class='row' id=\""+id_area_conf1+"\">"
+                                    +"<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\""+dati.id_sq1+"\",\""+dati_tempo.tempi_partita[i]+"\",\""+id_partita+"\",\""+id_torneo+"\")'>Conferma dati Tempo</button>"
+                                 +"</div>";*/
+                                codice_sq1+="</div>";
+                                codice_sq1+="</div>";
+                                //Fine Parte assegnazione Gol/Cartellini SQ1
+                                codice_sq1+="</div>";
+                                //Fine Prima Squadra
+                            }
+
+                            if(dati_tempo.close_tempo_sq2[i]==0){
                                 //Parte Seconda squadra
-                                +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
-                                //Nome Sqconda SQ
-                                +"<div class='row'>"
-                                +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
-                                +"<ul class=\"list-group\">"
-                                +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq2+"</li>"
-                                +"</ul>"
-                                +"</div>"
-                                +"</div>"
-                                //Fino Nome Seconda SQ
-                                //Contatore Gol SQ2
-                                +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
-                                +"<div class=\"btn-group-vertical\">"
-                                +"<button class=\"btn btn-primary\" data-dir=\"up\" onclick='assegna_punti(\""+dati.id_sq2+"\",\""+dati_tempo.tempi_partita[i]+"\")'><span class=\"glyphicon glyphicon-plus\"></span></button>"
-                                +"<input type=\"text\" id=\""+id_sq2+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq2[i]+"\">"
-                                +"<button class=\"btn btn-primary\" onclick='assegna_punti(\""+dati.id_sq2+"\",\""+dati_tempo.tempi_partita[i]+"\")' data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-                                +"</div>"
-                                +"</div>"
-                                //Fine Contatore Gol SQ2
-                                //Parte assegnazione Gol/cartellini SQ2
-                                +"<div class='row'>"
-                                +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo2+"\">Info Tempo</button>"
-                                +"<div style='padding-top:10px;' id=\""+id_gol_tempo2+"\" class=\"collapse\">"
-                                +"<div class='row' id=\""+id_area_punti2+"\"></div>";
-                                codice +="<div class='row' id=\""+id_area_cart2+"\">" +
+                                codice_sq2 = "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                                    //Nome Sqconda SQ
+                                    +"<div class='row'>"
+                                    +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                                    +"<ul class=\"list-group\">"
+                                    +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq2+"</li>"
+                                    +"</ul>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fino Nome Seconda SQ
+                                    //Contatore Gol SQ2
+                                    +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                                    +"<div class=\"btn-group-vertical\">"
+                                    +"<button class=\"btn btn-primary\" data-dir=\"up\" id=\""+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\"><span class=\"glyphicon glyphicon-plus\"></span></button>"
+                                    +"<input type=\"text\" id=\""+id_sq2+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq2[i]+"\">"
+                                    +"<button class=\"btn btn-primary\" id=\""+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Contatore Gol SQ2
+                                    //Parte assegnazione Gol/cartellini SQ2
+                                    +"<div class='row'>"
+                                    +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo2+"\">Info Tempo</button>"
+                                    +"<div style='padding-top:10px;' id=\""+id_gol_tempo2+"\" class=\"collapse\">"
+                                    +"<div class='row' id=\""+id_area_punti2+"\"></div>";
+                                codice_sq2 +="<div class='row' id=\""+id_area_cart2+"\">" +
                                     "<div id=\"cartellino_"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" >" +
                                     "<table class=\"table table-bordered table-hovered\">"+
                                     "<thead>"+
@@ -231,36 +419,37 @@ function creaPopup(id_partita, id_torneo) {
                                     "<th></th>"+
                                     "</tr>"+
                                     "</thead>"+
-                                    "<tbody>";
+                                    "<tbody id=\""+id_tbody_sq2+"\">";
 
-                                        $.each(dati_tempo.cartellini_sq2, function(idx, obj){
-                                            //console.log(idx);
-                                            //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
-                                            if(obj.id_tempo == dati_tempo.tempi_partita[i]){
-                                                console.log("ci sono");
-                                                for(var z=1;z<obj.id_cartellini.length;z++){
-                                                    //console.log(z);
-                                                    //console.log(obj.colore_cartellini[z].localeCompare("G"));
-                                                    if(obj.colore_cartellini[z].localeCompare("G")==0){
-                                                        codice+= "<tr class='warning'>";
-                                                        codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                                                        codice+="<td>Giallo</td>";
-                                                        codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                                                        codice+="</tr>";
-                                                    } else {
-                                                        codice+= "<tr class='danger'>"
-                                                        codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                                                        codice+="<td>Rosso</td>";
-                                                        codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                                                        codice+="</tr>";
-                                                    }
-                                                    
-                                                }
+                                $.each(dati_tempo.cartellini_sq2, function(idx, obj){
+                                    //console.log(idx);
+                                    //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
+                                    if(obj.id_tempo == dati_tempo.tempi_partita[i]){
+                                        //console.log("ci sono");
+                                        for(var z=1;z<obj.id_cartellini.length;z++){
+                                            var id_tr = "TR_"+obj.id_cartellini[z];
+                                            //console.log(z);
+                                            //console.log(obj.colore_cartellini[z].localeCompare("G"));
+                                            if(obj.colore_cartellini[z].localeCompare("G")==0){
+                                                codice_sq2+= "<tr id=\""+id_tr+"\" class='warning'>";
+                                                codice_sq2+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq2+="<td>Giallo</td>";
+                                                codice_sq2+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq2+="</tr>";
+                                            } else {
+                                                codice_sq2+= "<tr id=\""+id_tr+"\" class='danger'>"
+                                                codice_sq2+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq2+="<td>Rosso</td>";
+                                                codice_sq2+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq2+="</tr>";
                                             }
-                                        });
+
+                                        }
+                                    }
+                                });
 
 
-                                    codice+="</tbody>"+
+                                codice_sq2+="</tbody>"+
                                     "</table>" +
                                     "</div>"+
                                     "<div id=\"new_cartellino_"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" >" +
@@ -270,40 +459,166 @@ function creaPopup(id_partita, id_torneo) {
                                     "<div class='form-group'>"
                                     +"<label for=\"SG"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\">Giocatore:</label>"
                                     +"<select class=\"form-control\" id=\"SG"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\">" +
-                                    "<option value=\"0\">Scegli Giocatore...</option>";
-                                        for(var j = 1; j<dati_tempo.sq2.id_giocatori.length;j++){
-                                            codice += "<option value=\""+dati_tempo.sq2.id_giocatori[j]+"\">"+dati_tempo.sq2.nomi_giocatori[j]+"</option>"
-                                        }
-                                    codice+= "</select>" +
-                                        "</div>" +
-                                        "<div class='form-group text-center'>" +
-                                        "<label class=\"radio-inline\"><input id=\""+id_option_sq2_G+"\" type=\"radio\" value='G' name=\""+name_option_sq2+"\">Giallo</label>"+
-                                        "<label class=\"radio-inline\"><input id=\""+id_option_sq2_R+"\" type=\"radio\" value='R' name=\""+name_option_sq2+"\">Rosso</label>" +
-                                        "</div>" +
-                                        "<div class='form-group'>" +
-                                            "<button type='button' onclick='aggiungi_cartellino("+dati.id_sq2+","+dati_tempo.tempi_partita[i]+","+id_p+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
-                                        "</div>" +
-                                        "</div>" +
-                                        "</div>" +
-                                        "</div>"+
+                                    "<option value=\"nessuno\">Scegli Giocatore...</option>";
+                                for(var j = 1; j<dati_tempo.sq2.id_giocatori.length;j++){
+                                    codice_sq2 += "<option value=\""+dati_tempo.sq2.id_giocatori[j]+"\">"+dati_tempo.sq2.nomi_giocatori[j]+"</option>"
+                                }
+                                codice_sq2+= "</select>" +
+                                    "</div>" +
+                                    "<div class='form-group text-center'>" +
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq2_G+"\" type=\"radio\" checked value='G' name=\""+name_option_sq2+"\">Giallo</label>"+
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq2_R+"\" type=\"radio\" value='R' name=\""+name_option_sq2+"\">Rosso</label>" +
+                                    "</div>" +
+                                    "<div class='form-group'>" +
+                                    "<button type='button' onclick='aggiungi_cartellino("+dati.id_sq2+","+dati_tempo.tempi_partita[i]+","+id_partita+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>"+
                                     "</div>";
-                                codice +="<div class='row' id=\""+id_area_conf2+"\">"
-                                    +"<button type='button' class='btn btn-success btn-block' onclick='chiuditempo(\""+dati.id_sq2+"\",\""+dati_tempo.tempi_partita[i]+"\")'>Conferma dati Tempo</button>"
+                                codice_sq2 +="<div class='row' id=\""+id_area_conf2+"\">"
+                                    +"<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\""+dati.id_sq2+"\",\""+dati_tempo.tempi_partita[i]+"\",\""+id_partita+"\",\""+id_torneo+"\")'>Conferma dati Tempo</button>"
 
-                                +"</div>"
-                                +"</div>"
-                                +"</div>"
-                                //Fine Parte assegnazione Gol/Cartellini SQ2
-                                +"</div>"
-                                //Fine Seconda Squadra
+                                    +"</div>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Parte assegnazione Gol/Cartellini SQ2
+                                    +"</div>"
+                                    //Fine Seconda Squadra
 
-                                +"</div>"
-                                +"</div>"
-                                +"</div>";
+                                    +"</div>"
+                                    +"</div>"
+                                    +"</div>";
+                            }
+                            else {
+                                //Parte Seconda squadra
+                                codice_sq2 = "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                                    //Nome Sqconda SQ
+                                    +"<div class='row'>"
+                                    +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
+                                    +"<ul class=\"list-group\">"
+                                    +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati.nome_sq2+"</li>"
+                                    +"</ul>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fino Nome Seconda SQ
+                                    //Contatore Gol SQ2
+                                    +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
+                                    +"<div class=\"btn-group-vertical\">"
+                                    +"<button class=\"btn btn-primary disabled \" disabled data-dir=\"up\" id=\""+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\"><span class=\"glyphicon glyphicon-plus\"></span></button>"
+                                    +"<input type=\"text\" disabled id=\""+id_sq2+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\""+dati_tempo.punti_tempo_sq2[i]+"\">"
+                                    +"<button class=\"btn btn-primary disabled\" disabled id=\""+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
+                                    +"</div>"
+                                    +"</div>"
+                                    //Fine Contatore Gol SQ2
+                                    //Parte assegnazione Gol/cartellini SQ2
+                                    +"<div class='row'>"
+                                    +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo2+"\">Info Tempo</button>"
+                                    +"<div style='padding-top:10px;' id=\""+id_gol_tempo2+"\" class=\"collapse\">"
+                                    +"<div class='row' id=\""+id_area_punti2+"\">";
+                                        $.each(dati_tempo.gol_sq2, function(idx, obj) {
+                                            if(obj.id_tempo == dati_tempo.tempi_partita[i]) {
+                                                if(obj.giocatore.length>1){
+                                                    codice_sq2 +="<div class='panel panel-primary'>"
+                                                        +"<div class='panel-body'>"
+                                                    codice_sq2+="<ul class='list-group'>";
+                                                    for(var z =1;z<obj.giocatore.length;z++){
+                                                        codice_sq2+="<li class='list-group-item'><label>Gol "+parseInt(z)+":</label> "+obj.giocatore[z]+"</li>";
+                                                        console.log(obj.giocatore[z]);
+                                                    }
+                                                    codice_sq2+="</ul>"
+                                                        +"</div>"
+                                                        +"</div>";
+                                                }
+
+                                            }
+                                        });
+                                    codice_sq2+="</div>";
+                                codice_sq2 +="<div class='row' id=\""+id_area_cart2+"\">" +
+                                    "<div id=\"cartellino_"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<table class=\"table table-bordered table-hovered\">"+
+                                    "<thead>"+
+                                    "<tr>"+
+                                    "<th>Giocatore</th>"+
+                                    "<th>Cartellino</th>"+
+                                    "<th></th>"+
+                                    "</tr>"+
+                                    "</thead>"+
+                                    "<tbody id=\""+id_tbody_sq2+"\">";
+
+                                $.each(dati_tempo.cartellini_sq2, function(idx, obj){
+                                    //console.log(idx);
+                                    //console.log(obj.id_tempo+"--"+dati_tempo.tempi_partita[i]);
+                                    if(obj.id_tempo == dati_tempo.tempi_partita[i]){
+                                        //console.log("ci sono");
+                                        for(var z=1;z<obj.id_cartellini.length;z++){
+                                            var id_tr = "TR_"+obj.id_cartellini[z];
+                                            //console.log(z);
+                                            //console.log(obj.colore_cartellini[z].localeCompare("G"));
+                                            if(obj.colore_cartellini[z].localeCompare("G")==0){
+                                                codice_sq2+= "<tr id=\""+id_tr+"\" class='warning'>";
+                                                codice_sq2+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq2+="<td>Giallo</td>";
+                                                codice_sq2+="<td><button type='button' disabled onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger disabled'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq2+="</tr>";
+                                            } else {
+                                                codice_sq2+= "<tr id=\""+id_tr+"\" class='danger'>"
+                                                codice_sq2+="<td>"+obj.nome_g_cartellini[z]+"</td>";
+                                                codice_sq2+="<td>Rosso</td>";
+                                                codice_sq2+="<td><button type='button' disabled onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger disabled'><i class='fa fa-times'></i> </button></td>"
+                                                codice_sq2+="</tr>";
+                                            }
+
+                                        }
+                                    }
+                                });
+
+
+                                codice_sq2+="</tbody>"+
+                                    "</table>" +
+                                    "</div>";
+                              /*codice_sq2 +="<div id=\"new_cartellino_"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\" >" +
+                                    "<div class='panel panel-primary'>" +
+                                    "<div class='panel-heading'>Assegna Cartellini</div>" +
+                                    "<div class='panel-body'>"+
+                                    "<div class='form-group'>"
+                                    +"<label for=\"SG"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\">Giocatore:</label>"
+                                    +"<select class=\"form-control\" id=\"SG"+dati.id_sq2+"_"+dati_tempo.tempi_partita[i]+"\">" +
+                                    "<option value=\"0\">Scegli Giocatore...</option>";
+                                for(var j = 1; j<dati_tempo.sq2.id_giocatori.length;j++){
+                                    codice_sq2 += "<option value=\""+dati_tempo.sq2.id_giocatori[j]+"\">"+dati_tempo.sq2.nomi_giocatori[j]+"</option>"
+                                }
+                                codice_sq2+= "</select>" +
+                                    "</div>" +
+                                    "<div class='form-group text-center'>" +
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq2_G+"\" type=\"radio\" checked value='G' name=\""+name_option_sq2+"\">Giallo</label>"+
+                                    "<label class=\"radio-inline\"><input id=\""+id_option_sq2_R+"\" type=\"radio\" value='R' name=\""+name_option_sq2+"\">Rosso</label>" +
+                                    "</div>" +
+                                    "<div class='form-group'>" +
+                                    "<button type='button' disabled onclick='aggiungi_cartellino("+dati.id_sq2+","+dati_tempo.tempi_partita[i]+","+id_partita+")' class='btn btn-primary btn-block disabled'>Aggiungi Cartellino</button>"+
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "</div>";*/
+                                codice_sq2+="</div>";
+                                /*codice_sq2 +="<div class='row' id=\""+id_area_conf2+"\">"
+                                    +"<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\""+dati.id_sq2+"\",\""+dati_tempo.tempi_partita[i]+"\",\""+id_partita+"\",\""+id_torneo+"\")'>Conferma dati Tempo</button>"
+                                    +"</div>";*/
+                                    codice_sq2+="</div>"
+                                    +"</div>"
+                                    //Fine Parte assegnazione Gol/Cartellini SQ2
+                                    +"</div>"
+                                    //Fine Seconda Squadra
+
+                                    +"</div>"
+                                    +"</div>"
+                                    +"</div>";
+                            }
+
 
                         }
+                        codice += codice_sq1+codice_sq2;
                     }
-                    ////console.log(codice);
 
                     $('#dati_partita').append(codice);
 
@@ -324,37 +639,40 @@ function creaPopup(id_partita, id_torneo) {
                      */
                     var dati_tempo = $.parseJSON(risposta);
                     //console.log(dati_tempo);
-                    var codice = "<form class='form-inline'>" +
-                        "<div class=\"form-group\">"+
-                        "<label for=\"add"+id_partita+"\">Aggiungi Tempo: &nbsp;</label>"+
-                        "<select class=\"form-control\" id=\"add"+id_partita+"\">";
-                    for(var i = 0; i< dati_tempo.id_tempi.length;i++){
-                        var confronto = 0;
-                        for(var j=0; j<dati_tempo.tempi_partita.length;j++){
-                            if(dati_tempo.id_tempi[i]==dati_tempo.tempi_partita[j]){
-                                confronto = 1;
+                    var codice = "";
+                    if(dati.finish ==0) {
+                        var codice = "<form class='form-inline'>" +
+                            "<div class=\"form-group\">" +
+                            "<label for=\"add" + id_partita + "\">Aggiungi Tempo: &nbsp;</label>" +
+                            "<select class=\"form-control\" id=\"add" + id_partita + "\">";
+                        for (var i = 0; i < dati_tempo.id_tempi.length; i++) {
+                            var confronto = 0;
+                            for (var j = 0; j < dati_tempo.tempi_partita.length; j++) {
+                                if (dati_tempo.id_tempi[i] == dati_tempo.tempi_partita[j]) {
+                                    confronto = 1;
+                                }
+                            }
+                            if (confronto != 1) {
+                                codice += "<option value=\"" + dati_tempo.id_tempi[i] + "\">" + dati_tempo.nomi_tempi[i] + "</option>";
                             }
                         }
-                        if(confronto !=1){
-                            codice += "<option value=\""+dati_tempo.id_tempi[i]+"\">"+dati_tempo.nomi_tempi[i]+"</option>";
-                        }
+                        codice += "</select>&nbsp;" +
+                            "</div>" +
+                            "<div class=\"form-group\">" +
+                            "<button type='button' onclick='aggiungi_tempo(\"" + id_partita + "\",\"" + id_torneo + "\")' class='btn btn-primary'>Aggiungi Tempo <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i></button>" +
+                            "</div>" +
+                            "</form>";
                     }
-                    codice += "</select>&nbsp;"+
-                        "</div>" +
-                        "<div class=\"form-group\">"+
-                        "<button type='button' onclick='aggiungitempo("+id_partita+")' class='btn btn-primary'>Aggiungi Tempo <i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i></button>"+
-                        "</div>" +
-                        "</form>" +
-                        "<div class='row'>" +
+                        codice+="<div class='row'>" +
                         "<div class='col-lg-10 col-lg-offset-1 col-md-6 col-md-offset-3 col-sm-12 col-xs-12'>"+
                         "<div class=\"btn-group btn-group-lg\">";
                         if(dati.finish == 0){
-                            codice+="<button type=\"button\" class=\"btn btn-danger\">Annulla Partita <i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></button>" +
-                                "<button type='button' class='btn btn-success'>Concludi Partita <i class=\"fa fa-check-circle\" aria-hidden=\"true\"></i></button>"
+                            codice+="<button type=\"button\" onclick='elimina_partita(\""+id_partita+"\",\""+id_torneo+"\")' class=\"btn btn-danger\">Annulla Partita <i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></button>" +
+                                "<button type='button' onclick='conferma_partita(\""+id_partita+"\",\""+dati.id_sq1+"\",\""+dati.id_sq2+"\",\""+id_torneo+"\")' class='btn btn-success'>Concludi Partita <i class=\"fa fa-check-circle\" aria-hidden=\"true\"></i></button>"
 
                         } else {
-                            codice+= "<button type=\"button\" class=\"btn btn-danger disabled\">Annulla Partita <i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></button>" +
-                                "<button type='button' class='btn btn-success disabled'>Concludi Partita <i class=\"fa fa-check-circle\" aria-hidden=\"true\"></i></button>"
+                            codice+= "<button type=\"button\" class=\"btn btn-danger\" onclick='elimina_partita(\""+id_partita+"\",\""+id_torneo+"\")'>Annulla Partita <i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></button>" +
+                                "<button type='button' disabled class='btn btn-success disabled'>Concludi Partita <i class=\"fa fa-check-circle\" aria-hidden=\"true\"></i></button>"
 
                         }
                         codice +="</div>"
@@ -376,7 +694,7 @@ function creaPopup(id_partita, id_torneo) {
         }
     });
 }
-function aggiungitempo(id_partita){
+function aggiungi_tempo(id_partita,id_torneo){
     var key = "add"+id_partita;
     var valore = document.getElementById(key).value;
     var codice = "";
@@ -404,69 +722,76 @@ function aggiungitempo(id_partita){
              var id_option_sq2_G = "G"+dati_tempo.id_sq2+"-"+dati_tempo.id_tempo;
              var id_option_sq1_R = "R"+dati_tempo.id_sq1+"-"+dati_tempo.id_tempo;
              var id_option_sq2_R = "R"+dati_tempo.id_sq2+"-"+dati_tempo.id_tempo;
+             var id_tbody_sq1 = "Tb_"+dati_tempo.id_sq1+"-"+dati_tempo.id_tempo;
+             var id_tbody_sq2 = "Tb_"+dati_tempo.id_sq2+"-"+dati_tempo.id_tempo;
 
 
-             codice += "<div class='row'>"
-             +"<div class=\"panel panel-primary\">"
-             +"<div class=\"panel-heading\">"+dati_tempo.nome_tempo+"</div>"
-             +"<div class=\"panel-body\">"
-             //Parte prima squadra//
-            +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
-            //Nome Prima SQ
-            +"<div class='row'>"
-            +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
-            +"<ul class=\"list-group\">"
-            +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati_tempo.nome_sq1+"</li>"
-            +"</ul>"
-            +"</div>"
-            +"</div>"
-            //Fino Nome Prima SQ
-            //Contatore Gol SQ1
-            +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
-            +"<div class=\"btn-group-vertical\">"
-            +"<button class=\"btn btn-primary\" data-dir=\"up\" onclick='assegna_punti(\""+dati_tempo.id_sq1+"\",\""+dati_tempo.id_tempo+"\")'><span class=\"glyphicon glyphicon-plus\"></span></button>"
-            +"<input type=\"text\" id=\""+id_sq1+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"0\">"
-            +"<button class=\"btn btn-primary\" onclick='assegna_punti(\""+dati_tempo.id_sq1+"\",\""+dati_tempo.id_tempo+"\")' data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-            +"</div>"
-            +"</div>"
-            //Fine Contatore Gol SQ1
-            //Parte assegnazione Gol/cartellini SQ1
-            +"<div class='row'>"
-            +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo1+"\">Info Tempo</button>"
-            +"<div style='padding-top:10px;' id=\""+id_gol_tempo1+"\" class=\"collapse\">"
-            +"<div class='row' id=\""+id_area_punti1+"\"></div>";
-            codice +="<div class='row' id=\""+id_area_cart1+"\">" +
-                "<div id=\"cartellino_"+dati_tempo.id_sq1+"_"+dati_tempo.id_tempo+"\" >" +
-                "<table class=\"table table-bordered table-hovered\">"+
-                "<thead>"+
-                "<tr>"+
-                "<th>Giocatore</th>"+
-                "<th>Cartellino</th>"+
-                "<th></th>"+
-                "</tr>"+
-                "</thead>"+
-                "<tbody>";
+            codice += "<div class='row'>" +
+                "<div class=\"panel panel-primary\">" +
+                "<div class=\"panel-heading\">" + dati_tempo.nome_tempo + "</div>" +
+                "<div class=\"panel-body\">"
+                /*Parte prima squadra*/
+                +
+                "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+                //Nome Prima SQ
+                +
+                "<div class='row'>" +
+                "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" +
+                "<ul class=\"list-group\">" +
+                "<li class=\"list-group-item list-group-item-info text-center text-uppercase\">" + dati_tempo.nome_sq1 + "</li>" +
+                "</ul>" +
+                "</div>" +
+                "</div>"
+                //Fino Nome Prima SQ
+                //Contatore Gol SQ1
+                +
+                "<div style='padding: 15px;' class=\"input-group number-spinner\">" +
+                "<div class=\"btn-group-vertical\">" +
+                "<button class=\"btn btn-primary\" data-dir=\"up\" id=\"" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\"><span class=\"glyphicon glyphicon-plus\"></span></button>" +
+                "<input type=\"text\" id=\"" + id_sq1 + "\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"0\">" +
+                "<button class=\"btn btn-primary\" id=\"" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>" +
+                "</div>" +
+                "</div>"
+                //Fine Contatore Gol SQ1
+                //Parte assegnazione Gol/cartellini SQ1
+                +
+                "<div class='row'>" +
+                "<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#" + id_gol_tempo1 + "\">Info Tempo</button>" +
+                "<div style='padding-top:10px;' id=\"" + id_gol_tempo1 + "\" class=\"collapse\">" +
+                "<div class='row' id=\"" + id_area_punti1 + "\"></div>";
+            codice += "<div class='row' id=\"" + id_area_cart1 + "\">" +
+                "<div id=\"cartellino_" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\" >" +
+                "<table class=\"table table-bordered table-hovered\">" +
+                "<thead>" +
+                "<tr>" +
+                "<th>Giocatore</th>" +
+                "<th>Cartellino</th>" +
+                "<th></th>" +
+                "</tr>" +
+                "</thead>" +
+                "<tbody id=\"" + id_tbody_sq1 + "\">";
 
-            $.each(dati_tempo.cartellini_sq1, function(idx, obj){
+            $.each(dati_tempo.cartellini_sq1, function(idx, obj) {
                 //console.log(idx);
                 //console.log(obj.id_tempo+"--"+dati_tempo.id_tempo);
-                if(obj.id_tempo == dati_tempo.id_tempo){
-                    console.log("ci sono");
-                    for(var z=1;z<obj.id_cartellini.length;z++){
+                if (obj.id_tempo == dati_tempo.id_tempo) {
+                    //console.log("ci sono");
+                    for (var z = 1; z < obj.id_cartellini.length; z++) {
                         //console.log(z);
                         //console.log(obj.colore_cartellini[z].localeCompare("G"));
-                        if(obj.colore_cartellini[z].localeCompare("G")==0){
-                            codice+= "<tr class='warning'>";
-                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                            codice+="<td>Giallo</td>";
-                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                            codice+="</tr>";
+                        var id_tr = "TR_" + obj.id_cartellini[z];
+                        if (obj.colore_cartellini[z].localeCompare("G") == 0) {
+                            codice += "<tr id=\"" + id_tr + "\" class='warning'>";
+                            codice += "<td>" + obj.nome_g_cartellini[z] + "</td>";
+                            codice += "<td>Giallo</td>";
+                            codice += "<td><button type='button' onclick='elimina_cartellino(\"" + obj.id_cartellini[z] + "\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                            codice += "</tr>";
                         } else {
-                            codice+= "<tr class='danger'>"
-                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                            codice+="<td>Rosso</td>";
-                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                            codice+="</tr>";
+                            codice += "<tr id=\"" + id_tr + "\" class='danger'>"
+                            codice += "<td>" + obj.nome_g_cartellini[z] + "</td>";
+                            codice += "<td>Rosso</td>";
+                            codice += "<td><button type='button' onclick='elimina_cartellino(\"" + obj.id_cartellini[z] + "\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                            codice += "</tr>";
                         }
 
                     }
@@ -474,100 +799,108 @@ function aggiungitempo(id_partita){
             });
 
 
-            codice+="</tbody>"+
+            codice += "</tbody>" +
                 "</table>" +
-                "</div>"+
-                "<div id=\"new_cartellino_"+dati_tempo.id_sq1+"_"+dati_tempo.id_tempo+"\" >" +
+                "</div>" +
+                "<div id=\"new_cartellino_" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\" >" +
                 "<div class='panel panel-primary'>" +
                 "<div class='panel-heading'>Assegna Cartellini</div>" +
-                "<div class='panel-body'>"+
-                "<div class='form-group'>"
-                +"<label for=\"SG"+dati_tempo.id_sq1+"_"+dati_tempo.id_tempo+"\">Giocatore:</label>"
-                +"<select class=\"form-control\" id=\"SG"+dati_tempo.id_sq1+"_"+dati_tempo.id_tempo+"\">" +
-                "<option value=\"0\">Scegli Giocatore...</option>";
-            for(var j = 1; j<dati_tempo.sq1.id_giocatori.length;j++){
-                codice += "<option value=\""+dati_tempo.sq1.id_giocatori[j]+"\">"+dati_tempo.sq2.nomi_giocatori[j]+"</option>"
+                "<div class='panel-body'>" +
+                "<div class='form-group'>" +
+                "<label for=\"SG" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\">Giocatore:</label>" +
+                "<select class=\"form-control\" id=\"SG" + dati_tempo.id_sq1 + "_" + dati_tempo.id_tempo + "\">" +
+                "<option value=\"nessuno\">Scegli Giocatore...</option>";
+            for (var j = 1; j < dati_tempo.sq1.id_giocatori.length; j++) {
+                codice += "<option value=\"" + dati_tempo.sq1.id_giocatori[j] + "\">" + dati_tempo.sq1.nomi_giocatori[j] + "</option>"
             }
-            codice+= "</select>" +
+            codice += "</select>" +
                 "</div>" +
                 "<div class='form-group text-center'>" +
-                "<label class=\"radio-inline\"><input id=\""+id_option_sq1_G+"\" type=\"radio\" value='G' name=\""+name_option_sq1+"\">Giallo</label>"+
-                "<label class=\"radio-inline\"><input id=\""+id_option_sq1_R+"\" type=\"radio\" value='R' name=\""+name_option_sq1+"\">Rosso</label>" +
+                "<label class=\"radio-inline\"><input id=\"" + id_option_sq1_G + "\" checked type=\"radio\" value='G' name=\"" + name_option_sq1 + "\">Giallo</label>" +
+                "<label class=\"radio-inline\"><input id=\"" + id_option_sq1_R + "\" type=\"radio\" value='R' name=\"" + name_option_sq1 + "\">Rosso</label>" +
                 "</div>" +
                 "<div class='form-group'>" +
-                "<button type='button' onclick='aggiungi_cartellino("+dati_tempo.id_sq1+","+dati_tempo.tempi_partita[i]+","+id_p+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
+                "<button type='button' onclick='aggiungi_cartellino(" + dati_tempo.id_sq1 + "," + dati_tempo.id_tempo + "," + id_partita + ")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
-                "</div>"+
+                "</div>" +
                 "</div>";
-            codice +="<div class='row' id=\""+id_area_conf1+"\">"
-                +"<button type='button' class='btn btn-success btn-block' onclick='chiuditempo(\""+dati_tempo.id_sq1+"\",\""+dati_tempo.id_tempo+"\")'>Conferma dati Tempo</button>"
+            codice += "<div class='row' id=\"" + id_area_conf1 + "\">" +
+                "<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\"" + dati_tempo.id_sq1 + "\",\"" + dati_tempo.id_tempo + "\",\"" + id_partita + "\",\"" + id_torneo + "\")'>Conferma dati Tempo</button>"
 
-                +"</div>"
-                +"</div>"
-                +"</div>"
+                +
+                "</div>" +
+                "</div>" +
+                "</div>"
                 //Fine Parte assegnazione Gol/Cartellini SQ1
-                +"</div>"
-                //Fine Prima Squadra
+                +
+                "</div>"
+//Fine Prima Squadra
 
-                //Parte Seconda squadra
-                +"<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
+
+
+            //Parte Seconda squadra
+            codice += "<div class='col-lg-offset-2 col-md-offset-2 col-lg-3 col-md-3 col-sm-6 col-xs-6'>"
                 //Nome Sqconda SQ
-                +"<div class='row'>"
-                +"<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>"
-                +"<ul class=\"list-group\">"
-                +"<li class=\"list-group-item list-group-item-info text-center text-uppercase\">"+dati_tempo.nome_sq2+"</li>"
-                +"</ul>"
-                +"</div>"
-                +"</div>"
+                +
+                "<div class='row'>" +
+                "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>" +
+                "<ul class=\"list-group\">" +
+                "<li class=\"list-group-item list-group-item-info text-center text-uppercase\">" + dati_tempo.nome_sq2 + "</li>" +
+                "</ul>" +
+                "</div>" +
+                "</div>"
                 //Fino Nome Seconda SQ
                 //Contatore Gol SQ2
-                +"<div style='padding: 15px;' class=\"input-group number-spinner\">"
-                +"<div class=\"btn-group-vertical\">"
-                +"<button class=\"btn btn-primary\" data-dir=\"up\" onclick='assegna_punti(\""+dati_tempo.id_sq2+"\",\""+dati_tempo.id_tempo+"\")'><span class=\"glyphicon glyphicon-plus\"></span></button>"
-                +"<input type=\"text\" id=\""+id_sq2+"\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"0\">"
-                +"<button class=\"btn btn-primary\" onclick='assegna_punti(\""+dati_tempo.id_sq2+"\",\""+dati_tempo.id_tempo+"\")' data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-                +"</div>"
-                +"</div>"
+                +
+                "<div style='padding: 15px;' class=\"input-group number-spinner\">" +
+                "<div class=\"btn-group-vertical\">" +
+                "<button class=\"btn btn-primary\" data-dir=\"up\" id=\"" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\"><span class=\"glyphicon glyphicon-plus\"></span></button>" +
+                "<input type=\"text\" id=\"" + id_sq2 + "\" style=\"font-size:40px; height:60px;\" class=\"form-control text-center\" value=\"0\">" +
+                "<button class=\"btn btn-primary\" id=\"" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\" data-dir=\"dwn\"><span class=\"glyphicon glyphicon-minus\"></span></button>" +
+                "</div>" +
+                "</div>"
                 //Fine Contatore Gol SQ2
                 //Parte assegnazione Gol/cartellini SQ2
-                +"<div class='row'>"
-                +"<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#"+id_gol_tempo2+"\">Info Tempo</button>"
-                +"<div style='padding-top:10px;' id=\""+id_gol_tempo2+"\" class=\"collapse\">"
-                +"<div class='row' id=\""+id_area_punti2+"\"></div>";
-            codice +="<div class='row' id=\""+id_area_cart2+"\">" +
-                "<div id=\"cartellino_"+dati_tempo.id_sq2+"_"+dati_tempo.id_tempo+"\" >" +
-                "<table class=\"table table-bordered table-hovered\">"+
-                "<thead>"+
-                "<tr>"+
-                "<th>Giocatore</th>"+
-                "<th>Cartellino</th>"+
-                "<th></th>"+
-                "</tr>"+
-                "</thead>"+
-                "<tbody>";
+                +
+                "<div class='row'>" +
+                "<button type=\"button\" class=\"btn btn-info btn-block\" data-toggle=\"collapse\" data-target=\"#" + id_gol_tempo2 + "\">Info Tempo</button>" +
+                "<div style='padding-top:10px;' id=\"" + id_gol_tempo2 + "\" class=\"collapse\">" +
+                "<div class='row' id=\"" + id_area_punti2 + "\"></div>";
+            codice += "<div class='row' id=\"" + id_area_cart2 + "\">" +
+                "<div id=\"cartellino_" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\" >" +
+                "<table class=\"table table-bordered table-hovered\">" +
+                "<thead>" +
+                "<tr>" +
+                "<th>Giocatore</th>" +
+                "<th>Cartellino</th>" +
+                "<th></th>" +
+                "</tr>" +
+                "</thead>" +
+                "<tbody id=\"" + id_tbody_sq2 + "\">";
 
-            $.each(dati_tempo.cartellini_sq2, function(idx, obj){
+            $.each(dati_tempo.cartellini_sq2, function(idx, obj) {
                 //console.log(idx);
                 //console.log(obj.id_tempo+"--"+dati_tempo.id_tempo);
-                if(obj.id_tempo == dati_tempo.id_tempo){
-                    console.log("ci sono");
-                    for(var z=1;z<obj.id_cartellini.length;z++){
+                if (obj.id_tempo == dati_tempo.id_tempo) {
+                    //console.log("ci sono");
+                    for (var z = 1; z < obj.id_cartellini.length; z++) {
+                        var id_tr = "TR_" + obj.id_cartellini[z];
                         //console.log(z);
                         //console.log(obj.colore_cartellini[z].localeCompare("G"));
-                        if(obj.colore_cartellini[z].localeCompare("G")==0){
-                            codice+= "<tr class='warning'>";
-                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                            codice+="<td>Giallo</td>";
-                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                            codice+="</tr>";
+                        if (obj.colore_cartellini[z].localeCompare("G") == 0) {
+                            codice += "<tr id=\"" + id_tr + "\" class='warning'>";
+                            codice += "<td>" + obj.nome_g_cartellini[z] + "</td>";
+                            codice += "<td>Giallo</td>";
+                            codice += "<td><button type='button' onclick='elimina_cartellino(\"" + obj.id_cartellini[z] + "\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                            codice += "</tr>";
                         } else {
-                            codice+= "<tr class='danger'>"
-                            codice+="<td>"+obj.nome_g_cartellini[z]+"</td>";
-                            codice+="<td>Rosso</td>";
-                            codice+="<td><button type='button' onclick='elimina_cartellino(\""+obj.id_cartellini[z]+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
-                            codice+="</tr>";
+                            codice += "<tr id=\"" + id_tr + "\" class='danger'>"
+                            codice += "<td>" + obj.nome_g_cartellini[z] + "</td>";
+                            codice += "<td>Rosso</td>";
+                            codice += "<td><button type='button' onclick='elimina_cartellino(\"" + obj.id_cartellini[z] + "\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                            codice += "</tr>";
                         }
 
                     }
@@ -575,50 +908,52 @@ function aggiungitempo(id_partita){
             });
 
 
-            codice+="</tbody>"+
+            codice += "</tbody>" +
                 "</table>" +
-                "</div>"+
-                "<div id=\"new_cartellino_"+dati_tempo.id_sq2+"_"+dati_tempo.id_tempo+"\" >" +
+                "</div>" +
+                "<div id=\"new_cartellino_" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\" >" +
                 "<div class='panel panel-primary'>" +
                 "<div class='panel-heading'>Assegna Cartellini</div>" +
-                "<div class='panel-body'>"+
-                "<div class='form-group'>"
-                +"<label for=\"SG"+dati_tempo.id_sq2+"_"+dati_tempo.id_tempo+"\">Giocatore:</label>"
-                +"<select class=\"form-control\" id=\"SG"+dati_tempo.id_sq2+"_"+dati_tempo.id_tempo+"\">" +
-                "<option value=\"0\">Scegli Giocatore...</option>";
-            for(var j = 1; j<dati_tempo.sq2.id_giocatori.length;j++){
-                codice += "<option value=\""+dati_tempo.sq2.id_giocatori[j]+"\">"+dati_tempo.sq1.nomi_giocatori[j]+"</option>"
+                "<div class='panel-body'>" +
+                "<div class='form-group'>" +
+                "<label for=\"SG" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\">Giocatore:</label>" +
+                "<select class=\"form-control\" id=\"SG" + dati_tempo.id_sq2 + "_" + dati_tempo.id_tempo + "\">" +
+                "<option value=\"nessuno\">Scegli Giocatore...</option>";
+            for (var j = 1; j < dati_tempo.sq2.id_giocatori.length; j++) {
+                codice += "<option value=\"" + dati_tempo.sq2.id_giocatori[j] + "\">" + dati_tempo.sq2.nomi_giocatori[j] + "</option>"
             }
-            codice+= "</select>" +
+            codice += "</select>" +
                 "</div>" +
                 "<div class='form-group text-center'>" +
-                "<label class=\"radio-inline\"><input id=\""+id_option_sq2_G+"\" type=\"radio\" value='G' name=\""+name_option_sq2+"\">Giallo</label>"+
-                "<label class=\"radio-inline\"><input id=\""+id_option_sq2_R+"\" type=\"radio\" value='R' name=\""+name_option_sq2+"\">Rosso</label>" +
+                "<label class=\"radio-inline\"><input id=\"" + id_option_sq2_G + "\" type=\"radio\" checked value='G' name=\"" + name_option_sq2 + "\">Giallo</label>" +
+                "<label class=\"radio-inline\"><input id=\"" + id_option_sq2_R + "\" type=\"radio\" value='R' name=\"" + name_option_sq2 + "\">Rosso</label>" +
                 "</div>" +
                 "<div class='form-group'>" +
-                "<button type='button' onclick='aggiungi_cartellino("+dati_tempo.id_sq2+","+dati_tempo.tempi_partita[i]+","+id_p+")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>"+
+                "<button type='button' onclick='aggiungi_cartellino(" + dati_tempo.id_sq2 + "," + dati_tempo.id_tempo + "," + id_partita + ")' class='btn btn-primary btn-block'>Aggiungi Cartellino</button>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
-                "</div>"+
+                "</div>" +
                 "</div>";
-            codice +="<div class='row' id=\""+id_area_conf2+"\">"
-                +"<button type='button' class='btn btn-success btn-block' onclick='chiuditempo(\""+dati_tempo.id_sq2+"\",\""+dati_tempo.id_tempo+"\")'>Conferma dati Tempo</button>"
+            codice += "<div class='row' id=\"" + id_area_conf2 + "\">" +
+                "<button type='button' class='btn btn-success btn-block' onclick='conferma_tempo(\"" + dati_tempo.id_sq2 + "\",\"" + dati_tempo.id_tempo + "\",\"" + id_partita + "\",\"" + id_torneo + "\")'>Conferma dati Tempo</button>"
 
-                +"</div>"
-                +"</div>"
-                +"</div>"
+                +
+                "</div>" +
+                "</div>" +
+                "</div>"
                 //Fine Parte assegnazione Gol/Cartellini SQ2
-                +"</div>"
+                +
+                "</div>"
                 //Fine Seconda Squadra
 
-                +"</div>"
-                +"</div>"
-                +"</div>";
+                +"</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
 
 
-
-            
+             
             $('#dati_partita').append(codice);
             var indice = document.getElementById(key).selectedIndex;
             if(indice>=0) {
@@ -633,9 +968,12 @@ function aggiungitempo(id_partita){
 }
 function assegna_punti(id_sq,id_tempo) {
     //console.log("funziono!!!!"+id_sq+"__"+id_tempo);
+    //sleep(1000);
     var key =  "#punti_"+id_sq+"-"+id_tempo;
-    var valore = $(key).val();
-    valore = parseInt(valore)+1;
+    var valore =0;
+    valore = $(key).val();
+    valore = parseInt(valore);
+    
     var key_a_giocatori = "#Gpunti_"+id_sq+"-"+id_tempo;
     $(key_a_giocatori).empty();
     $.ajax({
@@ -646,9 +984,9 @@ function assegna_punti(id_sq,id_tempo) {
         var codice = "<div class='panel panel-primary'><div class='panel-body'>";
         for(var i = 0; i<valore;i++){
             codice += "<div class=\"form-group\">"
-                +"<label for=\"gol_"+i+"_sq"+id_sq+"\">Gol "+(parseInt(i)+1)+":</label>"
-                +"<select class=\"form-control\" id=\"gol_"+i+"_sq"+id_sq+"\">"
-                    +"<option value='NULL'>Nessuno</option>";
+                +"<label for=\"gol_"+i+"_sq"+id_sq+"_"+id_tempo+"\">Gol "+(parseInt(i)+1)+":</label>"
+                +"<select class=\"form-control\" id=\"gol_"+i+"_sq"+id_sq+"_"+id_tempo+"\">"
+                    +"<option value='nessuno'>Nessuno</option>";
                             var ogg_sq = $.parseJSON(risposta);
                             //console.log(ogg_sq);
                             for(var j = 1; j<ogg_sq.id_giocatori.length;j++){
@@ -658,7 +996,7 @@ function assegna_punti(id_sq,id_tempo) {
         }
         codice+="</div></div>";
         $(key_a_giocatori).append(codice);
-        console.log(codice);
+        //console.log(codice);
         },
         error: function(){
             alert("Chiamata fallita!!!");
@@ -666,10 +1004,24 @@ function assegna_punti(id_sq,id_tempo) {
     });
 
 }
-function elimina_cartellino(id_cartellino){}
-function elimina_partita(id_p, id_torneo) {}
-function conferma_tempo(){}
-function conferma_partita(){}
+function elimina_cartellino(id_cartellino){
+    $.ajax({
+        type: "GET",
+        url: "metodi/elimina_cartellino.php",
+        data: "id_cartellino="+id_cartellino,
+        //dataType: "json",
+        success: function(risposta){
+            if(risposta.localeCompare('1')==0){
+                var key = "#TR_"+id_cartellino;
+                $(key).hide();
+            }
+        },
+        // ed una per il caso di fallimento
+        error: function(){
+            //alert("Chiamata fallita!!!");
+        }
+    });
+}
 function aggiungi_cartellino(id_sq,id_tempo,id_p) {
     var key_colore = "input[name=\"colore_"+id_sq+"-"+id_tempo+"\"]:checked";
     var key_g = "SG"+id_sq+"_"+id_tempo;
@@ -682,11 +1034,105 @@ function aggiungi_cartellino(id_sq,id_tempo,id_p) {
         data: "id_p="+id_p+"&id_tempo="+id_tempo+"&id_sq="+id_sq+"&giocatore="+giocatore+"&colore="+colore,
         //dataType: "json",
         success: function(risposta){
-            $("div#risposta").html(risposta);
+            //$("div#risposta").html(risposta);
+            var ogg = $.parseJSON(risposta);
+            var key = "#Tb_"+id_sq+"-"+id_tempo;
+            //console.log(key);
+            var codice = "";
+            if(ogg.esito == 1){
+                var id_tr = "TR_"+ogg.id_cartellino;
+                if(ogg.colore.localeCompare("G")==0){
+                    codice+= "<tr id=\""+id_tr+"\" class='warning'>";
+                    codice+="<td>"+ogg.nome_giocatore+"</td>";
+                    codice+="<td>Giallo</td>";
+                    codice+="<td><button type='button' onclick='elimina_cartellino(\""+ogg.id_cartellino+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                    codice+="</tr>";
+                } else {
+                    codice+= "<tr id=\""+id_tr+"\" class='danger'>"
+                    codice+="<td>"+ogg.nome_giocatore+"</td>";
+                    codice+="<td>Rosso</td>";
+                    codice+="<td><button type='button' onclick='elimina_cartellino(\""+ogg.id_cartellino+"\")' class='btn btn-danger'><i class='fa fa-times'></i> </button></td>"
+                    codice+="</tr>";
+                }
+                $(key).append(codice);
+            }
         },
         // ed una per il caso di fallimento
+        error: function(){
+            //alert("Chiamata fallita!!!");
+        }
+    });
+}
+function conferma_tempo(id_sq,id_tempo,id_partita,id_torneo){
+
+    var key =  "#punti_"+id_sq+"-"+id_tempo;
+    var valore =0;
+    valore = $(key).val();
+    valore = parseInt(valore);
+    //console.log(valore);
+    var parametri ="id_sq="+id_sq+"&id_tempo="+id_tempo+"&id_p="+id_partita+"&gol="+valore+"&id_torneo="+id_torneo;
+    for(var i = 0; i<valore;i++){
+        var id_s_g="#gol_"+i+"_sq"+id_sq+"_"+id_tempo;
+        parametri += "&g"+i+"="+$(id_s_g).val();
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "metodi/conferma_tempo.php",
+        data: parametri,
+        dataType: "html",
+        success: function(risposta){
+            if(risposta==1) {
+                creaPopup(id_partita, id_torneo);
+            }
+        },
         error: function(){
             alert("Chiamata fallita!!!");
         }
     });
+}
+function elimina_partita(id_p, id_torneo) {
+    $.ajax({
+        type: "GET",
+        url: "metodi/cancella_partita.php",
+        data: "id_partita="+id_p,
+        dataType: "html",
+        success: function(risposta){
+            if(risposta==1) {
+                window.location.href="Admin_torneo.php?id="+id_torneo;
+            }
+        },
+        error: function(){
+            alert("Chiamata fallita!!!");
+        }
+    });   
+}
+function conferma_partita(id_p, id_sq1, id_sq2,id_torneo){
+    $.ajax({
+        type: "GET",
+        url: "metodi/conferma_partita.php",
+        data: "id_p="+id_p+"&id_sq1="+id_sq1+"&id_sq2="+id_sq2+"&torneo="+id_torneo,
+        dataType: "html",
+        success: function(risposta){
+            if(risposta==1)
+                creaPopup(id_p,id_torneo);
+        },
+        error: function(){
+            alert("Chiamata fallita!!!");
+        }
+    });
+}
+function creaClassifica(id_torneo){
+    $.ajax({
+        type: "GET",
+        url: "metodi/classifica.php",
+        data: "id_t="+id_torneo,
+        dataType: "html",
+        success: function(risposta){
+           
+        },
+        error: function(){
+            alert("Chiamata fallita!!!");
+        }
+    });    
 }

@@ -28,6 +28,11 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
             creaPopup(id_p, id_torneo);
             $('#partita').modal('show')
         }
+
+        function popupClassifica(id_torneo) {
+            //creaClassifica(id_torneo);
+            $('#classifica').modal('show')
+        }
         
         function downloadPDF(id, nome_torneo) {
             $.ajax({
@@ -85,6 +90,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
             var btn = $(this),
                 oldValue = btn.closest('.number-spinner').find('input').val().trim(),
                 newVal = 0;
+            var res = this.id.split("_");
+            // console.log(res[0]);
 
             if (btn.attr('data-dir') == 'up') {
                 newVal = parseInt(oldValue) + 1;
@@ -96,6 +103,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 }
             }
             btn.closest('.number-spinner').find('input').val(newVal);
+            assegna_punti(res[0],res[1]);
         });
     </script>
 </head>
@@ -321,7 +329,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 . "<div class=\"list-group\">"
                                 . "<a href=\"#\" onclick=\"window.location.href='metodi/crea_partite.php?id=$torneo'\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>"
                                 . "<a href=\"#\" onclick=\"$('#new_partita').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>"
-                                . "<a href=\"#\" onclick=\"\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>"
+                                . "<a href=\"#\" onclick=\"popupClassifica('$torneo')\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>"
                                 //. "<a href=\"#\" onclick=\"\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>"
                                 . "</div>"
                                 . "</div>"
@@ -622,6 +630,25 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
               ."</div>"
         ."</div>"
   ."</div>";
+
+
+    //modal classifica torneo
+    echo "<div class=\"modal fade\" id=\"classifica\" role=\"dialog\">"
+        ."<div class=\"modal-dialog modal-lg\">"
+        ."<div class=\"modal-content\">"
+        ."<div class=\"modal-header\" id='headerPartita'>"
+        ."<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
+        ."<h4 id='titoloClassifica' class=\"modal-title\">Classifica Gironi</h4>"
+        ."</div>"
+        ."<div style='overflow-y:hidden;' class=\"modal-body\" id='bodyClassifica'>"
+
+        ."</div>"
+        ."<div class=\"modal-footer\" id='footerPartita'>"
+        ."<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>"
+        ."</div>"
+        ."</div>"
+        ."</div>"
+        ."</div>";
 ?>
 </body>
 </html>

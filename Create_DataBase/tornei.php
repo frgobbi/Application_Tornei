@@ -28,6 +28,7 @@ $torneo = "CREATE TABLE torneo ("
     ."logo_torneo TEXT,"
     ."color VARCHAR(255),"
     ."info TEXT,"
+    ."fase_finale INT NOT NULL DEFAULT '0',"
     ."finished INT NOT NULL DEFAULT '0'"
 .")";
 
@@ -69,7 +70,8 @@ $utente = "CREATE TABLE utente ("
     ."foto TEXT,"
     ."id_cat INT,"
     ."FOREIGN KEY(id_cat) REFERENCES cat_utente(id_cat_utente),"
-    ."card varchar(10)"
+    ."card VARCHAR(10),"
+    ."saldo DOUBLE NOT NULL DEFAULT '0'"
 .")";
 
 $girone = "CREATE TABLE girone ("
@@ -115,7 +117,7 @@ $sq_partita = "CREATE TABLE sq_partita("
     ."vittoria INT NOT NULL DEFAULT '0',"
     ."sconfitta INT NOT NULL DEFAULT '0',"
     ."pareggio INT NOT NULL DEFAULT '0',"
-    ."sconfitta_punti INT NOT NULL DEFAULT '0',"
+    ."tie_break INT NOT NULL DEFAULT '0',"
     ."PRIMARY KEY(id_sq,id_partita)"
 .")";
 
@@ -131,7 +133,9 @@ $sq_tempo = "CREATE TABLE sq_tempo("
     ."FOREIGN KEY(id_sq) REFERENCES squadra(id_sq),"
     ."FOREIGN KEY(id_partita) REFERENCES partita(id_partita),"
     ."FOREIGN KEY(id_tempo) REFERENCES tempo(id_tempo),"
-    ."punti INT NOT NULL DEFAULT '0',"
+    ."vittoria INT NOT NULL DEFAULT '0',"
+    ."sconfitta INT NOT NULL DEFAULT '0',"
+    ."pareggio INT NOT NULL DEFAULT '0',"
     ."PRIMARY KEY(id_sq,id_partita,id_tempo),"
     ."conclused INT NOT NULL DEFAULT '0'"
 .")";

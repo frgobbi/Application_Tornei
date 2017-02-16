@@ -13,7 +13,7 @@ try{
     foreach ($connessione->query("SELECT * FROM `sq_partita` INNER JOIN squadra ON squadra.id_sq = sq_partita.id_sq WHERE id_partita = '$id_partita'") as $row ){
         $sq = $row['id_sq'];
         $squadre[] = array($row['id_sq'], $row['nome_sq']);
-        $connessione->exec("INSERT INTO `sq_tempo`(`id_sq`, `id_partita`, `id_tempo`, `punti`) VALUES ('$sq','$id_partita','$id_tempo',0)");
+        $connessione->exec("INSERT INTO `sq_tempo`(`id_sq`, `id_partita`, `id_tempo`) VALUES ('$sq','$id_partita','$id_tempo')");
         $oggTempo = $connessione->query("SELECT * FROM `tempo` WHERE id_tempo = '$id_tempo'")->fetch(PDO::FETCH_OBJ);
     }
     echo "{";

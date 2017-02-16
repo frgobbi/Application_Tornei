@@ -30,8 +30,8 @@ try{
                 $squadra2 = $squadre[$z];
                 $connessione->exec("INSERT INTO `partita` (`id_partita`, `data_partita`, `ora_partita`, `luogo`, `fase_finale`) VALUES (NULL, NULL, NULL, 'Campo 1', '0')");
                 $oggPartita = $connessione->query("SELECT MAX(id_partita) AS id_partita FROM `partita` WHERE 1")->fetch(PDO::FETCH_OBJ);
-                $connessione->exec("INSERT INTO `sq_partita` (`id_sq`, `id_partita`, `vittoria`, `sconfitta`, `pareggio`, `sconfitta_punti`) VALUES ('$squadra1', '$oggPartita->id_partita', '0', '0', '0', '0')");
-                $connessione->exec("INSERT INTO `sq_partita` (`id_sq`, `id_partita`, `vittoria`, `sconfitta`, `pareggio`, `sconfitta_punti`) VALUES ('$squadra2', '$oggPartita->id_partita', '0', '0', '0', '0')");
+                $connessione->exec("INSERT INTO `sq_partita` (`id_sq`, `id_partita`, `vittoria`, `sconfitta`, `pareggio`, `tie_break`) VALUES ('$squadra1', '$oggPartita->id_partita', '0', '0', '0', '0')");
+                $connessione->exec("INSERT INTO `sq_partita` (`id_sq`, `id_partita`, `vittoria`, `sconfitta`, `pareggio`, `tie_break`) VALUES ('$squadra2', '$oggPartita->id_partita', '0', '0', '0', '0')");
 
             }
         }
