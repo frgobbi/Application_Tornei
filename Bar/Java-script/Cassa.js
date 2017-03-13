@@ -481,62 +481,66 @@ function strStampa(tipo) {
 }
 //Stampa Scontrino
 function stampa(str) {
-    $.ajax({
-        type: "GET",
-        url: "../Librerie/Stampante/Stampante.php",
-        data: "comando=" + str,
-        dataType: "html",
-        success: function () {
-        },
-        error: function () {
-            alert("Scontrino non stampato");
-        }
-    });
+    if(booleanScontrino==true) {
+        $.ajax({
+            type: "GET",
+            url: "../Librerie/Stampante/Stampante.php",
+            data: "comando=" + str,
+            dataType: "html",
+            success: function () {
+            },
+            error: function () {
+                alert("Scontrino non stampato");
+            }
+        });
+    }
 }
 //Ristampa scontrino
 function ristampa(id_giorno, id_ord) {
-    $.ajax({
-        type: "GET",
-        url: "metodi/dati_ordine.php",
-        data: "id_giorno="+id_giorno+"&id_ord="+id_ord,
-        success: function (risposta) {
-            var ogg = $.parseJSON(risposta);
-            var tot_sc = 0;
-            var str = "";
-            str += "2;1           COPIA DELLO SCONTRINO          :                                   EURO;1";
-            for (i = 1; i < ogg.desc_ord.length; i++) {
-                var sp1 = "";//spazio1
-                var numTx = ogg.desc_ord[i].length;//parte testo
-                var mancanti = 12 - parseInt(numTx);
-                var app = "";
-                for (j = 0; j < mancanti; j++) {
-                    app += " ";
+    if(booleanScontrino==true) {
+        $.ajax({
+            type: "GET",
+            url: "metodi/dati_ordine.php",
+            data: "id_giorno=" + id_giorno + "&id_ord=" + id_ord,
+            success: function (risposta) {
+                var ogg = $.parseJSON(risposta);
+                var tot_sc = 0;
+                var str = "";
+                str += "2;1           COPIA DELLO SCONTRINO          :                                   EURO;1";
+                for (i = 1; i < ogg.desc_ord.length; i++) {
+                    var sp1 = "";//spazio1
+                    var numTx = ogg.desc_ord[i].length;//parte testo
+                    var mancanti = 12 - parseInt(numTx);
+                    var app = "";
+                    for (j = 0; j < mancanti; j++) {
+                        app += " ";
+                    }
+                    var Tx = ogg.desc_ord[i] + app;//parte testo
+                    var sp2 = "     ";//spazio2
+                    var qua = toStringIntero(ogg.num_p[i]);//parte numeri
+                    var deci = toStringDecimale(ogg.prezzo[i]);
+                    var molt = qua + "X" + deci; //qua e prezzo
+                    var sp3 = "      ";//spazio3
+                    var prezzo = parseInt(ogg.num_p[i]) * parseFloat(ogg.prezzo[i]);
+                    var prezzo_str = toStringDecimale(prezzo); //tot prezzo
+                    tot_sc = parseFloat(tot_sc) + parseFloat(prezzo);
+                    var sp4 = " ";//spazio4
+                    str += sp1 + Tx + sp2 + molt + sp3 + prezzo_str + sp4 + ":";
                 }
-                var Tx = ogg.desc_ord[i] + app;//parte testo
-                var sp2 = "     ";//spazio2
-                var qua = toStringIntero(ogg.num_p[i]);//parte numeri
-                var deci = toStringDecimale(ogg.prezzo[i]);
-                var molt = qua + "X" + deci; //qua e prezzo
-                var sp3 = "      ";//spazio3
-                var prezzo = parseInt(ogg.num_p[i]) * parseFloat(ogg.prezzo[i]);
-                var prezzo_str = toStringDecimale(prezzo); //tot prezzo
-                tot_sc = parseFloat(tot_sc)+parseFloat(prezzo);
-                var sp4 = " ";//spazio4
-                str += sp1 + Tx + sp2 + molt + sp3 + prezzo_str + sp4 + ":";
-            }
 
-            //TOTALE SCONTRINO
-            str += ";2;1";
-            str += "TOTALE                           ";
-            var cifra = toStringDecimale(tot_sc); //tot prezzo
-            str += cifra + ":";
-            str += ";4";
-            stampa(str);
-        },
-        error: function () {
-            alert("Scontrino non stampato");
-        }
-    });
+                //TOTALE SCONTRINO
+                str += ";2;1";
+                str += "TOTALE                           ";
+                var cifra = toStringDecimale(tot_sc); //tot prezzo
+                str += cifra + ":";
+                str += ";4";
+                stampa(str);
+            },
+            error: function () {
+                alert("Scontrino non stampato");
+            }
+        });
+    }
 }
 //Stampa Incasso
 function stampa_incassoG(incassoTOT, incassoCard, Diff) {
@@ -545,7 +549,9 @@ function stampa_incassoG(incassoTOT, incassoCard, Diff) {
     str += "Incasso Credit Card                 "+toStringDecimale(incassoCard)+":";
     str += "Incasso in Contanti                 "+toStringDecimale(Diff)+":";
     str += ";2;4";
-    stampa(str);
+    if(booleanScontrino==true) {
+        stampa(str);
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
