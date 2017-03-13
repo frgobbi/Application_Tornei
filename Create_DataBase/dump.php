@@ -19,10 +19,10 @@ $utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `
     ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '2', NULL),"
     ."('bar', 'bar', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL),"
     ."('francesco.gobbi', 'Francesco', 'Gobbi', '1997-06-03', 'GBBFNC97H03G478G', 'Perugia', 'M', 'Via Montiano 5 Corciano', 'gobbi03.fg@gmail.com', '3475057671', '$pass', '1', 'utente.gif', '4', NULL),"
-    ."('criambro', 'Cristiano', 'Ambrogi', '1998-07-06', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, NULL, 4, NULL),"
-    ."('megafono', 'Massimiliano', 'Avanai', '1998-11-22', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, NULL, 4, NULL),"
-    ."('mignino', 'Riccardo', 'Migni', '1997-11-11', NULL, 'Perugia', 'M', NULL, 'riccardomigni@gmail.com', '123478569', '$pass', 1, NULL, 4, NULL),"
-    ."('tommicacc', 'Cacchiata', 'Tommaso', '1997-01-12', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, NULL, 4, NULL);";
+    ."('criambro', 'Cristiano', 'Ambrogi', '1998-07-06', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, 'utente.gif', 4, NULL),"
+    ."('megafono', 'Massimiliano', 'Avanai', '1998-11-22', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, 'utente.gif', 4, NULL),"
+    ."('mignino', 'Riccardo', 'Migni', '1997-11-11', NULL, 'Perugia', 'M', NULL, 'riccardomigni@gmail.com', '123478569', '$pass', 1, 'utente.gif', 4, NULL),"
+    ."('tommicacc', 'Cacchiata', 'Tommaso', '1997-01-12', NULL, 'Perugia', 'M', NULL, NULL, NULL, '$pass', 1, 'utente.gif', 4, NULL);";
 
 $funzioni = "INSERT INTO `funzioni`(`id_funzione`, `nome_funzione`, `colore`, `src`, `icona`) VALUES "
     ."(NULL, 'Tornei','red','Staff/Torneo.php','fa-calendar-o'),"

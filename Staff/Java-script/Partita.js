@@ -1123,13 +1123,49 @@ function conferma_partita(id_p, id_sq1, id_sq2,id_torneo){
     });
 }
 function creaClassifica(id_torneo){
+    $('#bodyClassifica').empty();
     $.ajax({
         type: "GET",
         url: "metodi/classifica.php",
         data: "id_t="+id_torneo,
         dataType: "html",
         success: function(risposta){
-           
+           var ogg = $.parseJSON(risposta);
+            var codice = "<div class='container-fluid'>" +
+                "<div class='row'>";
+            if(ogg.fase_finale == 0){
+                $.each(ogg.classifica, function(idx, obj){
+                   if(idx !=0){
+                    codice+="<table class=\"table table-bordered\">"
+                           +"<thead>"
+                           +"<tr>"
+                           +"<th colspan='5'><h4 class='text-center'>Girone "+obj.nome_girone+"</h4></th>"
+                           +"</tr>"
+                           +"<tr>"
+                           +"<th>Nome Squadra</th>"
+                           +"<th>Punti</th>"
+                           +"<th>Gol Fatti</th>"
+                           +"<th>Gol Subiti</th>"
+                           +"<th>Differenza Reti</th>"
+                           +"</tr>"
+                           +"</thead>"
+                           +"<tbody>";
+                           for(var i =0;i<obj.nome_sq.length;i++){
+                               codice+="<tr>"
+                               +"<td>"+obj.nome_sq[i]+"</td>"
+                               +"<td>"+obj.punti[i]+"</td>"
+                               +"<td>"+obj.gol_fatti[i]+"</td>"
+                               +"<td>"+obj.gol_subiti[i]+"</td>"
+                               +"<td>"+obj.dif_reti[i]+"</td>"
+                               +"</tr>";
+                           }
+                           codice+="</tbody>"
+                           +"</table>";
+                   }
+                });
+            }
+            codice += "</div></div>";
+            $('#bodyClassifica').append(codice);
         },
         error: function(){
             alert("Chiamata fallita!!!");

@@ -30,7 +30,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         }
 
         function popupClassifica(id_torneo) {
-            //creaClassifica(id_torneo);
+            creaClassifica(id_torneo);
             $('#classifica').modal('show')
         }
         

@@ -20,10 +20,8 @@ catch (PDOException $e){
 
 if(isset($_FILES['foto_profilo']) && $_FILES['foto_profilo']['tmp_name']) {
     try {
-        $oggUtente = $connessione->query("SELECT * FROM staff WHERE username = '$utente'")->fetch(PDO::FETCH_OBJ);
-    } catch (PDOException $e) {
-        echo "error: " . $e->getMessage();
-    }
+        $oggUtente = $connessione->query("SELECT * FROM utente WHERE username = '$utente'")->fetch(PDO::FETCH_OBJ);
+
     //$nomeFoto = $utente->nome."_".$utente->cognome;
 
 
@@ -45,7 +43,6 @@ if(isset($_FILES['foto_profilo']) && $_FILES['foto_profilo']['tmp_name']) {
     $tmpNome = $_FILES['foto_profilo']['tmp_name'];
     move_uploaded_file($tmpNome, "../../Immagini/Immagini_Profilo/" . $foto);
 
-    try {
         $connessione->exec("UPDATE `utente` SET `foto` = '$foto' WHERE `utente`.`username` = '$utente'");
     } catch (PDOException $e) {
         echo "error: " . $e->getMessage();

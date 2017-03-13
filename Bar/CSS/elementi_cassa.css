@@ -1,0 +1,22 @@
+.barra_y {
+    overflow-y: auto;
+}
+.numeri{
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 30px;
+}
+.display{
+    background-color: white;
+    font-family: Arial;
+    font-size: 45px;
+    margin-bottom: 12px;
+    resize: none;
+    height: 70px;
+    overflow-y: hidden;
+    /*color: lawngreen;*/
+}
+
+/* Switch button */
+.btn-default.btn-on.active{background-color: #5BB75B;color: white;}
+.btn-default.btn-off.active{background-color: #DA4F49;color: white;}

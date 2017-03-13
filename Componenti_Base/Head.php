@@ -11,6 +11,7 @@ function LibrerieLogin() {
     . "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
+    . "<link rel=\"icon\" href=\"../Immagini/logo_app.png\" type=\"image/png\" />"
     . "<title>Nuova App</title>";
     
     echo "<link href=\"../Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
@@ -36,6 +37,7 @@ function index() {
     . "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
+    . "<link rel=\"icon\" href=\"Immagini/logo_app.png\" type=\"image/png\" />"
     . "<title>Nuova App</title>";
     
     echo "<link href=\"Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
@@ -61,6 +63,7 @@ function LibrerieUnLog(){
     . "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
+    . "<link rel=\"icon\" href=\"../Immagini/logo_app.png\" type=\"image/png\" />"
     . "<title>Nuova App</title>";
     
     echo "<link href=\"../Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"

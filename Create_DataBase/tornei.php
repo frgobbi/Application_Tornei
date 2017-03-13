@@ -5,13 +5,11 @@
  * Date: 15/11/2016
  * Time: 10:17
  */
-
 $tipo_sport = "CREATE TABLE tipo_sport("
 	." id_tipo_sport INT PRIMARY KEY AUTO_INCREMENT,"
     ." descrizione VARCHAR(255) NOT NULL,"
     ." logo TEXT"
 .")";
-
 $torneo = "CREATE TABLE torneo ("
     ."id_torneo INT PRIMARY KEY AUTO_INCREMENT,"
     ."nome_torneo VARCHAR(255) NOT NULL,"
@@ -31,7 +29,6 @@ $torneo = "CREATE TABLE torneo ("
     ."fase_finale INT NOT NULL DEFAULT '0',"
     ."finished INT NOT NULL DEFAULT '0'"
 .")";
-
 $funzioni = "CREATE TABLE funzioni("
     ."id_funzione INT PRIMARY KEY AUTO_INCREMENT,"
     ."nome_funzione VARCHAR(255) NOT NULL,"
@@ -39,12 +36,10 @@ $funzioni = "CREATE TABLE funzioni("
     ."src TEXT,"
     ."icona TEXT"
 .")";
-
 $cat_utente = "CREATE TABLE cat_utente("
     ."id_cat_utente INT PRIMARY KEY AUTO_INCREMENT,"
     ."nome_cat VARCHAR(255)"
 .")";
-
 $funzioni_cat_utente = "CREATE TABLE funzioni_cat_utente("
     ."id_cat_utente INT,"
     ."FOREIGN KEY(id_cat_utente) REFERENCES cat_utente(id_cat_utente),"
@@ -53,7 +48,6 @@ $funzioni_cat_utente = "CREATE TABLE funzioni_cat_utente("
     ."abilitato INT NOT NULL DEFAULT '1',"
     ."PRIMARY KEY(id_cat_utente, id_funzione)"
 .")";
-
 $utente = "CREATE TABLE utente ("
     ."username VARCHAR(255) PRIMARY KEY,"
     ."nome VARCHAR(255),"
@@ -73,12 +67,10 @@ $utente = "CREATE TABLE utente ("
     ."card VARCHAR(10),"
     ."saldo DOUBLE NOT NULL DEFAULT '0'"
 .")";
-
 $girone = "CREATE TABLE girone ("
     ."id_girone INT PRIMARY KEY AUTO_INCREMENT,"
     ."nome_girone VARCHAR(255)"
 .")";
-
 $squadra = "CREATE TABLE squadra ("
     ."id_sq INT PRIMARY KEY AUTO_INCREMENT,"
     ."nome_sq VARCHAR(255),"
@@ -89,7 +81,6 @@ $squadra = "CREATE TABLE squadra ("
     ."iscritta INT NOT NULL DEFAULT '0',"
     ."eliminata INT NOT NULL DEFAULT '0'"
 .")";
-
 $sq_utente = "CREATE TABLE sq_utente("
     ."id_sq_utente INT PRIMARY KEY AUTO_INCREMENT,"
     ."username VARCHAR(255),"
@@ -99,7 +90,6 @@ $sq_utente = "CREATE TABLE sq_utente("
     ."make INT NOT NULL DEFAULT '0',"
     ."giocatore INT NOT NULL DEFAULT '1'"
 .")";
-
 $partita ="CREATE TABLE partita ("
     ."id_partita INT PRIMARY KEY AUTO_INCREMENT,"
     ."data_partita DATE,"
@@ -108,7 +98,6 @@ $partita ="CREATE TABLE partita ("
     ."fase_finale INT NOT NULL DEFAULT '0',"
     ."finish INT NOT NULL DEFAULT '0'"
 .")";
-
 $sq_partita = "CREATE TABLE sq_partita("
     ."id_sq INT,"
     ."FOREIGN KEY(id_sq) REFERENCES squadra(id_sq),"
@@ -120,12 +109,10 @@ $sq_partita = "CREATE TABLE sq_partita("
     ."tie_break INT NOT NULL DEFAULT '0',"
     ."PRIMARY KEY(id_sq,id_partita)"
 .")";
-
 $tempo = "CREATE TABLE tempo("
     ."id_tempo INT PRIMARY KEY AUTO_INCREMENT,"
     ."descrizione VARCHAR(255)"
 .")";
-
 $sq_tempo = "CREATE TABLE sq_tempo("
     ."id_sq INT,"
     ."id_partita INT,"
@@ -139,7 +126,6 @@ $sq_tempo = "CREATE TABLE sq_tempo("
     ."PRIMARY KEY(id_sq,id_partita,id_tempo),"
     ."conclused INT NOT NULL DEFAULT '0'"
 .")";
-
 $info_tempo = "CREATE TABLE info_tempo("
     ."id_info INT PRIMARY KEY AUTO_INCREMENT,"
     ."id_sq_utente INT,"
@@ -152,6 +138,48 @@ $info_tempo = "CREATE TABLE info_tempo("
     ."cartellino_giallo INT NOT NULL DEFAULT '0',"
     ."cartellino_rosso INT NOT NULL DEFAULT '0'"
 .")";
+$log = "CREATE TABLE log("
+    ."id_log INT PRIMARY KEY AUTO_INCREMENT,"
+    ."username VARCHAR(255),"
+    ."FOREIGN KEY(username) REFERENCES utente(username)"
+    .")";
+$cat_prodotto = "CREATE TABLE cat_prodotto("
+    ."id_cat_prodotto INT PRIMARY KEY AUTO_INCREMENT,"
+    ."nome_cat VARCHAR(255),"
+    ."colore VARCHAR(255)"
+    .")";
+$prodotto = "CREATE TABLE prodotto ("
+    ."id_prodotto INT PRIMARY KEY AUTO_INCREMENT,"
+    ."nome_prodotto VARCHAR(255),"
+    ."prezzo DOUBLE NOT NULL DEFAULT '0',"
+    ."vendibile INT NOT NULL DEFAULT '1',"
+    ."id_cat_prodotto INT,"
+    ."FOREIGN KEY(id_cat_prodotto) REFERENCES cat_prodotto(id_cat_prodotto)"
+    .")";
+$giorno = "CREATE TABLE giorno("
+    ."id_giorno INT PRIMARY KEY AUTO_INCREMENT,"
+    ."data_g DATE,"
+    ."chiuso INT NOT NULL DEFAULT '0'"
+    .")";
+$ordine_P = "CREATE TABLE ordine_p ("
+    ."id_ordine_p INT PRIMARY KEY AUTO_INCREMENT,"
+    ."id_prodotto INT,"
+    ."FOREIGN KEY(id_prodotto)REFERENCES prodotto(id_prodotto),"
+    ."id_giorno INT,"
+    ."FOREIGN KEY(id_giorno)REFERENCES giorno(id_giorno),"
+    ."ora TIME,"
+    ."num_ordine INT,"
+    ."credito INT NOT NULL DEFAULT '0'"
+    .")";
+$ordine_v = "CREATE TABLE ordine_v ("
+    ."id_ordine_p INT PRIMARY KEY AUTO_INCREMENT,"
+    ."varie DOUBLE,"
+    ."id_giorno INT,"
+    ."FOREIGN KEY(id_giorno)REFERENCES giorno(id_giorno),"
+    ."ora TIME,"
+    ."num_ordine INT,"
+    ."credito INT NOT NULL DEFAULT '0'"
+    .")";
 
 include "../connessione.php";
 try{
@@ -169,6 +197,12 @@ try{
     $connessione->exec($tempo);
     $connessione->exec($sq_tempo);
     $connessione->exec($info_tempo);
+    $connessione->exec($log);
+    $connessione->exec($cat_prodotto);
+    $connessione->exec($prodotto);
+    $connessione->exec($giorno);
+    $connessione->exec($ordine_P);
+    $connessione->exec($ordine_v);
 } catch (PDOException $e){
     echo "error: ".$e->getMessage();
 }

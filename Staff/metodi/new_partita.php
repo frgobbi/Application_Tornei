@@ -11,7 +11,7 @@ $ora  = filter_input(INPUT_POST,"ora",FILTER_SANITIZE_STRING);
 $luogo = filter_input(INPUT_POST,"luogo",FILTER_SANITIZE_STRING);
 $sq1 = filter_input(INPUT_POST,"sq1",FILTER_SANITIZE_STRING);
 $sq2 = filter_input(INPUT_POST,"sq2",FILTER_SANITIZE_STRING);
-$tipo = filter_input(INPUT_POST,"tipo_parita",FILTER_SANITIZE_STRING);
+$tipo = filter_input(INPUT_POST,"tipo_partita",FILTER_SANITIZE_STRING);
 
 include "../../connessione.php";
 try{
