@@ -55,7 +55,6 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 }
             });
         }
-
         function elimina_torneo(id, data_inizio) {
             var domanda = confirm("Eliminando il toreno, eliminerai anche tutti i suoi dati");
             if (domanda === true) {

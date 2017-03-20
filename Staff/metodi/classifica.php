@@ -14,6 +14,7 @@ try {
     echo "\"nome_torneo\":\"".$oggT->nome_torneo."\",";
     echo "\"fase_finale\":".$oggT->fase_finale.",";
     echo "\"finished\":".$oggT->finished.",";
+    echo "\"tipo_sport\":".$oggT->id_sport.",";
     $vincitore = null;
     if($oggT->finished == 1){
         $oggV = $connessione->query("SELECT nome_sq FROM `squadra` WHERE `id_torneo` = '$torneo' AND `eliminata` == 0")->fetch(PDO::FETCH_OBJ);
