@@ -1167,7 +1167,6 @@ function creaClassifica(id_torneo){
             }
             codice += "</div>";
 
-
             codice += "<div class='row'>";
             if(ogg.tipo_sport != 4 && ogg.tipo_sport != 5){
                 $.each(ogg.classifica, function(idx, obj){
@@ -1198,7 +1197,71 @@ function creaClassifica(id_torneo){
                 });
 
             }
-            codice += "</div>";
+            codice +="</div>";
+
+            codice += "<div class='row'>";
+            if(ogg.tipo_sport != 5){
+                $.each(ogg.classifica, function(idx, obj){
+                    if(idx !=0){
+                        codice+="<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6\">";
+                        codice+="<table class=\"table table-bordered\">"
+                            +"<thead>"
+                            +"<tr class='warning'>"
+                            +"<th colspan='5'><h4 class='text-center'>Cartellini Gialli Girone "+obj.nome_girone+"</h4></th>"
+                            +"</tr>"
+                            +"<tr>"
+                            +"<th>Nome Giocatore</th>"
+                            +"<th>Num Gol</th>"
+                            +"</tr>"
+                            +"</thead>"
+                            +"<tbody>";
+                        for(var i =1;i<obj.cartellino_G_nome.length;i++){
+                            var name = obj.cartellino_G_nome[i]+" "+obj.cartellino_G_cognome[i];
+                            codice+="<tr>"
+                                +"<td>"+name+"</td>"
+                                +"<td>"+obj.cartellino_G_num[i]+"</td>"
+                                +"</tr>";
+                        }
+                        codice+="</tbody>"
+                            +"</table>" +
+                            "</div>";
+                    }
+                });
+            }
+            codice +="</div>";
+
+            codice += "<div class='row'>";
+            if(ogg.tipo_sport != 5){
+                $.each(ogg.classifica, function(idx, obj){
+                    if(idx !=0){
+                        codice+="<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6\">";
+                        codice+="<table class=\"table table-bordered\">"
+                            +"<thead>"
+                            +"<tr class='danger'>"
+                            +"<th colspan='5'><h4 class='text-center'>Cartellini Gialli Girone "+obj.nome_girone+"</h4></th>"
+                            +"</tr>"
+                            +"<tr>"
+                            +"<th>Nome Giocatore</th>"
+                            +"<th>Num Gol</th>"
+                            +"</tr>"
+                            +"</thead>"
+                            +"<tbody>";
+                        for(var i =1;i<obj.cartellino_R_nome.length;i++){
+                            var name = obj.cartellino_R_nome[i]+" "+obj.cartellino_R_cognome[i];
+                            codice+="<tr>"
+                                +"<td>"+name+"</td>"
+                                +"<td>"+obj.cartellino_R_num[i]+"</td>"
+                                +"</tr>";
+                        }
+                        codice+="</tbody>"
+                            +"</table>" +
+                            "</div>";
+                    }
+                });
+
+            }
+            codice +="</div>";
+
             codice += "</div>";
             
             $('#bodyClassifica').append(codice);

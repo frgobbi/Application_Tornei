@@ -237,6 +237,61 @@ try {
                 $num = $row['num_gol'];
                 echo ",$num";
             }
+            echo "],";
+
+
+            $query_marcatori = "SELECT utente.nome, utente.cognome , COUNT(*) AS num_gol FROM `info_tempo` "
+                ."INNER JOIN sq_utente ON sq_utente.id_sq_utente = info_tempo.id_sq_utente "
+                ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
+                ."INNER JOIN utente ON utente.username = sq_utente.username "
+                ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
+                ."WHERE cartellino_giallo = 1 AND fase_finale = 0 AND id_girone = '$id_girone' GROUP BY (utente.username)";
+            echo "\"cartellino_G_nome\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $nome = $row['nome'];
+                echo ",\"$nome\"";
+            }
+            echo "],";
+
+            echo "\"cartellino_G_cognome\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $cognome = $row['cognome'];
+                echo ",\"$cognome\"";
+            }
+            echo "],";
+
+            echo "\"cartellino_G_num\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $num = $row['num_gol'];
+                echo ",$num";
+            }
+            echo "],";
+
+            $query_marcatori = "SELECT utente.nome, utente.cognome , COUNT(*) AS num_gol FROM `info_tempo` "
+                ."INNER JOIN sq_utente ON sq_utente.id_sq_utente = info_tempo.id_sq_utente "
+                ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
+                ."INNER JOIN utente ON utente.username = sq_utente.username "
+                ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
+                ."WHERE cartellino_rosso = 1 AND fase_finale = 0 AND id_girone = '$id_girone' GROUP BY (utente.username)";
+            echo "\"cartellino_R_nome\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $nome = $row['nome'];
+                echo ",\"$nome\"";
+            }
+            echo "],";
+
+            echo "\"cartellino_R_cognome\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $cognome = $row['cognome'];
+                echo ",\"$cognome\"";
+            }
+            echo "],";
+
+            echo "\"cartellino_R_num\":[0";
+            foreach ($connessione->query($query_marcatori) as $row){
+                $num = $row['num_gol'];
+                echo ",$num";
+            }
             echo "]";
 
             echo "}";
