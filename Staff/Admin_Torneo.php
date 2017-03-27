@@ -338,6 +338,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                     echo "</div>";
                 echo "</div>";
                 echo "<div class=\"tab-pane fade\" id=\"fine\">"
+                    //manca questa parte
                     . "</div>";
                 echo "</div>";
                 ?>
