@@ -1439,3 +1439,149 @@ function creaFormFineGironi(torneo){
         }
     });
 }
+function classificaFinale(id_torneo) {
+    $('#fine').empty();
+    $.ajax({
+        type: "GET",
+        url: "metodi/classifica.php",
+        data: "id_t="+id_torneo,
+        dataType: "html",
+        success: function(risposta){
+            var ogg = $.parseJSON(risposta);
+            var codice = "<div class=\"row container-fluid\" style='padding-top: 20px;'>" +
+                "<div class=\"panel panel-primary\">"
+                    +"<div class=\"panel-body\"><div class='container-fluid'>" +
+                        "<div class='row'>";
+            
+                $.each(ogg.classifica, function (idx, obj) {
+                    if (idx != 0) {
+                        codice += "<table class=\"table table-bordered\">"
+                            + "<thead>"
+                            + "<tr>"
+                            + "<th colspan='5'><h4 class='text-center'>Girone " + obj.nome_girone + "</h4></th>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<th>Nome Squadra</th>"
+                            + "</tr>"
+                            + "</thead>"
+                            + "<tbody>";
+                        for (var i = 0; i < obj.nome_sq.length; i++) {
+                            codice += "<tr>"
+                                + "<td>" + obj.nome_sq[i] + "</td>"
+                                + "</tr>";
+                        }
+                        codice += "</tbody>"
+                            + "</table>";
+                    }
+                });
+            codice += "</div>";
+
+            codice += "<div class='row'>";
+                if (ogg.tipo_sport != 4 && ogg.tipo_sport != 5) {
+                    codice += "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6\">";
+                    codice += "<table class=\"table table-bordered\">"
+                        + "<thead>"
+                        + "<tr>"
+                        + "<th colspan='5'><h4 class='text-center'>Classifica Marcatori</h4></th>"
+                        + "</tr>"
+                        + "<tr>"
+                        + "<th>Nome Giocatore</th>"
+                        + "<th>Num Gol</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        + "<tbody>";
+                    for (var i = 1; i < ogg.marcatori_num_gol.length; i++) {
+                        var name = ogg.marcatori_nome[i] + " " + ogg.marcatori_cognome[i];
+                        codice += "<tr>"
+                            + "<td>" + name + "</td>"
+                            + "<td>" + ogg.marcatori_num_gol[i] + "</td>"
+                            + "</tr>";
+                    }
+                    codice += "</tbody>"
+                        + "</table>" +
+                        "</div>";
+                }
+
+                if (ogg.tipo_sport != 5) {
+                    codice += "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6\">";
+                    codice += "<table class=\"table table-bordered\">"
+                        + "<thead>"
+                        + "<tr class='warning'>"
+                        + "<th colspan='5'><h4 class='text-center'>Cartellini Gialli</h4></th>"
+                        + "</tr>"
+                        + "<tr>"
+                        + "<th>Nome Giocatore</th>"
+                        + "<th>Num Gol</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        + "<tbody>";
+                    for (var i = 1; i < ogg.cartellino_G_nome.length; i++) {
+                        var name = ogg.cartellino_G_nome[i] + " " + ogg.cartellino_G_cognome[i];
+                        codice += "<tr>"
+                            + "<td>" + name + "</td>"
+                            + "<td>" + ogg.cartellino_G_num[i] + "</td>"
+                            + "</tr>";
+                    }
+                    codice += "</tbody>"
+                        + "</table>" +
+                        "</div>";
+                }
+
+                if (ogg.tipo_sport != 5) {
+                    codice += "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6\">";
+                    codice += "<table class=\"table table-bordered\">"
+                        + "<thead>"
+                        + "<tr class='danger'>"
+                        + "<th colspan='5'><h4 class='text-center'>Cartellini Gialli</h4></th>"
+                        + "</tr>"
+                        + "<tr>"
+                        + "<th>Nome Giocatore</th>"
+                        + "<th>Num Gol</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        + "<tbody>";
+                    for (var i = 1; i < ogg.cartellino_R_nome.length; i++) {
+                        var name = ogg.cartellino_R_nome[i] + " " + ogg.cartellino_R_cognome[i];
+                        codice += "<tr>"
+                            + "<td>" + name + "</td>"
+                            + "<td>" + ogg.cartellino_R_num[i] + "</td>"
+                            + "</tr>";
+                    }
+                    codice += "</tbody>"
+                        + "</table>" +
+                        "</div>";
+
+                }
+            
+            codice += "</div>";
+
+            codice += "<div class='row'>";
+            codice += "<button class='btn btn-primary btn-block' onclick=\"fineTorneo("+id_torneo+")\">Concludi Torneo</button>"
+            codice += "</div>";
+
+            codice += "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
+            $('#fine').append(codice);
+        },
+        error: function(){
+            alert("Chiamata fallita!!!");
+        }
+    });
+}
+function fineTorneo(id_torneo) {
+    $('#fine').empty();
+    $.ajax({
+        type: "GET",
+        url: "metodi/fine_torneo.php",
+        data: "id_t=" + id_torneo,
+        dataType: "html",
+        success: function () {
+            window.location.href="Admin_Torneo.php?id="+id_torneo;
+        },
+        error: function () {
+            alert("qualcosa non va!!");
+        }
+    });
+}

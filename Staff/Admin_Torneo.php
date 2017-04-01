@@ -117,6 +117,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 +"</div></div>";
                 $('#fine').empty();
                 $('#fine').append(codice);
+            } else {
+                classificaFinale(torneo);
             }
         }
     </script>
@@ -129,7 +131,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     $torneo = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
     include "../connessione.php";
     try {
-        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale` "
+        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale`,`finished` "
             . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$torneo'";
         $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
@@ -220,13 +222,21 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                         . "</h4>"
                                     ."</div>"
                                     . "<div style=\"padding:0px;\" class=\"panel-body\">"
-                                        . "<div class=\"list-group\">"
-                                            . "<a href=\"#\" onclick=\"$('#dati').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i> Impostazioni</a>"
-                                            . "<a href=\"#\" onclick=\"$('#squadre').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-shield\" aria-hidden=\"true\"></i> Squadre Iscritte</a>"
+                                        . "<div class=\"list-group\">";
+                                            if($oggTorneo->finished==0){
+                                                echo "<a href=\"#\" onclick=\"$('#dati').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i> Impostazioni</a>";
+                                            } else {
+                                                echo "<a href=\"#\" class=\"list-group-item\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i> Impostazioni</a>";
+                                            }
+                                            echo "<a href=\"#\" onclick=\"$('#squadre').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-shield\" aria-hidden=\"true\"></i> Squadre Iscritte</a>"
                                             . "<a href=\"#\" onclick=\"$('#giocatori').modal('show');\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Lista Giocatori</a>"
-                                            . "<a href=\"#\" onclick=\"downloadPDF('".$torneo."','".$oggTorneo->nome_torneo."');\" class=\"list-group-item\"><i class=\"fa fa-file-pdf-o\" aria-hidden=\"true\"></i> Scarica Lista Giocatori</a>"
-                                            . "<a href=\"#\" onclick=\"elimina_torneo('".$torneo."','".$oggTorneo->inizio."');\" class=\"list-group-item\"><i class=\"fa fa-calendar-times-o\" aria-hidden=\"true\"></i> Cancella Torneo</a>"
-                                        . "</div>"
+                                            . "<a href=\"#\" onclick=\"downloadPDF('".$torneo."','".$oggTorneo->nome_torneo."');\" class=\"list-group-item\"><i class=\"fa fa-file-pdf-o\" aria-hidden=\"true\"></i> Scarica Lista Giocatori</a>";
+                                            if($oggTorneo->finished==0){
+                                                echo "<a href=\"#\" onclick=\"elimina_torneo('".$torneo."','".$oggTorneo->inizio."');\" class=\"list-group-item\"><i class=\"fa fa-calendar-times-o\" aria-hidden=\"true\"></i> Cancella Torneo</a>";
+                                            } else {
+                                                echo "<a href=\"#\"  class=\"list-group-item\"><i class=\"fa fa-calendar-times-o\" aria-hidden=\"true\"></i> Cancella Torneo</a>";
+                                            }
+                                        echo "</div>"
                                 . "</div>"
                             . "</div>"
                         . "</div>"
@@ -340,12 +350,24 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 . "</h4>"
                                 ."</div>"
                                 . "<div style=\"padding:0px;\" class=\"panel-body\">"
-                                . "<div class=\"list-group\">"
-                                . "<a href=\"#\" onclick=\"window.location.href='metodi/crea_partite.php?id=$torneo'\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>"
-                                . "<a href=\"#\" onclick=\"$('#new_partita').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>"
-                                . "<a href=\"#\" onclick=\"popupClassifica('$torneo')\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>"
-                                . "<a href=\"#\" onclick=\"chiudiGironi('$torneo','$oggTorneo->fase_finale')\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>"
-                                . "</div>"
+                                . "<div class=\"list-group\">";
+                                if($oggTorneo->finished==0){
+                                    echo "<a href=\"#\" onclick=\"window.location.href='metodi/crea_partite.php?id=$torneo'\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>";
+                                } else {
+                                    echo "<a href=\"#\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>";
+                                }
+                                if($oggTorneo->finished==0){
+                                    echo "<a href=\"#\" onclick=\"$('#new_partita').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>";
+                                } else {
+                                    echo "<a href=\"#\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>";
+                                }
+                                echo "<a href=\"#\" onclick=\"popupClassifica('$torneo')\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>";
+                                if($oggTorneo->finished==0){
+                                    echo "<a href=\"#\" onclick=\"chiudiGironi('$torneo','$oggTorneo->fase_finale')\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>";
+                                } else {
+                                    echo "<a href=\"#\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>";
+                                }
+                                echo "</div>"
                                 . "</div>"
                                 . "</div>"
                                 . "</div>"

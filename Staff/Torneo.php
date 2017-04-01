@@ -237,7 +237,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                     $componentiDataF = explode("-", $dataF_F);
                                     $meseF = mese($componentiDataF[1]);
                                     $tipoSport = $connessione->query("SELECT * FROM tipo_sport WHERE id_tipo_sport = '$id'")->fetch(PDO::FETCH_OBJ);
-                                    echo "<li style='padding: 10px 10px 10px 10px;'>"
+                                    echo "<li>"
                                         . "<a href=\"Admin_Torneo.php?id=$id\">"
                                         . "<time class=\"i\" datetime=\"$dataI\">"
                                         . "<span class=\"day\">" . $componentiDataI[0] . "</span>"
