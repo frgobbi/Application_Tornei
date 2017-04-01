@@ -28,12 +28,10 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
             creaPopup(id_p, id_torneo);
             $('#partita').modal('show')
         }
-
         function popupClassifica(id_torneo) {
             creaClassifica(id_torneo);
             $('#classifica').modal('show')
         }
-        
         function downloadPDF(id, nome_torneo) {
             $.ajax({
                 // definisco il tipo della chiamata
@@ -83,8 +81,6 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 });
             }
         }
-
-
         $(document).on('click', '.number-spinner button', function () {
             var btn = $(this),
                 oldValue = btn.closest('.number-spinner').find('input').val().trim(),
@@ -104,6 +100,25 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
             btn.closest('.number-spinner').find('input').val(newVal);
             assegna_punti(res[0],res[1]);
         });
+        function chiudiGironi(torneo,fase_f) {
+            if(fase_f==0) {
+                creaFormFineGironi(torneo);
+                $('#chiudiGironi').modal('show');
+            }else{
+                alert("La fase finale gia\' attiva");
+            }
+        }
+        function parteFinale(torneo, fase_f){
+            if(fase_f==0){
+                var codice = "<div class=\"row\" style='padding-top: 50px;'><div class=\"col-lg-12\">"
+                    +"<div class=\"alert alert-info\">"
+                    +"<strong>Attenzione</strong> La fasa Finale non è attiva!"
+                    +"</div>"
+                +"</div></div>";
+                $('#fine').empty();
+                $('#fine').append(codice);
+            }
+        }
     </script>
 </head>
 <body>
@@ -114,7 +129,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     $torneo = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
     include "../connessione.php";
     try {
-        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`"
+        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale` "
             . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$torneo'";
         $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
@@ -147,7 +162,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 echo "<ul class=\"nav nav-tabs\">"
                     . "<li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Home Torneo</a></li>"
                     . "<li><a href=\"#partite\" data-toggle=\"tab\">Gestione Partite</a></li>"
-                    . "<li><a href=\"#fine\" data-toggle=\"tab\">Gestione Risultati</a></li>"
+                    . "<li><a href=\"#fine\" onclick=\"parteFinale('$torneo','$oggTorneo->fase_finale')\" data-toggle=\"tab\">Gestione Risultati</a></li>"
                     . "</ul>"
                     . "<div id=\"myTabContent\" class=\"tab-content\">";
 
@@ -316,7 +331,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
 
                         echo "</div>";
                             //terza parte
-                            echo "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-12\">"
+                            echo "<div class=\"col-lg-3 col-md-3 col-sm-12 col-xs-12\">"
                                 . "<div class=\"panel-group\">"
                                 . "<div class=\"panel panel-primary\">"
                                 . "<div class=\"panel-heading\">"
@@ -329,7 +344,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 . "<a href=\"#\" onclick=\"window.location.href='metodi/crea_partite.php?id=$torneo'\" class=\"list-group-item\"><i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i> Partite Gironi</a>"
                                 . "<a href=\"#\" onclick=\"$('#new_partita').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Nuova Partita</a>"
                                 . "<a href=\"#\" onclick=\"popupClassifica('$torneo')\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Classifica</a>"
-                                //. "<a href=\"#\" onclick=\"\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>"
+                                . "<a href=\"#\" onclick=\"chiudiGironi('$torneo','$oggTorneo->fase_finale')\" class=\"list-group-item\"><i class=\"fa fa-window-close\" aria-hidden=\"true\"></i> Chiudi Gironi</a>"
                                 . "</div>"
                                 . "</div>"
                                 . "</div>"
@@ -338,7 +353,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                     echo "</div>";
                 echo "</div>";
                 echo "<div class=\"tab-pane fade\" id=\"fine\">"
-                    //manca questa parte
+
                     . "</div>";
                 echo "</div>";
                 ?>
@@ -643,7 +658,25 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         ."<div style='overflow-y:hidden;' class=\"modal-body\" id='bodyClassifica'>"
 
         ."</div>"
-        ."<div class=\"modal-footer\" id='footerPartita'>"
+        ."<div class=\"modal-footer\" id='footerClassifica'>"
+        ."<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>"
+        ."</div>"
+        ."</div>"
+        ."</div>"
+        ."</div>";
+
+    //modal classifica torneo
+    echo "<div class=\"modal fade\" id=\"chiudiGironi\" role=\"dialog\">"
+        ."<div class=\"modal-dialog modal-lg\">"
+        ."<div class=\"modal-content\">"
+        ."<div class=\"modal-header\" id='headerPartita'>"
+        ."<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
+        ."<h4 id='titoloClassifica' class=\"modal-title\">Chiudi Gironi</h4>"
+        ."</div>"
+        ."<div style='overflow-y:hidden;' class=\"modal-body\" id='bodyChiudi'>"
+
+        ."</div>"
+        ."<div class=\"modal-footer\" id='footerGironi'>"
         ."<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>"
         ."</div>"
         ."</div>"

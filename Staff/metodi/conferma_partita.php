@@ -25,6 +25,8 @@ try{
 
     foreach ($connessione->query("SELECT * FROM `sq_tempo` WHERE `id_partita` = '$partita' GROUP BY(id_tempo)") as $row){
         $id_tempo = $row['id_tempo'];
+        $sql_conferma_t = "UPDATE `sq_tempo` SET `conclused`='1' WHERE `id_partita` = '$partita' AND `id_tempo`= '$id_tempo'";
+        $connessione->exec($sql_conferma_t);
         $oggP2 = $connessione->query("SELECT COUNT(*) AS gol FROM `info_tempo` INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente INNER JOIN `utente` ON utente.username = sq_utente.username WHERE `id_tempo` ='$id_tempo' AND `id_partita`='$partita' AND `id_sq` = '$sq2' AND punto = 1")->fetch(PDO::FETCH_OBJ);
         $oggP1 = $connessione->query("SELECT COUNT(*) AS gol FROM `info_tempo` INNER JOIN `sq_utente` ON info_tempo.id_sq_utente = sq_utente.id_sq_utente INNER JOIN `utente` ON utente.username = sq_utente.username WHERE `id_tempo` ='$id_tempo' AND `id_partita`='$partita' AND `id_sq` = '$sq1' AND punto = 1")->fetch(PDO::FETCH_OBJ);
         $punti_sq1 = $punti_sq1+$oggP1->gol;
