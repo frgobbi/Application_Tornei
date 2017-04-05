@@ -136,7 +136,27 @@ and open the template in the editor.
                         <div class="carousel-inner" role="listbox">
                             <?php
                             $c = 0;
-                            if ($handle = opendir("Immagini/Vecchi_Tornei")) {
+                            include "connessione.php";
+                            try{
+                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_Tornei'")->fetch(PDO::FETCH_OBJ);
+                                foreach ($connessione->query("SELECT `id_foto`, `nome_foto`, `id_c` FROM `foto` WHERE id_c = '$oggC->id_c'") as $row){
+                                 $file = $row['nome_foto'];
+                                    if ($c == 0) {
+                                        echo " <div class=\"item active\">"
+                                            . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                            . "</div>";
+                                    } else {
+                                        echo " <div class=\"item\">"
+                                            . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                            . "</div>";
+                                    }
+                                    $c = $c + 1;
+                                }
+                            } catch (PDOException $e){
+                                echo $e->getMessage();
+                            }
+                            $connessione = null;
+                            /*if ($handle = opendir("Immagini/Vecchi_Tornei")) {
                                 while ($file = readdir($handle)) {
                                     if ($file != "." & $file != "..") {
                                         if ($c == 0) {
@@ -152,7 +172,7 @@ and open the template in the editor.
                                     }
 
                                 }
-                            }
+                            }*/
                             ?>
                         </div>
 

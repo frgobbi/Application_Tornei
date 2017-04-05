@@ -54,6 +54,8 @@ $gironi ="INSERT INTO `girone` (`id_girone`, `nome_girone`) VALUES "
     ."(NULL, 'Fasi Finali Torneo Superiore'),"
     ."(NULL, 'Fasi Finali Torneo Inferiore')";
 
+$cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_Tornei','primary')";
+
 include "../connessione.php";
 try{
     $connessione->exec($tipo_sport);
@@ -63,6 +65,7 @@ try{
     $connessione->exec($funzioni_cat_utente);
     $connessione->exec($tempo);
     $connessione->exec($gironi);
+    $connessione->exec($cartelle_c);
 } catch (PDOException $e){
     echo "error: ".$e->getMessage();
 }

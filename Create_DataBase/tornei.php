@@ -180,6 +180,17 @@ $ordine_v = "CREATE TABLE ordine_v ("
     ."num_ordine INT,"
     ."credito INT NOT NULL DEFAULT '0'"
     .")";
+$cartelle_f = "CREATE TABLE cartelle_f("
+    ."id_c INT PRIMARY KEY AUTO_INCREMENT,"
+    ."nome_cartella VARCHAR(255),"
+    ."colore VARCHAR(255)"
+    .")";
+$foto= "CREATE TABLE foto("
+    ."id_foto INT PRIMARY KEY AUTO_INCREMENT,"
+    ."nome_foto VARCHAR(255),"
+    ."id_c INT,"
+    ."FOREIGN KEY(id_c) REFERENCES cartelle_f(id_c)"
+    .")";
 
 include "../connessione.php";
 try{
@@ -203,6 +214,8 @@ try{
     $connessione->exec($giorno);
     $connessione->exec($ordine_P);
     $connessione->exec($ordine_v);
+    $connessione->exec($cartelle_f);
+    $connessione->exec($foto);
 } catch (PDOException $e){
     echo "error: ".$e->getMessage();
 }
