@@ -6,53 +6,6 @@
  * Time: 21:46
  */
 session_start();
-
-function mese($mese)
-{
-    $StringMese = "";
-    //$mese = ltrim($mese, '0');
-    switch ($mese) {
-        case 1:
-            $StringMese = "GEN";
-            break;
-        case 2:
-            $StringMese = "FEB";
-            break;
-        case 3:
-            $StringMese = "MAR";
-            break;
-        case 4:
-            $StringMese = "APR";
-            break;
-        case 5:
-            $StringMese = "MAG";
-            break;
-        case 6:
-            $StringMese = "GIU";
-            break;
-        case 7:
-            $StringMese = "LUG";
-            break;
-        case 8:
-            $StringMese = "AGO";
-            break;
-        case 9:
-            $StringMese = "SET";
-            break;
-        case 10:
-            $StringMese = "OTT";
-            break;
-        case 11:
-            $StringMese = "NOV";
-            break;
-        case 12:
-            $StringMese = "DIC";
-            break;
-    }
-    return $StringMese;
-}
-
-
 if (!$_SESSION['login']) {
     header("Location:../index.php");
 }
@@ -73,6 +26,12 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     <link rel="stylesheet" href="../Librerie/CSS/event-list.css">
     <script type="text/javascript" src="Java-script/Gestione_foto.js"></script>
     <style type="text/css">
+        .btn span.glyphicon {
+            opacity: 0;
+        }
+        .btn.active span.glyphicon {
+            opacity: 1;
+        }
     </style>
     <script type="text/javascript">
         function open_popHome() {
@@ -80,6 +39,9 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
             $('#gestione_foto').modal('show');
 
             setTimeout(function () {
+                $('#alertC').hide();
+                $('#agg_foto').hide();
+                $('#ges_foto').hide();
                 $("#input-ke-2").fileinput({
                     theme: "explorer",
                     uploadUrl: "#",
@@ -145,7 +107,79 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
 
 
         }
-        
+        function open_popCart(id_c) {
+            visualizza_foto(id_c);
+            $('#gestione_foto').modal('show');
+
+            setTimeout(function () {
+                $('#alertC').hide();
+                $('#agg_foto').hide();
+                $('#ges_foto').hide();
+                $("#input-ke-2").fileinput({
+                    theme: "explorer",
+                    uploadUrl: "#",
+                    showUpload:false,
+                    //allowedFileExtensions: ['jpg', 'png', 'gif'],
+                    overwriteInitial: false,
+                    initialPreviewAsData: true,
+                    initialPreview: [],
+                    initialPreviewConfig: [
+                        {caption: "nature-1.jpg", size: 329892, width: "120px", url: "/site/file-delete", key: 1},
+                        {caption: "nature-2.jpg", size: 872378, width: "120px", url: "/site/file-delete", key: 2},
+                        {caption: "nature-3.jpg", size: 632762, width: "120px", url: "/site/file-delete", key: 3},
+                    ],
+                    uploadExtraData: {
+                        img_key: "1000",
+                        img_keywords: "happy, nature",
+                    },
+                    preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
+                    previewFileIconSettings: { // configure your icon file extensions
+                        'doc': '<i class="fa fa-file-word-o text-primary"></i>',
+                        'xls': '<i class="fa fa-file-excel-o text-success"></i>',
+                        'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                        'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+                        'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+                        'htm': '<i class="fa fa-file-code-o text-info"></i>',
+                        'txt': '<i class="fa fa-file-text-o text-info"></i>',
+                        'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
+                        'mp3': '<i class="fa fa-file-audio-o text-warning"></i>',
+                        // note for these file types below no extension determination logic
+                        // has been configured (the keys itself will be used as extensions)
+                        'jpg': '<i class="fa fa-file-photo-o text-danger"></i>',
+                        'gif': '<i class="fa fa-file-photo-o text-muted"></i>',
+                        'png': '<i class="fa fa-file-photo-o text-primary"></i>'
+                    },
+                    previewFileExtSettings: { // configure the logic for determining icon file extensions
+                        'doc': function(ext) {
+                            return ext.match(/(doc|docx)$/i);
+                        },
+                        'xls': function(ext) {
+                            return ext.match(/(xls|xlsx)$/i);
+                        },
+                        'ppt': function(ext) {
+                            return ext.match(/(ppt|pptx)$/i);
+                        },
+                        'zip': function(ext) {
+                            return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+                        },
+                        'htm': function(ext) {
+                            return ext.match(/(htm|html)$/i);
+                        },
+                        'txt': function(ext) {
+                            return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+                        },
+                        'mov': function(ext) {
+                            return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+                        },
+                        'mp3': function(ext) {
+                            return ext.match(/(mp3|wav)$/i);
+                        },
+                    }
+                });
+            }, 100);
+
+
+        }
     </script>
 </head>
 <body>
@@ -233,7 +267,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 $id = $row['id_c'];
                                 if($id!=1){
                                     echo "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">"
-                                        ."<a href=\"#\">"
+                                        ."<a href=\"#\" onclick=\"open_popCart($id)\">"
                                         ."<div class=\"panel panel-$colore\">"
                                         ."<div class=\"panel-heading\">"
                                         ."<div class=\"row\">"

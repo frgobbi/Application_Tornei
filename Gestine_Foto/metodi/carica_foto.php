@@ -17,7 +17,7 @@ try{
         $nomeF = $_FILES[$key]['name'];
         $estensione = $_FILES[$key]['type'];
         echo $nomeF;
-       /* $c=0;
+        $c=0;
         foreach ($connessione->query("SELECT * FROM `foto` WHERE `id_c` = '$id_cart' AND `nome_foto` = '$nomeF'") as $row){
             $c++;
         }
@@ -25,11 +25,11 @@ try{
             $parti_nome = explode(".",$nomeF = $_FILES[$key]['name']);
             $nome_new= "";
             for($j=0;$j<count($parti_nome)-1;$j++){
-                $nome_new .= $parti_nome[$j].".";
+                $nome_new .= $parti_nome[$j];
             }
             $app = explode("/", $estensione);
             $ex = $app[1];
-            $nome_new .= $nome_new." ($c).".$ex;
+            $nome_new = $nome_new."($c).".$ex;
         } else{
             $nome_new = $nomeF;
         }
@@ -42,7 +42,7 @@ try{
         move_uploaded_file($tmpNome, $percorso);
 
         $connessione->exec("INSERT INTO `foto`(`id_foto`, `nome_foto`, `id_c`) VALUES (NULL, '$nome_new','$oggC->id_c')");
-*/
+
 
     }
 }catch (PDOException $e){
