@@ -19,6 +19,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     include '../Componenti_Base/Head.php';
     LibrerieLogin();
     ?>
+    <link href="../Librerie/CSS/contact-list.css" rel="stylesheet">
     <link href="../Librerie/Input_File/css/fileinput.min.css" rel="stylesheet">
     <link href="../Librerie/Input_File/themes/explorer/theme.css" rel="stylesheet">
     <script src="../Librerie/Input_File/js/fileinput.js"></script>

@@ -62,7 +62,17 @@ function visualizza_foto(cartella) {
             codice += "</div>";
             codice += "</div>";
 
-            codice += "<div id='ges_foto' style='height: 600px; overflow-y: auto'  class='row'>";
+            codice += "<div id='ges_foto' class='row container-fluid'>";
+            codice += "<div class='panel panel-default'>" +
+                "<div class='panel-heading c-list'>" +
+                "<span class='title'>Gestione Foto</span>" +
+                "<ul class=\"pull-right c-controls\">"+
+                "<li id='deSel'><a href=\"#\"><i class=\"fa fa-square-o\" aria-hidden=\"true\"></i></a></li>"+
+                "<li id='Sel'><a href=\"#\"><i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i></a></li>"+
+                "<li id='cSel'><a href=\"#\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a></li>"+
+                "</ul>"+
+                "</div>" +
+                "<div style='height: 600px; overflow-y: auto' class='panel-body'>";
                 codice+="<div class='list-group gallery'>";
                         for(var i=1;i<ogg.id_f.length;i++){
                             var percorso = "../Immagini/"+ogg.nome_c+"/"+ogg.nome_f[i];
@@ -72,7 +82,7 @@ function visualizza_foto(cartella) {
                                 "<div class='text-right'>" +
                                 "<div class='row' style='padding-top: 15px;'>" +
                                 "<div class='col-md-8 col-sm-12'><button onclick='eliminaF("+ogg.id_f[i]+")' class='btn btn-danger btn-block'>Elimina</button></div>"+
-                                "<div class='col-md-4 col-sm-12'>" +
+                                "<div class='col-md-3 col-sm-12'>" +
                                 "<div class=\"btn-group\" data-toggle=\"buttons\">" +
                                 "<label class=\"btn btn-default\">" +
                                 "<input type=\"checkbox\" autocomplete=\"off\">" +
@@ -86,9 +96,12 @@ function visualizza_foto(cartella) {
                                 "</div>";
                         }
                     codice+="</div>";
+                codice += "</div>";
+                codice += "</div>";
             codice += "</div>";
             
             $('#body_foto').append(codice);
+            $('#deSel').hide();
         },
         error: function () {
             alert("Chiamata fallita!!!");
