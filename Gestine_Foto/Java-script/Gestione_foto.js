@@ -31,21 +31,25 @@ function visualizza_foto(cartella) {
                 codice += "</a>";
                 codice += "</div>";
 
-                if(cartella !=1) {
-                    codice += "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">";
-                    codice += "<div class=\"panel panel-red\">"
-                        + "<div class=\"panel-heading text-center\"><h3>Elimina Album</h3></div>"
-                        //+"<div class=\"panel-footer\"></div>"
-                        + "</div>";
-                    codice += "</div>";
-                } else {
-                    codice += "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">";
-                    codice += "<div class=\"panel panel-red\">"
-                        + "<div class=\"panel-heading text-center\"><h3>Elimina Foto</h3></div>"
-                        //+"<div class=\"panel-footer\"></div>"
-                        + "</div>";
-                    codice += "</div>";
-                }
+            if(cartella !=1) {
+                codice += "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">";
+                codice += "<a href='#' onclick='DelAll("+cartella+",\"1\")'>";
+                codice += "<div class=\"panel panel-red\">"
+                    + "<div  class=\"panel-heading text-center\"><h3>Elimina Album</h3></div>"
+                    //+"<div class=\"panel-footer\"></div>"
+                    + "</div>";
+                codice += "</a>";
+                codice += "</div>";
+            } else {
+                codice += "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">";
+                codice += "<a href='#' onclick='DelAll("+cartella+",\"0\")'>";
+                codice += "<div class=\"panel panel-red\">"
+                    + "<div class=\"panel-heading text-center\"><h3>Elimina Foto</h3></div>"
+                    //+"<div class=\"panel-footer\"></div>"
+                    + "</div>";
+                codice += "</div>";
+                codice += "</a>";
+            }
             codice += "</div>";
 
             codice += "<div id='agg_foto' class='row' style='height: 600px; overflow-y: auto'>";
@@ -67,25 +71,25 @@ function visualizza_foto(cartella) {
                 "<div class='panel-heading c-list'>" +
                 "<span class='title'>Gestione Foto</span>" +
                 "<ul class=\"pull-right c-controls\">"+
-                "<li id='deSel'><a href=\"#\"><i class=\"fa fa-square-o\" aria-hidden=\"true\"></i></a></li>"+
-                "<li id='Sel'><a href=\"#\"><i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i></a></li>"+
-                "<li id='cSel'><a href=\"#\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a></li>"+
+                "<li id='deSel'><a href=\"#\" onclick='AllDeSel()'><i class=\"fa fa-square-o\" aria-hidden=\"true\"></i></a></li>"+
+                "<li id='Sel'><a href=\"#\" onclick='AllSel()'><i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i></a></li>"+
+                "<li id='cSel'><a href=\"#\" onclick='SelC()'><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a></li>"+
                 "</ul>"+
                 "</div>" +
                 "<div style='height: 600px; overflow-y: auto' class='panel-body'>";
-                codice+="<div class='list-group gallery'>";
+                codice+="<div class='list-group gallery'><form name='modulo'>";
                         for(var i=1;i<ogg.id_f.length;i++){
                             var percorso = "../Immagini/"+ogg.nome_c+"/"+ogg.nome_f[i];
                             codice+= "<div id=\"foto"+ogg.id_f[i]+"\" class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>" +
                                 "<a style='height: 200px;' class=\"thumbnail fancybox\" rel=\"ligthbox\" href=\"#\">"+
                                 "<img class=\"img-responsive\" alt=\"\" src=\""+percorso+"\" />" +
                                 "<div class='text-right'>" +
-                                "<div class='row' style='padding-top: 15px;'>" +
+                                "<div class='row container-fluid' style='padding-top: 15px;'>" +
                                 "<div class='col-md-8 col-sm-12'><button onclick='eliminaF("+ogg.id_f[i]+")' class='btn btn-danger btn-block'>Elimina</button></div>"+
-                                "<div class='col-md-3 col-sm-12'>" +
+                                "<div class='col-md-4 col-sm-12'>" +
                                 "<div class=\"btn-group\" data-toggle=\"buttons\">" +
-                                "<label class=\"btn btn-default\">" +
-                                "<input type=\"checkbox\" autocomplete=\"off\">" +
+                                "<label class=\"btn btn-default fotoS\">" +
+                                "<input id=\"foto"+ogg.id_f[i]+"\" type=\"checkbox\" name='foto' value=\""+ogg.id_f[i]+"\" autocomplete=\"off\">" +
                                 "<span class=\"glyphicon glyphicon-ok\"></span>" +
                                 "</label>" +
                                 "</div>" +
@@ -95,7 +99,7 @@ function visualizza_foto(cartella) {
                                 "</a>" +
                                 "</div>";
                         }
-                    codice+="</div>";
+                    codice+="</div></</form>";
                 codice += "</div>";
                 codice += "</div>";
             codice += "</div>";
@@ -156,6 +160,63 @@ function eliminaF(id) {
                 var key = "#foto" + id;
                 $(key).hide();
             }
+        },
+        error: function(){
+            alert("Chiamata fallita!!!");
+        }
+    });
+}
+function AllSel() {
+    $('.fotoS').addClass('active');
+    $('#Sel').hide();
+    $('#deSel').show();
+
+    var i = 0;
+    var modulo = document.modulo.elements;
+    for (i=0; i<modulo.length; i++)
+    {
+        if(modulo[i].type == "checkbox")
+        {
+            modulo[i].checked = true;
+        }
+    }
+}
+function AllDeSel() {
+    $('.fotoS').removeClass('active');
+    $('#deSel').hide();
+    $('#Sel').show();
+
+    var i = 0;
+    var modulo = document.modulo.elements;
+    for (i=0; i<modulo.length; i++)
+    {
+        if(modulo[i].type == "checkbox")
+        {
+            modulo[i].checked = false;
+        }
+    }
+}
+function SelC() {
+    var i = 0;
+    var modulo = document.modulo.elements;
+    for (i=0; i<modulo.length; i++)
+    {
+        if(modulo[i].type == "checkbox")
+        {
+            if(modulo[i].checked){
+                eliminaF(modulo[i].value);
+            }
+        }
+    }
+}
+function DelAll(cartella,d_cartella) {
+    $.ajax({
+        type: "GET",
+        url: "metodi/eliminaAllFoto.php",
+        data: "id_f="+cartella+"&del="+d_cartella,
+        dataType: "html",
+        success: function(risposta){
+            window.location.href="Foto.php";
         },
         error: function(){
             alert("Chiamata fallita!!!");
