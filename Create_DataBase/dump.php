@@ -5,9 +5,13 @@
  * Date: 15/11/2016
  * Time: 14:08
  */
-$tipo_sport = "INSERT INTO `tipo_sport`(`id_tipo_sport`, `descrizione`, `logo`)"
-    ." VALUES (NULL, 'Calcio','fa-futbol-o'),(NULL, 'Calcio a 5','fa-futbol-o'),(NULL, 'Calcio a 7','fa-futbol-o'),"
-    ."(NULL, 'Beach-Volley',NULL),(NULL, 'Tennis',NULL)";
+$tipo_sport = "INSERT INTO `tipo_sport`(`id_tipo_sport`, `descrizione`, `logo`, `colore`) VALUES "
+        ."(NULL, 'Calcio','fa-futbol-o','red'),"
+        ."(NULL, 'Calcio a 5','fa-futbol-o','yellow'),"
+        ."(NULL, 'Calcio a 7','fa-futbol-o','success'),"
+        ."(NULL, 'Beach-Volley','fa-trophy','primary'),"
+        ."(NULL, 'Tennis','fa-trophy','green'),"
+        ."(NULL, 'Biliardino','fa-trophy','info')";
 $cat_utente = "INSERT INTO `cat_utente`(`id_cat_utente`, `nome_cat`) VALUES (NULL,'Admin'),(NULL,'Staff'),(NULL, 'Bar'),(NULL,'Utente')";
 $pass= "123456";
 $pass = password_hash($pass,PASSWORD_BCRYPT);
@@ -24,10 +28,12 @@ $funzioni = "INSERT INTO `funzioni`(`id_funzione`, `nome_funzione`, `colore`, `s
     ."(NULL, 'Tornei','red','Staff/Torneo.php','fa-calendar-o'),"
     ."(NULL, 'Bar', 'yellow', 'Bar/Bar.php', 'fa-shopping-basket'),"
     ."(NULL, 'Notizie', 'link', 'Staff/Notizie.php', 'fa-newspaper-o'),"
-    ."(NULL, 'Foto', 'success', 'Gestine_Foto/Foto.php', 'fa-camera-retro')";
+    ."(NULL, 'Foto', 'success', 'Gestine_Foto/Foto.php', 'fa-camera-retro'),"
+    ."(NULL, 'Iscrizione', 'primary', 'Utente/Tornei_disp.php', 'fa-pencil-square-o'),"
+    ."(NULL, 'My Tornei', 'info', 'Utente/My_Tornei.php', 'fa fa-cog')";
 $funzioni_cat_utente = "INSERT INTO `funzioni_cat_utente` (`id_cat_utente`, `id_funzione`, `abilitato`)"
 ." VALUES ('1', '1', '1'), ('2', '1', '1'), ('1', '2', '1'), ('3', '2', '1'), ('1', '3', '1'), ('2', '3', '1')"
-.",('1', '4', '1'), ('2', '4', '1')";
+.",('1', '4', '1'), ('2', '4', '1'),('4','5','1'),('4','6','1')";
 $tempo = "INSERT INTO `tempo` (`id_tempo`,`descrizione`) VALUES"
     ."(NULL, '1° Tempo'),"
     ."(NULL, '2° Tempo'),"

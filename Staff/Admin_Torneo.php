@@ -131,7 +131,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
     $torneo = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
     include "../connessione.php";
     try {
-        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale`,`finished` "
+        $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori_min`,`num_giocatori_max`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale`,`finished` "
             . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$torneo'";
         $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
@@ -179,7 +179,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                             . "<li class=\"list-group-item\"><strong>Data Iscrizioni: </strong>$oggTorneo->Fiscirizioni</li>"
                             . "<li class=\"list-group-item\"><strong>Numero Minimo Squadre: </strong>$oggTorneo->min_sq</li>"
                             . "<li class=\"list-group-item\"><strong>Numero Massimo Squadre: </strong>$oggTorneo->max_sq</li>"
-                            . "<li class=\"list-group-item\"><strong>Numero Giocatori per Squadra: </strong>$oggTorneo->num_giocatori</li>"
+                            . "<li class=\"list-group-item\"><strong>Numero Giocatori Minimo per Squadra: </strong>$oggTorneo->num_giocatori_min</li>"
+                            . "<li class=\"list-group-item\"><strong>Numero Giocatori Massimo per Squadra: </strong>$oggTorneo->num_giocatori_max</li>"
                             . "</ul>"
                         . "</div>";
                         //FINE PRIMO BLOCCO
@@ -471,8 +472,12 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "<input type=\"number\" class=\"form-control\" id=\"max_sq\" name='max_sq' value='$oggTorneo->max_sq' required>"
         . "</div>"
         ."<div class=\"form-group\">"
-        . "<label for=\"num\">Numero Giocatori Per Squadra:</label>"
-        . "<input type=\"number\" class=\"form-control\" id=\"num\" name='num' value='$oggTorneo->num_giocatori' required>"
+        . "<label for=\"num\">Numero Giocatori Minimo Per Squadra:</label>"
+        . "<input type=\"number\" class=\"form-control\" id=\"num_min\" name='num_min' value='$oggTorneo->num_giocatori_min' required>"
+        . "</div>"
+        ."<div class=\"form-group\">"
+        . "<label for=\"num\">Numero Giocatori Massimo Per Squadra:</label>"
+        . "<input type=\"number\" class=\"form-control\" id=\"num_max\" name='num_max' value='$oggTorneo->num_giocatori_max' required>"
         . "</div>"
         . "<div class=\"alert alert-warning\">Se non ci sono vincoli di et&agrave;, Canella i dati esistenti!</div>"
         . "<div class=\"form-group col-md-6\">"

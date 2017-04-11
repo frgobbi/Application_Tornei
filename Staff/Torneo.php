@@ -113,8 +113,12 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                 <input type="number" class="form-control" name="max_sq" id="max_sq" required>
                             </div>
                             <div class="form-group">
-                                <label for="giocatori_sq">Numero Giocatori Per Squadra:</label>
-                                <input type="number" class="form-control" name="giocatori_sq" id="giocatori_sq" required>
+                                <label for="giocatori_sq">Numero Giocatori minimo per Squadra:</label>
+                                <input type="number" class="form-control" name="giocatori_sq_min" id="giocatori_sq_min" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="giocatori_sq">Numero Giocatori massimo per Squadra:</label>
+                                <input type="number" class="form-control" name="giocatori_sq_max" id="giocatori_sq_max" required>
                             </div>
 
                             <div class="alert alert-warning">Se non ci sono vincoli di et&agrave;, non inserire nulla!</div>
