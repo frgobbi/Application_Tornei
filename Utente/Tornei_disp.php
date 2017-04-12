@@ -19,11 +19,13 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
     include '../Componenti_Base/Head.php';
     LibrerieLogin();
     ?>
+    <script src="Java-script/tornei_disp.js" type="text/javascript"></script>
     <style type="text/css">
     </style>
     <script type="text/javascript">
         function info_t(id) {
-           console.log($('#modal_info_T').modal('show'));
+            torneo(id);
+           $('#modal_info_T').modal('show');
         }
     </script>
 </head>
