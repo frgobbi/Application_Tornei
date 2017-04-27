@@ -11,7 +11,7 @@ function mailIscrizione($nome, $cognome, $username)
     $url = "$dominio/login-singup-logout/metodi/abilitazione.php?utente=$username";
     $body = "<div style=\"width: 400px; height:500px; border: 2px solid #428bca;\">"
         . "<div style=\"padding: 10px;\">"
-        . "<h3 style=\"font-family: Comic Sans MS; font-size: 25px; text-align: center; color: #55ccff;\">Ciao francesco Gobbi Completa la tua iscrizione!</h3>"
+        . "<h3 style=\"font-family: Comic Sans MS; font-size: 25px; text-align: center; color: #55ccff;\">Ciao ".$nome." ".$cognome." Completa la tua iscrizione!</h3>"
         . "</div>"
         . "<div style=\"padding: 2px;\">"
         . "<p style=\"text-align: center; font-family: Comic Sans MS; font-size: 20px; font-weight: bold;\">Per completare la tua iscrizione clicca sul bottone sottostante</p>"

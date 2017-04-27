@@ -536,7 +536,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                     ."</tr>"
                 ."</thead>"
             ."<tbody>";
-            foreach ($connessione->query("SELECT nome,cognome,DATE_FORMAT(data_nascita,'%d-%m-%Y') AS data,codice_fiscale,luogo_nascita,residenza FROM `utente` INNER JOIN sq_utente ON utente.username = sq_utente.username WHERE sq_utente.id_sq = '$squadra' ORDER BY(nome) ASC") as $riga){
+            foreach ($connessione->query("SELECT nome,cognome,DATE_FORMAT(data_nascita,'%d-%m-%Y') AS data,codice_fiscale,luogo_nascita,residenza FROM `utente` INNER JOIN sq_utente ON utente.username = sq_utente.username INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq WHERE sq_utente.id_sq = '$squadra' AND squadra.iscritta = 1 ORDER BY(nome) ASC") as $riga){
                 $nome_u = $riga['nome'];
                 $cognome_u = $riga['cognome'];
                 $data = $riga['data'];

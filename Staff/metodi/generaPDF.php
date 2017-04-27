@@ -43,13 +43,13 @@ try{
         $pdf->setX(54);
         $pdf->Cell(46, 10, 'Cognome', 1, 0, 'C');
         $pdf->setX(100);
-        $pdf->Cell(46, 10, 'Data di Nascita', 1, 0, 'C');
-        $pdf->setX(146);
-        $pdf->Cell(46, 10, 'Luogo di Nascita', 1, 0, 'C');
-        $pdf->setX(192);
+        $pdf->Cell(34, 10, 'Data di Nascita', 1, 0, 'C');
+        $pdf->setX(134);
+        $pdf->Cell(40, 10, 'Luogo di Nascita', 1, 0, 'C');
+        $pdf->setX(174);
         $pdf->Cell(46, 10, 'Codice Fiscale', 1, 0, 'C');
-        $pdf->setX(238);
-        $pdf->Cell(46, 10, 'Residenza', 1, 0, 'C');
+        $pdf->setX(220);
+        $pdf->Cell(64, 10, 'Residenza', 1, 0, 'C');
 
         $pdf->SetFont('Arial','',12);
         foreach ($connessione->query("SELECT nome,cognome,DATE_FORMAT(data_nascita,'%d-%m-%Y') AS data,codice_fiscale,luogo_nascita,residenza FROM `utente` INNER JOIN sq_utente ON utente.username = sq_utente.username WHERE sq_utente.id_sq = '$squadra' ORDER BY(nome) ASC") as $riga) {
@@ -65,13 +65,13 @@ try{
             $pdf->setX(54);
             $pdf->Cell(46, 10, $cognome_u, 1, 0, 'C');
             $pdf->setX(100);
-            $pdf->Cell(46, 10, $data, 1, 0, 'C');
-            $pdf->setX(146);
-            $pdf->Cell(46, 10, $luogo_d, 1, 0, 'C');
-            $pdf->setX(192);
+            $pdf->Cell(34, 10, $data, 1, 0, 'C');
+            $pdf->setX(134);
+            $pdf->Cell(40, 10, $luogo_d, 1, 0, 'C');
+            $pdf->setX(174);
             $pdf->Cell(46, 10, $codice, 1, 0, 'C');
-            $pdf->setX(238);
-            $pdf->Cell(46, 10, $residenza, 1, 0, 'C');
+            $pdf->setX(220);
+            $pdf->Cell(64, 10, $residenza, 1, 0, 'C');
 
         }
     }

@@ -65,5 +65,9 @@ $connessione = null;
     </script>
     </body>
 </html>
-<?php
-header('Refresh: 5; url=../../index.php');
+
+<script type="text/javascript">
+	setTimeout(function(){ 
+		window.location.href="../../index.php";
+	 }, 5000);
+</script>

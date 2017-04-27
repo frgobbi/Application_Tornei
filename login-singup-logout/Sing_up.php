@@ -193,7 +193,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xm-12 col-sm-6 col-md-6 col-lg-6">
-                                                <button type="button" onclick="submitForm()" class="btn btn-primary btn-lg btn-block">Invia</button>
+                                                <button type="button" id="buttonSub" onclick="submitForm()" class="btn btn-primary btn-lg btn-block">Invia</button>
                                             </div>
                                             <div class="col-xm-12 col-sm-6 col-md-6 col-lg-6">
                                                 <button type="button" onclick="resetForm()" class="btn btn-danger btn-lg btn-block">Reset</button>

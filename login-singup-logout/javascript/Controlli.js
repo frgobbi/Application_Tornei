@@ -86,6 +86,7 @@ function controllaUser() {
                     $(keyI).removeClass("has-error");
                     $(keyLOK).show();
                     $(keyLE).hide();
+                    $(key).popover('hide');
                 }
             },
             // ed una per il caso di fallimento
@@ -252,6 +253,8 @@ function submitForm() {
 
 
     if (controllo == 0) {
+    	$('#buttonSub').addClass('disabled');
+    	$('#buttonSub').attr('disabled',true);
         document.getElementById("iscrizione_utenti").submit();
     }
 

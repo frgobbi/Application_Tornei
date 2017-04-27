@@ -6,9 +6,9 @@
  * Time: 10:14
  */
 $host = "localhost";
-$user = "root";
-$password = "";
-$db = "tornei";
+$user = "efzfkmex_francesco";
+$password = "Francigobbi.03";
+$db = "efzfkmex_tornei";
 /*Instaurazione della connessione mediante i metodi messi a disposizione dalla
  * classe "PDO".
  */

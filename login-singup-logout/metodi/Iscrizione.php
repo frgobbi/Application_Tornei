@@ -65,7 +65,8 @@ if(!$mail->send()) {
     //echo 'Message has been sent';
 }
 $mail = null;
-header('Refresh: 0.05; url=../Iscritto.php?user='.$username);
+echo "<script type='text/javascript'>window.location.href='../Iscritto.php?user=$username'</script>";
+//header('Refresh: 0.05; url=../Iscritto.php?user='.$username);
 ?>
 
 
