@@ -24,7 +24,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
     </style>
     <script type="text/javascript">
         function apriPopup(id_p, id_torneo){
-            creaPopup(id_p, id_torneo);
+            creaPopupP(id_p, id_torneo);
             $('#partita').modal('show')
         }
     </script>

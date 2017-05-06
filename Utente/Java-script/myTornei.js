@@ -1,7 +1,7 @@
 /**
  * Created by francesco on 01/05/2017.
  */
-function creaPopup(id_partita, id_torneo) {
+function creaPopupP(id_partita, id_torneo) {
     var codice = "";
     var codiceH = "";
     $('#bodyPartita').empty();
@@ -337,4 +337,25 @@ function creaPopup(id_partita, id_torneo) {
             alert("Chiamata fallita!!!");
         }
     });
+}
+function creaPopupL(id_sq) {
+    var codice = "";
+    $.ajax({
+        type: "GET",
+        url: "dati/listaSQ.php",
+        data: "id_sq="+id_sq,
+        success: function (risposta) {
+            var ogg = $.parseJSON(risposta);
+            
+        },
+        error: function () {
+            alert("Chiamata fallita!!!");
+        }
+    });
+}
+function creaPopupGC(id_sq){
+    
+}
+function  creaPopC(id_t){
+    
 }
