@@ -5,10 +5,10 @@
  * Date: 22/11/2016
  * Time: 19:53
  */
-$user = filter_input(INPUT_GET, "utente",FILTER_SANITIZE_STRING);
+$username_u = filter_input(INPUT_GET, "utente",FILTER_SANITIZE_STRING);
 include "../../connessione.php";
 try{
-    $connessione->exec("UPDATE `utente` SET `attivo` = '1' WHERE `utente`.`username` = '$user'");
+    $connessione->exec("UPDATE `utente` SET `attivo` = '1' WHERE `utente`.`username` = '$username_u'");
 } catch (PDOException $e){
     echo "error: ".$e->getMessage();
 }

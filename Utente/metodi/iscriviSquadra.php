@@ -64,14 +64,17 @@ try {
     $pdf->setX(100);
     $pdf->Cell(46, 10, 'Cognome', 1, 0, 'C');
     $pdf->setX(146);
-    $pdf->Cell(46, 10, 'Email', 1, 0, 'C');
-    $pdf->setX(192);
+    $pdf->Cell(56, 10, 'Email', 1, 0, 'C');
+    $pdf->setX(212);
     $pdf->Cell(46, 10, 'Username', 1, 0, 'C');
-    $pdf->setX(238);
-    $pdf->Cell(46, 10, 'Password', 1, 0, 'C');
+    $pdf->setX(248);
+    $pdf->Cell(38, 10, 'Password', 1, 0, 'C');
     $pdf->setX(284);
 
     $connessione->beginTransaction();
+    $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori_min`,`num_giocatori_max`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale`,`finished` "
+        . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$id_t'";
+    $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
     $connessione->exec("INSERT INTO `squadra` (`id_sq`, `nome_sq`, `id_girone`, `id_torneo`, `iscritta`, `eliminata`) VALUES (NULL, '$nome_sq', NULL, '$id_t', '0', '0')");
     $oggS = $connessione->query("SELECT * FROM `squadra` WHERE id_torneo = '$id_t' AND nome_sq = '$nome_sq'")->fetch(PDO::FETCH_OBJ);
     if (strcmp($giocoAd, "si") == 0) {
@@ -88,11 +91,11 @@ try {
     $pdf->setX(100);
     $pdf->Cell(46, 10, $oggA->cognome, 1, 0, 'C');
     $pdf->setX(146);
-    $pdf->Cell(46, 10, $oggA->mail, 1, 0, 'C');
-    $pdf->setX(192);
+    $pdf->Cell(56, 10, $oggA->mail, 1, 0, 'C');
+    $pdf->setX(212);
     $pdf->Cell(46, 10, $oggA->username, 1, 0, 'C');
-    $pdf->setX(238);
-    $pdf->Cell(46, 10, '', 1, 0, 'C');
+    $pdf->setX(248);
+    $pdf->Cell(36, 10, '', 1, 0, 'C');
     $pdf->setX(284);
 
     for ($i = 0; $i < count($giocatori); $i++) {
@@ -122,25 +125,102 @@ try {
                 $codNew = $giocatori[$i][4];
                 $resNew = $giocatori[$i][5];
                 $sessoNew = $giocatori[$i][6];
-                $sql = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`, `card`, `saldo`) VALUES "
-                    . "('$username','$nomeNew','$cognomeNew','$dataNew','$codNew','$luogoNew','$sessoNew','$resNew',NULL,NULL,'$pwd_cript','1','utente.gif','4',NULL,'0')";
-                $connessione->exec($sql);
 
-                $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$username', '$oggS->id_sq', '0', '1')");
-                $pdf->setY($pdf->GetY() + 10);
-                $pdf->SetX(8);
-                $pdf->Cell(46, 10, 'Nuovo utente', 1, 0, 'C');
-                $pdf->setX(54);
-                $pdf->Cell(46, 10, $nomeNew, 1, 0, 'C');
-                $pdf->setX(100);
-                $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
-                $pdf->setX(146);
-                $pdf->Cell(46, 10, '', 1, 0, 'C');
-                $pdf->setX(192);
-                $pdf->Cell(46, 10, $username, 1, 0, 'C');
-                $pdf->setX(238);
-                $pdf->Cell(46, 10, $pwd, 1, 0, 'C');
-                $pdf->setX(284);
+                $anno_g = explode("-", $dataNew);
+
+                if ($oggTorneo->min_anno != 0) {
+                    if ($oggTorneo->max_anno != 0) {
+                        if ($anno_g[0] >= $oggTorneo->max_anno && $anno_g[0] <= $oggTorneo->min_anno) {
+                            $sql = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`, `card`, `saldo`, `new_pas`) VALUES "
+                                . "('$username','$nomeNew','$cognomeNew','$dataNew','$codNew','$luogoNew','$sessoNew','$resNew',NULL,NULL,'$pwd_cript','1','utente.gif','4',NULL,'0','0')";
+                            $connessione->exec($sql);
+
+                            $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$username', '$oggS->id_sq', '0', '1')");
+                            $pdf->setY($pdf->GetY() + 10);
+                            $pdf->SetX(8);
+                            $pdf->Cell(46, 10, 'Nuovo utente', 1, 0, 'C');
+                            $pdf->setX(54);
+                            $pdf->Cell(46, 10, $nomeNew, 1, 0, 'C');
+                            $pdf->setX(100);
+                            $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
+                            $pdf->setX(146);
+                            $pdf->Cell(56, 10, '', 1, 0, 'C');
+                            $pdf->setX(212);
+                            $pdf->Cell(46, 10, $username, 1, 0, 'C');
+                            $pdf->setX(248);
+                            $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
+                            $pdf->setX(284);
+                        }
+                    } else {
+                        if ($anno_g[0] <= $oggTorneo->min_anno) {
+                            $sql = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`, `card`, `saldo`, `new_pas`) VALUES "
+                                . "('$username','$nomeNew','$cognomeNew','$dataNew','$codNew','$luogoNew','$sessoNew','$resNew',NULL,NULL,'$pwd_cript','1','utente.gif','4',NULL,'0','0')";
+                            $connessione->exec($sql);
+
+                            $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$username', '$oggS->id_sq', '0', '1')");
+                            $pdf->setY($pdf->GetY() + 10);
+                            $pdf->SetX(8);
+                            $pdf->Cell(46, 10, 'Nuovo utente', 1, 0, 'C');
+                            $pdf->setX(54);
+                            $pdf->Cell(46, 10, $nomeNew, 1, 0, 'C');
+                            $pdf->setX(100);
+                            $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
+                            $pdf->setX(146);
+                            $pdf->Cell(56, 10, '', 1, 0, 'C');
+                            $pdf->setX(212);
+                            $pdf->Cell(46, 10, $username, 1, 0, 'C');
+                            $pdf->setX(248);
+                            $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
+                            $pdf->setX(284);
+                        }
+                    }
+                } else{
+                    if ($oggTorneo->max_anno != 0) {
+                        if ($anno_g[0] >= $oggTorneo->max_anno) {
+                            $sql = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`, `card`, `saldo`, `new_pas`) VALUES "
+                                . "('$username','$nomeNew','$cognomeNew','$dataNew','$codNew','$luogoNew','$sessoNew','$resNew',NULL,NULL,'$pwd_cript','1','utente.gif','4',NULL,'0','0')";
+                            $connessione->exec($sql);
+
+                            $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$username', '$oggS->id_sq', '0', '1')");
+                            $pdf->setY($pdf->GetY() + 10);
+                            $pdf->SetX(8);
+                            $pdf->Cell(46, 10, 'Nuovo utente', 1, 0, 'C');
+                            $pdf->setX(54);
+                            $pdf->Cell(46, 10, $nomeNew, 1, 0, 'C');
+                            $pdf->setX(100);
+                            $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
+                            $pdf->setX(146);
+                            $pdf->Cell(56, 10, '', 1, 0, 'C');
+                            $pdf->setX(212);
+                            $pdf->Cell(46, 10, $username, 1, 0, 'C');
+                            $pdf->setX(248);
+                            $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
+                            $pdf->setX(284);
+                        }
+                    } else {
+                        $sql = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`, `card`, `saldo`,`new_pas`) VALUES "
+                            . "('$username','$nomeNew','$cognomeNew','$dataNew','$codNew','$luogoNew','$sessoNew','$resNew',NULL,NULL,'$pwd_cript','1','utente.gif','4',NULL,'0','0')";
+                        $connessione->exec($sql);
+
+                        $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$username', '$oggS->id_sq', '0', '1')");
+                        $pdf->setY($pdf->GetY() + 10);
+                        $pdf->SetX(8);
+                        $pdf->Cell(46, 10, 'Nuovo utente', 1, 0, 'C');
+                        $pdf->setX(54);
+                        $pdf->Cell(46, 10, $nomeNew, 1, 0, 'C');
+                        $pdf->setX(100);
+                        $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
+                        $pdf->setX(146);
+                        $pdf->Cell(56, 10, '', 1, 0, 'C');
+                        $pdf->setX(212);
+                        $pdf->Cell(46, 10, $username, 1, 0, 'C');
+                        $pdf->setX(248);
+                        $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
+                        $pdf->setX(284);
+                    }
+                }
+
+
             } else {
                 $sql = "SELECT * FROM `sq_utente` "
                     . "INNER JOIN utente ON sq_utente.username = utente.username "
@@ -148,21 +228,84 @@ try {
                     . "WHERE utente.username = '$oggG->username' AND squadra.id_torneo = '$id_t'";
                 $righe = $connessione->query($sql)->rowCount();
                 if ($righe == 0) {
-                    $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$oggG->username', '$oggS->id_sq', '0', '1')");
-                    $pdf->setY($pdf->GetY() + 10);
-                    $pdf->SetX(8);
-                    $pdf->Cell(46, 10, 'Account esistente', 1, 0, 'C');
-                    $pdf->setX(54);
-                    $pdf->Cell(46, 10, $oggG->nome, 1, 0, 'C');
-                    $pdf->setX(100);
-                    $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
-                    $pdf->setX(146);
-                    $pdf->Cell(46, 10, $oggG->mail, 1, 0, 'C');
-                    $pdf->setX(192);
-                    $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
-                    $pdf->setX(238);
-                    $pdf->Cell(46, 10, '', 1, 0, 'C');
-                    $pdf->setX(284);
+                    $anno_g = explode("-", $oggG->data_nascita);
+
+                    if ($oggTorneo->min_anno != 0) {
+                        if ($oggTorneo->max_anno != 0) {
+                            if ($anno_g[0] >= $oggTorneo->max_anno && $anno_g[0] <= $oggTorneo->min_anno) {
+                                $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$oggG->username', '$oggS->id_sq', '0', '1')");
+                                $pdf->setY($pdf->GetY() + 10);
+                                $pdf->SetX(8);
+                                $pdf->Cell(46, 10, 'Account esistente', 1, 0, 'C');
+                                $pdf->setX(54);
+                                $pdf->Cell(46, 10, $oggG->nome, 1, 0, 'C');
+                                $pdf->setX(100);
+                                $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
+                                $pdf->setX(146);
+                                $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
+                                $pdf->setX(212);
+                                $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
+                                $pdf->setX(248);
+                                $pdf->Cell(36, 10, '', 1, 0, 'C');
+                                $pdf->setX(284);
+                            }
+                        } else {
+                            if ($anno_g[0] <= $oggTorneo->min_anno) {
+                                $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$oggG->username', '$oggS->id_sq', '0', '1')");
+                                $pdf->setY($pdf->GetY() + 10);
+                                $pdf->SetX(8);
+                                $pdf->Cell(46, 10, 'Account esistente', 1, 0, 'C');
+                                $pdf->setX(54);
+                                $pdf->Cell(46, 10, $oggG->nome, 1, 0, 'C');
+                                $pdf->setX(100);
+                                $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
+                                $pdf->setX(146);
+                                $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
+                                $pdf->setX(212);
+                                $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
+                                $pdf->setX(248);
+                                $pdf->Cell(36, 10, '', 1, 0, 'C');
+                                $pdf->setX(284);
+                            }
+                        }
+                    } else{ 
+                        if ($oggTorneo->max_anno != 0) {
+                            if ($anno_g[0] >= $oggTorneo->max_anno) {
+                                $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$oggG->username', '$oggS->id_sq', '0', '1')");
+                                $pdf->setY($pdf->GetY() + 10);
+                                $pdf->SetX(8);
+                                $pdf->Cell(46, 10, 'Account esistente', 1, 0, 'C');
+                                $pdf->setX(54);
+                                $pdf->Cell(46, 10, $oggG->nome, 1, 0, 'C');
+                                $pdf->setX(100);
+                                $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
+                                $pdf->setX(146);
+                                $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
+                                $pdf->setX(212);
+                                $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
+                                $pdf->setX(248);
+                                $pdf->Cell(36, 10, '', 1, 0, 'C');
+                                $pdf->setX(284);
+                            }
+                        }else {
+                            $connessione->exec("INSERT INTO `sq_utente` (`id_sq_utente`, `username`, `id_sq`, `make`, `giocatore`) VALUES (NULL, '$oggG->username', '$oggS->id_sq', '0', '1')");
+                            $pdf->setY($pdf->GetY() + 10);
+                            $pdf->SetX(8);
+                            $pdf->Cell(46, 10, 'Account esistente', 1, 0, 'C');
+                            $pdf->setX(54);
+                            $pdf->Cell(46, 10, $oggG->nome, 1, 0, 'C');
+                            $pdf->setX(100);
+                            $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
+                            $pdf->setX(146);
+                            $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
+                            $pdf->setX(212);
+                            $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
+                            $pdf->setX(248);
+                            $pdf->Cell(36, 10, '', 1, 0, 'C');
+                            $pdf->setX(284);
+                        }
+                    }
+
                 } else {
                     $esito = 2;
                 }
@@ -193,17 +336,17 @@ try {
     include "../../Librerie/Mail/oggettoMail.php";
 
     $mail->addAddress($oggA->mail, $oggA->nome);     // Add a recipient
-//$mail->addAddress('ellen@example.com');               // Name is optional
-//$mail->addReplyTo('torneosupernova@gmail.com', 'Staff Supernova');
-//$mail->addCC('cc@example.com');
-//$mail->addBCC('bcc@example.com');
+    //$mail->addAddress('ellen@example.com');               // Name is optional
+    //$mail->addReplyTo('torneosupernova@gmail.com', 'Staff Supernova');
+    //$mail->addCC('cc@example.com');
+    //$mail->addBCC('bcc@example.com');
 
     $mail->addAttachment($percorso);         // Add attachments
-//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Iscrizione Squadra';
     $mail->Body = 'In allegato il file con gli username e le password per accedere alla piattaforma, per i nuovi iscritti';
-//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients";
+    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients";
     if (!$mail->send()) {
         //echo 'Message could not be sent.';
         echo 'Mailer Error: ' . $mail->ErrorInfo;

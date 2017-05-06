@@ -70,7 +70,7 @@ and open the template in the editor.
                     </div>
                     <!-- 3 -->
                     <div class="col-lg-3 col-md-6">
-                        <a href="#">
+                        <a href="Public/Galleria.php">
                             <div class="panel panel-yellow">
                                 <div class="panel-heading">
                                     <div class="row">
@@ -123,7 +123,7 @@ and open the template in the editor.
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                             <?php
                             $c = 1;
-                            if ($handle = opendir("Immagini/Vecchi_Tornei")) {
+                            if ($handle = opendir("Immagini/Vecchi_tornei")) {
                                 while ($file = readdir($handle)) {
                                     echo "<li data-target=\"#myCarousel\" data-slide-to=\"$c\"></li>";
                                     $c = $c + 1;
@@ -138,16 +138,16 @@ and open the template in the editor.
                             $c = 0;
                             include "connessione.php";
                             try{
-                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_Tornei'")->fetch(PDO::FETCH_OBJ);
+                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_tornei'")->fetch(PDO::FETCH_OBJ);
                                 foreach ($connessione->query("SELECT `id_foto`, `nome_foto`, `id_c` FROM `foto` WHERE id_c = '$oggC->id_c'") as $row){
                                  $file = $row['nome_foto'];
                                     if ($c == 0) {
                                         echo " <div class=\"item active\">"
-                                            . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                            . "<img src=\"Immagini/Vecchi_tornei/$file\">"
                                             . "</div>";
                                     } else {
                                         echo " <div class=\"item\">"
-                                            . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                            . "<img src=\"Immagini/Vecchi_tornei/$file\">"
                                             . "</div>";
                                     }
                                     $c = $c + 1;
@@ -156,16 +156,16 @@ and open the template in the editor.
                                 echo $e->getMessage();
                             }
                             $connessione = null;
-                            /*if ($handle = opendir("Immagini/Vecchi_Tornei")) {
+                            /*if ($handle = opendir("Immagini/Vecchi_tornei")) {
                                 while ($file = readdir($handle)) {
                                     if ($file != "." & $file != "..") {
                                         if ($c == 0) {
                                             echo " <div class=\"item active\">"
-                                                . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                                . "<img src=\"Immagini/Vecchi_tornei/$file\">"
                                                 . "</div>";
                                         } else {
                                             echo " <div class=\"item\">"
-                                                . "<img src=\"Immagini/Vecchi_Tornei/$file\">"
+                                                . "<img src=\"Immagini/Vecchi_tornei/$file\">"
                                                 . "</div>";
                                         }
                                         $c = $c + 1;

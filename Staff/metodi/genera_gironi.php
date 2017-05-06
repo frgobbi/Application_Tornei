@@ -51,4 +51,4 @@ for ($i=0; $i<count($squadre);$i++){
     }
 }
 $connessione = null;
-header("Location:../Admin_torneo.php?id=$torneo");
+header("Location:../Admin_Torneo.php?id=$torneo");

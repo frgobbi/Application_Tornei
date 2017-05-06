@@ -129,7 +129,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="eta_max">Anno di nascita minimo (et&agrave; pi&ugrave; grande):</label>
+                                <label for="eta_max">Anno di nascita massimo (et&agrave; pi&ugrave; grande):</label>
                                 <input type="number" class="form-control" name="eta_max" id="eta_max">
                             </div>
 

@@ -246,6 +246,8 @@ function removeGiocatore() {
     }
 }
 function invia(username,id_t) {
+    $('#inviaF').attr("disabled");
+    $('#inviaF').addClass("disabled");
     $('#ruota').show();
     var nome_sq = $('#nome_sq').val();
     var gioco_r = $('#gioco').val();
@@ -265,7 +267,7 @@ function invia(username,id_t) {
         data: parametri,
         dataType: "html",
         success: function(risposta){
-           //window.location.href="Iscritto.php?esito="+risposta+"&id_t="+id_t;
+           window.location.href="Iscritto.php?esito="+risposta+"&id_t="+id_t;
         },
         error: function(){
             alert("Chiamata fallita!!!");

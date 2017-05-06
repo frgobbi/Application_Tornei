@@ -254,7 +254,7 @@ function submitForm() {
 
     if (controllo == 0) {
     	$('#buttonSub').addClass('disabled');
-    	$('#buttonSub').attr('disabled',true);
+    	$('#buttonSub').attr('disabled');
         document.getElementById("iscrizione_utenti").submit();
     }
 

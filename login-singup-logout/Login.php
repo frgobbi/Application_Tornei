@@ -16,9 +16,16 @@
         #errore{
             display: none;
         }
+        #warning{
+            display: none;
+        }
+        #ruota{
+            display: none;
+        }
     </style>
     <script type="text/javascript">
         function accedi() {
+            $('#ruota').show();
             $(document).ready(function() {
                 var user = $("#username").val();
                 var pwd = $("#pwd").val();
@@ -32,13 +39,20 @@
                         console.log(risposta);
                         if(risposta==0){
                             $('#errore').hide();
+                            $('#warning').hide();
                             window.location.href="../Home/home.php";
                         } else{
-                            $('#errore').show();
+                            if(risposta==1) {
+                                $('#errore').show();
+                            }else {
+                                $('#warning').show();
+                            }
                         }
+                        $('#ruota').hide();
                     },
                     error: function()
                     {
+                        $('#ruota').hide();
                         alert("Chiamata fallita, si prega di riprovare...");
                     }
                 });
@@ -82,9 +96,12 @@
                             <div id="errore" class="alert alert-danger">
                                 <strong>Errore!</strong> Username e/o Password errati!
                             </div>
+                            <div id="warning" class="alert alert-warning">
+                                <strong>Attenzione</strong> Questo account non è stato attivato. <br> controlla la tua mail
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-4 col-md-4">
-                                    <button type="button" onclick="accedi()" class="btn btn-block btn-primary">Accedi</button>
+                                    <button type="button" onclick="accedi()" class="btn btn-block btn-primary">Accedi <i id="ruota" class="fa fa-spinner fa-pulse fa-lg fa-fw"></i></button>
                                 </div>
                             </div>
                             <hr>

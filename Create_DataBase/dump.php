@@ -15,18 +15,18 @@ $tipo_sport = "INSERT INTO `tipo_sport`(`id_tipo_sport`, `descrizione`, `logo`, 
 $cat_utente = "INSERT INTO `cat_utente`(`id_cat_utente`, `nome_cat`) VALUES (NULL,'Admin'),(NULL,'Staff'),(NULL, 'Bar'),(NULL,'Utente')";
 $pass= "123456";
 $pass = password_hash($pass,PASSWORD_BCRYPT);
-$utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza` ,`mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`) "
-    ."VALUES ('admin', 'admin', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '1', NULL),"
-    ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '2', NULL),"
-    ."('bar', 'bar', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL),"
-    ."('francesco.gobbi', 'Francesco', 'Gobbi', '1997-06-03', 'GBBFNC97H03G478G', 'Perugia', 'M', 'Via Montiano 5 Corciano', 'gobbi03.fg@gmail.com', '3475057671', '$pass', '1', 'utente.gif', '4', NULL)";
+$utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza` ,`mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`, `new_pas`, `new_pas`) "
+    ."VALUES ('admin', 'admin', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '1', NULL,0),"
+    ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '2', NULL,0),"
+    ."('bar', 'bar', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL,0),"
+    ."('francesco.gobbi', 'Francesco', 'Gobbi', '1997-06-03', 'GBBFNC97H03G478G', 'Perugia', 'M', 'Via Montiano 5 Corciano', 'gobbi03.fg@gmail.com', '3475057671', '$pass', '1', 'utente.gif', '4', NULL,'0')";
 $funzioni = "INSERT INTO `funzioni`(`id_funzione`, `nome_funzione`, `colore`, `src`, `icona`) VALUES "
     ."(NULL, 'Tornei','red','Staff/Torneo.php','fa-calendar-o'),"
     ."(NULL, 'Bar', 'yellow', 'Bar/Bar.php', 'fa-shopping-basket'),"
     ."(NULL, 'Notizie', 'link', 'Staff/Notizie.php', 'fa-newspaper-o'),"
     ."(NULL, 'Foto', 'success', 'Gestine_Foto/Foto.php', 'fa-camera-retro'),"
     ."(NULL, 'Iscrizione', 'primary', 'Utente/Tornei_disp.php', 'fa-pencil-square-o'),"
-    ."(NULL, 'My Tornei', 'info', 'Utente/My_Tornei.php', 'fa fa-cog')";
+    ."(NULL, 'Squadre', 'info', 'Utente/My_Tornei.php', 'fa fa-cog')";
 $funzioni_cat_utente = "INSERT INTO `funzioni_cat_utente` (`id_cat_utente`, `id_funzione`, `abilitato`)"
 ." VALUES ('1', '1', '1'), ('2', '1', '1'), ('1', '2', '1'), ('3', '2', '1'), ('1', '3', '1'), ('2', '3', '1')"
 .",('1', '4', '1'), ('2', '4', '1'),('4','5','1'),('4','6','1')";
@@ -56,7 +56,7 @@ $gironi ="INSERT INTO `girone` (`id_girone`, `nome_girone`) VALUES "
     ."(NULL, 'Fasi Finali Torneo Superiore'),"
     ."(NULL, 'Fasi Finali Torneo Inferiore')";
 
-$cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_Tornei','primary')";
+$cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_tornei','primary')";
 
 include "../connessione.php";
 try{

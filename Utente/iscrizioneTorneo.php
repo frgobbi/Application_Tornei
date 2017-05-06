@@ -29,12 +29,12 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             torneo(id);
             $('#modal_info_T').modal('show');
         }
-        function num_g(min,max) {
-            num_g_a = min-2;
-            max_g = max-2;
-            min_g =  min-2;
-            for(var i=min-1; i<max-1;i++){
-                var key = "#giocatore"+i;
+        function num_g(min, max) {
+            num_g_a = min - 2;
+            max_g = max - 2;
+            min_g = min - 2;
+            for (var i = min - 1; i < max - 1; i++) {
+                var key = "#giocatore" + i;
                 $(key).hide();
             }
         }
@@ -46,11 +46,52 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
     require '../Componenti_Base/Nav-SideBar.php';
     navLogin();
     $torneo = filter_input(INPUT_GET, "id_t", FILTER_SANITIZE_STRING);
+    $id_u = $_SESSION['username'];
     include "../connessione.php";
     try {
         $sql = "SELECT `id_torneo`,`nome_torneo`,`min_sq`,`max_sq`,`num_giocatori_min`,`num_giocatori_max`, DATE_FORMAT(data_inizio,'%d-%m-%Y') AS inizio, `data_inizio`, DATE_FORMAT(data_f_iscrizioni,'%d-%m-%Y') AS Fiscirizioni,`data_f_iscrizioni`, DATE_FORMAT(data_fine,'%d-%m-%Y') AS fine,`data_fine`,`info`,tipo_sport.descrizione AS sport, `min_anno`, `max_anno`, `fase_finale`,`finished` "
             . "FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport = torneo.id_sport WHERE id_torneo= '$torneo'";
         $oggTorneo = $connessione->query($sql)->fetch(PDO::FETCH_OBJ);
+
+        $oggi = date("d-m-Y");
+        $oggiTime = strtotime($oggi);
+        $dataTime = strtotime($oggTorneo->Fiscirizioni);
+
+        if ($oggiTime > $dataTime) {
+            echo "<script type='text/javascript'>"
+                . "alert('Le Iscrizioni sono chiuse');"
+                . "window.location.href='Tornei_disp.php';"
+                . "</script>";
+        }
+
+        $oggAd = $connessione->query("SELECT * FROM `utente` WHERE username = '$id_u'")->fetch(PDO::FETCH_OBJ);
+
+        $data_n = explode("-", $oggAd->data_nascita);
+        if ($oggTorneo->max_anno != 0) {
+            if ($data_n[0] < $oggTorneo->max_anno) {
+                echo "<script type='text/javascript'>"
+                    . "alert('Sei troppo grande per questo Torneo');"
+                    . "window.location.href='Tornei_disp.php';"
+                    . "</script>";
+            }
+        }
+        if ($oggTorneo->min_anno != 0) {
+            if ($data_n[0] > $oggTorneo->min_anno) {
+                echo "<script type='text/javascript'>"
+                    . "alert('Sei troppo piccolo per questo Torneo');"
+                    . "window.location.href='Tornei_disp.php';"
+                    . "</script>";
+            }
+        }
+
+        $iscritto = $connessione->query("SELECT * FROM `utente` INNER JOIN sq_utente ON utente.username = sq_utente.username INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq WHERE utente.username = '$id_u' AND squadra.id_torneo = '$torneo'")->rowCount();
+        if ($iscritto != 0) {
+            echo "<script type='text/javascript'>"
+                . "alert('Sei gia\' iscritto a questo torneo');"
+                . "window.location.href='Tornei_disp.php';"
+                . "</script>";
+        }
+
     } catch (PDOException $e) {
         echo "error: " . $e->getMessage();
     }
@@ -76,14 +117,6 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             </div>
         </div>
         <?php
-        include "../connessione.php";
-        $id_u = $_SESSION['username'];
-        try {
-            $oggAd = $connessione->query("SELECT * FROM `utente` WHERE username = '$id_u'")->fetch(PDO::FETCH_OBJ);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-        $connessione = null;
 
         echo "<div class=\"row\">"
             . "<div class=\"col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12\">"
@@ -196,23 +229,23 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             . "</table>"
             . "</div>";
         echo "<div class='row container-fluid'>"
-            ."<div class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12'>"
-            ."<div class=\"btn-group btn-group-justified\">"
-            ."<a href=\"#\" onclick='removeGiocatore()' class=\"btn btn-danger btn-lg\">Rimuovi Giocatore</a>"
-            ."<a href=\"#\" onclick='addGiocatore()' class=\"btn btn-primary btn-lg\">Aggiungi Giocatore</a>"
-            ."</div>"
-            ."</div>"
-            ."</div>";
+            . "<div class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12'>"
+            . "<div class=\"btn-group btn-group-justified\">"
+            . "<a href=\"#\" onclick='removeGiocatore()' class=\"btn btn-danger btn-lg\">Rimuovi Giocatore</a>"
+            . "<a href=\"#\" onclick='addGiocatore()' class=\"btn btn-primary btn-lg\">Aggiungi Giocatore</a>"
+            . "</div>"
+            . "</div>"
+            . "</div>";
 
         echo "<div style='padding-top: 30px;' class='row container-fluid'>"
-            ."<button type='button' onclick='invia(\"$oggAd->username\",$torneo)' class='btn btn-primary btn-block'>Iscriviti al torneo</button>"
-            ."</div>"
-            ."<div id='ruota' style=\"padding-top:30px;\" class=\"row container-fluid\">"
-            ."<div class='col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-12 text-center'>"
-            ."<i class=\"fa fa-spinner fa-pulse fa-3x fa-fw\"></i>"
-            ."<span class=\"sr-only\">Loading...</span>"
-            ."</div>"
-            ."</div>";
+            . "<button type='button' id='inviaF' onclick='invia(\"$oggAd->username\",$torneo)' class='btn btn-primary btn-block'>Iscriviti al torneo</button>"
+            . "</div>"
+            . "<div id='ruota' style=\"padding-top:30px;\" class=\"row container-fluid\">"
+            . "<div class='col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-12 text-center'>"
+            . "<i class=\"fa fa-spinner fa-pulse fa-3x fa-fw\"></i>"
+            . "<span class=\"sr-only\">Loading...</span>"
+            . "</div>"
+            . "</div>";
 
         echo "<div class=\"row\">"
             . "<ul class=\"pager\">"
@@ -228,8 +261,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             . "</div>";
 
         echo "<script type='text/javascript'>"
-            ."num_g($oggTorneo->num_giocatori_min,$oggTorneo->num_giocatori_max)"
-            ."</script>";
+            . "num_g($oggTorneo->num_giocatori_min,$oggTorneo->num_giocatori_max)"
+            . "</script>";
         ?>
     </div>
 </div>
@@ -251,7 +284,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
                 <h4 class="modal-title">Utenti</h4>
             </div>
             <div id="body_utenti" class="modal-body">
-               
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

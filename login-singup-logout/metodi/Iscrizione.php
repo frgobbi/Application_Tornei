@@ -30,11 +30,11 @@ $sesso = filter_input(INPUT_POST, "sesso", FILTER_SANITIZE_STRING);
 include "../../connessione.php";
 try{
     if(strcmp($telefono, "")==0){
-        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`)"
-            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', NULL, '$pwd_criptata', '0', 'utente.gif', '4', NULL)");
+        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`, `new_pas`)"
+            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', NULL, '$pwd_criptata', '0', 'utente.gif', '4', NULL,'0')");
     } else {
-        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`)"
-            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', '$telefono', '$pwd_criptata', '0', 'utente.gif', '4', NULL)");
+        $connessione->exec("INSERT INTO `utente` (`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza`, `mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`, `new_pas`)"
+            ." VALUES ('$username', '$nome', '$cognome', '$data_nascita', '$cod_fiscale', '$luogo_nascita', '$sesso', '$residenza', '$mail_utente', '$telefono', '$pwd_criptata', '0', 'utente.gif', '4', NULL,'0')");
     }
 } catch (PDOException $e){
     echo"<script>alert('Non e\' stato possibile eseguire l\'iscrizione... Riprova piu\' tardi ');</script>";

@@ -260,7 +260,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                                             ."<input type=\"number\" min='1' max='9'  class=\"form-control\" id=\"num_gironi\" name='num_gironi'>"
                                         ."</div>"
                                         ."<div class=\"form-group\">"
-                                            ."<label for=\"num_sq\">Numero Squadre per Squadra:</label>"
+                                            ."<label for=\"num_sq\">Numero Squadre per Girone:</label>"
                                             ."<input type=\"number\" class=\"form-control\" id=\"num_sq\" name='num_sq'>"
                                         ."</div>"
                                         ."<div class=\"form-group\">";
@@ -485,7 +485,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "<input type=\"number\" class=\"form-control\" value=\"$oggTorneo->min_anno\" name=\"eta_min\" id=\"eta_min\">"
         . "</div>"
         . "<div class=\"form-group col-md-6\">"
-        . "<label for=\"eta_max\">Anno di nascita minimo (et&agrave; pi&ugrave; grande):</label>"
+        . "<label for=\"eta_max\">Anno di nascita massimo (et&agrave; pi&ugrave; grande):</label>"
         . "<input type=\"number\" class=\"form-control\" value=\"$oggTorneo->max_anno\" name=\"eta_max\" id=\"eta_max\">"
         . "</div>"
         . "<div class=\"form-group\">"

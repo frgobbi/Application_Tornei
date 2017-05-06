@@ -16,10 +16,14 @@ try{
        $esito = 1;
    } else {
        if(password_verify($pass,$utente->pass)){
-           $_SESSION['login'] = TRUE;
-           $_SESSION['tipo_utente'] = $utente->id_cat;
-           $_SESSION['nome_utente'] = $utente->nome." ".$utente->cognome;
-           $_SESSION['username'] = $utente->username;
+            if($utente->attivo ==1) {
+                $_SESSION['login'] = TRUE;
+                $_SESSION['tipo_utente'] = $utente->id_cat;
+                $_SESSION['nome_utente'] = $utente->nome . " " . $utente->cognome;
+                $_SESSION['username'] = $utente->username;
+            }else {
+                $esito =2;
+            }
        } else{
            $esito = 1;
        }
