@@ -242,7 +242,7 @@
                 echo "<div id='area_foto'>";
                     echo "<div id=\"main_area\">"
                         . "<div class=\"row\">"
-                        . "<div class=\"col-sm-6\" style='height: 500px; overflow-y: auto;' id=\"slider-thumbs\">"
+                        . "<div class=\"col-lg-6 col-md-12 col-sm-12\" style='height: 500px; overflow-y: auto;' id=\"slider-thumbs\">"
                         . "<ul class=\"hide-bullets\">";
                     for ($i = 0; $i < count($array_foto); $i++) {
                         //$percorso = "../Immagini/" . $array_cartelle[$num][1] . "/" . $array_foto[$i];
@@ -261,7 +261,7 @@
                     }
                     echo "</ul>"
                         . "</div>"
-                        . "<div class=\"col-sm-6\">"
+                        . "<div class=\"col-lg-6 col-md-12 col-sm-12\">"
                         . "<div class=\"col-xs-12\" id=\"slider\">"
                         . "<div class=\"row\">"
                         . "<div class=\"col-sm-12\" id=\"carousel-bounding-box\">"

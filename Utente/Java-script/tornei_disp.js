@@ -14,6 +14,7 @@ function torneo(id){
                 codice += "<div class='row'>";
                     codice += "<div class='col-lg-9 col-md-9 col-sm-12 col-xs-12'>";
                         codice += "<ul class=\"list-group\">"
+                            +"<li class=\"list-group-item\"><label>Tipo sport:</label> "+ogg.tipo_sport+"</li>"
                             +"<li class=\"list-group-item\"><label>Data Inizio:</label> "+ogg.data_inizio+"</li>"
                             +"<li class=\"list-group-item\"><label>Data Fine Iscrizioni:</label> "+ogg.data_f_iscrizioni+"</li>"
                             +"<li class=\"list-group-item\"><label>Data Fine:</label> "+ogg.data_fine+"</li>"
@@ -31,7 +32,7 @@ function torneo(id){
                                 codice +="<li class=\"list-group-item\"><label>Anno massimo giocatori:</label> "+ogg.max_anno+"</li>";
                             }
                             codice +="<li class=\"list-group-item\"><label>Squadre gi&agrave iscritte: </label> "+ogg.sq_iscritte+"</li>"
-                            +"<li class=\"list-group-item\"><label>Squadre con iscrizione non confermata: </label> "+ogg.sq_n_confermate+"</li>"
+                            //+"<li class=\"list-group-item\"><label>Squadre con iscrizione non confermata: </label> "+ogg.sq_n_confermate+"</li>"
                             +"<li class=\"list-group-item\"><label>Informazioni: </label> "+ogg.info_t+"</li>"
                             +"</ul>";
                     codice += "</div>";
@@ -44,6 +45,10 @@ function torneo(id){
                     "</div>";
             codice += "</div>";
             $('#body_t').append(codice);
+            $('#header_t').empty();
+             var codiceH = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>"
+                +" <h4 class=\"modal-title\">"+ogg.nome_t+" <small>"+ogg.tipo_sport+"</small></h4>";
+            $('#header_t').append(codiceH);
         },
         error: function(){
             alert("Chiamata fallita!!!");

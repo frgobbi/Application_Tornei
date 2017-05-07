@@ -27,6 +27,18 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             creaPopupP(id_p, id_torneo);
             $('#partita').modal('show')
         }
+        function popupLista(id_sq){
+            creaPopupL(id_sq);
+            $('#listaG').modal('show');
+        }
+        function popupGC(id_sq) {
+            creaPopupGC(id_sq);
+            $('#gol-cartelliniSq').modal('show');
+        }
+        function popupC(id_t) {
+            creaPopC(id_t);
+            $('#classificaG').modal('show');
+        }
     </script>
 </head>
 <body>
@@ -127,7 +139,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
                                 $sq[] = array($riga['id_sq'], $riga['nome_sq']);
                             }
 
-                            echo "<tr onclick=\"apriPopup($id_p, $torneo)\">"
+                            echo "<tr onclick=\"apriPopup('$id_p', '$torneo')\">"
                                 . "<td>" . $sq[0][1] . "</td>"
                                 . "<td>VS</td>"
                                 . "<td>" . $sq[1][1] . "</td>"
@@ -166,10 +178,10 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
                                 echo "<a href=\"#\" onclick=\"$('#aggGiocatore').modal('show')\" class=\"list-group-item\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i> Aggiungi giocatore </a>";
                             }
                         }
+                        echo "<a href=\"#\" onclick=\"popupLista('$id_sq')\" class=\"list-group-item\"><i class=\"fa fa-list\" aria-hidden=\"true\"></i> Lista squadra</a>";
+                        echo "<a href=\"#\" onclick=\"popupGC('$id_sq')\" class=\"list-group-item\"><i class=\"fa fa-info\" aria-hidden=\"true\"></i> Gol-Cartellini di squadra</a>";
+                        echo "<a href=\"#\" onclick=\"popupC('$torneo')\" class=\"list-group-item\"><i class=\"fa fa-trophy\" aria-hidden=\"true\"></i> Classifica generale torneo</a>";
                         ?>
-                        <a href="#" onclick="" class="list-group-item"> Lista squadra</a>
-                        <a href="#" onclick="" class="list-group-item"> Gol-Cartellini di squadra</a>
-                        <a href="#" onclick="" class="list-group-item"> Classifica generale torneo</a>
                     </div>
                 </div>
             </div>
@@ -237,15 +249,14 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
         </div>
     </div>
 </div>
-
 <div class="modal fade" role="dialog" id="listaG">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id='titoloPartita' class="modal-title">Modal Header</h4>
+                <h4 id='titoloPartita' class="modal-title">Lista giocatori</h4>
             </div>
-            <div class="modal-body">
+            <div id='bodyListaG' class="modal-body">
 
             </div>
             <div class="modal-footer">
@@ -254,15 +265,14 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
         </div>
     </div>
 </div>
-
 <div class="modal fade" role="dialog" id="gol-cartelliniSq">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id='titoloPartita' class="modal-title">Modal Header</h4>
+                <h4 id='titoloPartita' class="modal-title">Risultati squadra</h4>
             </div>
-            <div class="modal-body">
+            <div id="body_info_sq" class="modal-body">
 
             </div>
             <div class="modal-footer">
@@ -279,7 +289,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 id='titoloPartita' class="modal-title">fuhfuif</h4>
             </div>
-            <div class="modal-body">
+            <div id="body_classifica" class="modal-body">
 
             </div>
             <div class="modal-footer">

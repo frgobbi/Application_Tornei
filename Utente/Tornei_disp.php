@@ -82,7 +82,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
             <div class="modal-content">
                 <div id="header_t" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title"></h4>
                 </div>
                 <div id="body_t" class="modal-body">
                     <p>Some text in the modal.</p>

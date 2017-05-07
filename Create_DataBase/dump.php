@@ -23,7 +23,7 @@ $utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `
 $funzioni = "INSERT INTO `funzioni`(`id_funzione`, `nome_funzione`, `colore`, `src`, `icona`) VALUES "
     ."(NULL, 'Tornei','red','Staff/Torneo.php','fa-calendar-o'),"
     ."(NULL, 'Bar', 'yellow', 'Bar/Bar.php', 'fa-shopping-basket'),"
-    ."(NULL, 'Notizie', 'link', 'Staff/Notizie.php', 'fa-newspaper-o'),"
+    ."(NULL, 'Notizie', 'link', 'News/Notizie.php', 'fa-newspaper-o'),"
     ."(NULL, 'Foto', 'success', 'Gestine_Foto/Foto.php', 'fa-camera-retro'),"
     ."(NULL, 'Iscrizione', 'primary', 'Utente/Tornei_disp.php', 'fa-pencil-square-o'),"
     ."(NULL, 'Squadre', 'info', 'Utente/My_Tornei.php', 'fa fa-cog')";
@@ -55,9 +55,7 @@ $gironi ="INSERT INTO `girone` (`id_girone`, `nome_girone`) VALUES "
     ."(NULL, 'Fasi Finali'),"
     ."(NULL, 'Fasi Finali Torneo Superiore'),"
     ."(NULL, 'Fasi Finali Torneo Inferiore')";
-
 $cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_tornei','primary')";
-
 include "../connessione.php";
 try{
     $connessione->exec($tipo_sport);

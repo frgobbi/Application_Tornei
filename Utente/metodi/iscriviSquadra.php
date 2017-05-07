@@ -65,7 +65,7 @@ try {
     $pdf->Cell(46, 10, 'Cognome', 1, 0, 'C');
     $pdf->setX(146);
     $pdf->Cell(56, 10, 'Email', 1, 0, 'C');
-    $pdf->setX(212);
+    $pdf->setX(202);
     $pdf->Cell(46, 10, 'Username', 1, 0, 'C');
     $pdf->setX(248);
     $pdf->Cell(38, 10, 'Password', 1, 0, 'C');
@@ -92,7 +92,7 @@ try {
     $pdf->Cell(46, 10, $oggA->cognome, 1, 0, 'C');
     $pdf->setX(146);
     $pdf->Cell(56, 10, $oggA->mail, 1, 0, 'C');
-    $pdf->setX(212);
+    $pdf->setX(202);
     $pdf->Cell(46, 10, $oggA->username, 1, 0, 'C');
     $pdf->setX(248);
     $pdf->Cell(36, 10, '', 1, 0, 'C');
@@ -145,7 +145,7 @@ try {
                             $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
                             $pdf->setX(146);
                             $pdf->Cell(56, 10, '', 1, 0, 'C');
-                            $pdf->setX(212);
+                            $pdf->setX(202);
                             $pdf->Cell(46, 10, $username, 1, 0, 'C');
                             $pdf->setX(248);
                             $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
@@ -167,7 +167,7 @@ try {
                             $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
                             $pdf->setX(146);
                             $pdf->Cell(56, 10, '', 1, 0, 'C');
-                            $pdf->setX(212);
+                            $pdf->setX(202);
                             $pdf->Cell(46, 10, $username, 1, 0, 'C');
                             $pdf->setX(248);
                             $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
@@ -191,7 +191,7 @@ try {
                             $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
                             $pdf->setX(146);
                             $pdf->Cell(56, 10, '', 1, 0, 'C');
-                            $pdf->setX(212);
+                            $pdf->setX(202);
                             $pdf->Cell(46, 10, $username, 1, 0, 'C');
                             $pdf->setX(248);
                             $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
@@ -212,7 +212,7 @@ try {
                         $pdf->Cell(46, 10, $cognomeNew, 1, 0, 'C');
                         $pdf->setX(146);
                         $pdf->Cell(56, 10, '', 1, 0, 'C');
-                        $pdf->setX(212);
+                        $pdf->setX(202);
                         $pdf->Cell(46, 10, $username, 1, 0, 'C');
                         $pdf->setX(248);
                         $pdf->Cell(36, 10, $pwd, 1, 0, 'C');
@@ -243,7 +243,7 @@ try {
                                 $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
                                 $pdf->setX(146);
                                 $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
-                                $pdf->setX(212);
+                                $pdf->setX(202);
                                 $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
                                 $pdf->setX(248);
                                 $pdf->Cell(36, 10, '', 1, 0, 'C');
@@ -261,7 +261,7 @@ try {
                                 $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
                                 $pdf->setX(146);
                                 $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
-                                $pdf->setX(212);
+                                $pdf->setX(202);
                                 $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
                                 $pdf->setX(248);
                                 $pdf->Cell(36, 10, '', 1, 0, 'C');
@@ -281,7 +281,7 @@ try {
                                 $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
                                 $pdf->setX(146);
                                 $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
-                                $pdf->setX(212);
+                                $pdf->setX(202);
                                 $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
                                 $pdf->setX(248);
                                 $pdf->Cell(36, 10, '', 1, 0, 'C');
@@ -298,7 +298,7 @@ try {
                             $pdf->Cell(46, 10, $oggG->cognome, 1, 0, 'C');
                             $pdf->setX(146);
                             $pdf->Cell(56, 10, $oggG->mail, 1, 0, 'C');
-                            $pdf->setX(212);
+                            $pdf->setX(202);
                             $pdf->Cell(46, 10, $oggG->username, 1, 0, 'C');
                             $pdf->setX(248);
                             $pdf->Cell(36, 10, '', 1, 0, 'C');
