@@ -28,7 +28,7 @@ and open the template in the editor.
                 <div class="panel-body">
                     <!-- 1 -->
                     <div class="col-lg-3 col-md-6">
-                        <a href="#">
+                        <a href="Public/Info_tornei.php">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <div class="row">
@@ -49,7 +49,7 @@ and open the template in the editor.
                     </div>
                     <!-- 2 -->
                     <div class="col-lg-3 col-md-6">
-                        <a href="#">
+                        <a href="Public/Classifiche_tornei.php">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
                                     <div class="row">
@@ -91,7 +91,7 @@ and open the template in the editor.
                     </div>
                     <!-- 4 -->
                     <div class="col-lg-3 col-md-6">
-                        <a href="#">
+                        <a href="#" onclick="alert('Funzionatltà ancora non attivata');">
                             <div class="panel panel-red">
                                 <div class="panel-heading">
                                     <div class="row">
