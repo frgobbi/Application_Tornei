@@ -13,14 +13,13 @@ include "../connessione.php";
 try {
     $utente = $_SESSION['username'];
     $oggU = $connessione->query("SELECT * FROM utente WHERE username ='$utente'")->fetch(PDO::FETCH_OBJ);
-    if ($oggU->id_cat != 4) {
+    if ($oggU->id_cat == 4) {
         if ($oggU->mail != NULL) {
             if (strcmp($oggU->mail, "") == 0) {
                 echo "<script type='text/javascript'>window.location.href='Aggiungi_mail.php'</script>";
             }
         } else {
-            echo "<script type='text/javascript'>
-window.location.href='Aggiungi_mail.php'</script>";
+            echo "<script type='text/javascript'>window.location.href='Aggiungi_mail.php'</script>";
         }
     }
 } catch (PDOException $e) {

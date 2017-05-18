@@ -55,7 +55,7 @@ $gironi ="INSERT INTO `girone` (`id_girone`, `nome_girone`) VALUES "
     ."(NULL, 'Fasi Finali'),"
     ."(NULL, 'Fasi Finali Torneo Superiore'),"
     ."(NULL, 'Fasi Finali Torneo Inferiore')";
-$cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_tornei','primary')";
+$cartelle_c = "INSERT INTO `cartelle_f`(`id_c`, `nome_cartella`, `colore`) VALUES (NULL,'Vecchi_Tornei','primary')";
 include "../connessione.php";
 try{
     $connessione->exec($tipo_sport);

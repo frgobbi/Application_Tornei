@@ -138,16 +138,16 @@ and open the template in the editor.
                             $c = 0;
                             include "connessione.php";
                             try{
-                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_tornei'")->fetch(PDO::FETCH_OBJ);
+                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_Tornei'")->fetch(PDO::FETCH_OBJ);
                                 foreach ($connessione->query("SELECT `id_foto`, `nome_foto`, `id_c` FROM `foto` WHERE id_c = '$oggC->id_c'") as $row){
                                  $file = $row['nome_foto'];
                                     if ($c == 0) {
                                         echo " <div class=\"item active\">"
-                                            . "<img src=\"Immagini/Vecchi_tornei/$file\">"
+                                            . "<img src=\"Immagini/$oggC->nome_cartella/$file\">"
                                             . "</div>";
                                     } else {
                                         echo " <div class=\"item\">"
-                                            . "<img src=\"Immagini/Vecchi_tornei/$file\">"
+                                            . "<img src=\"Immagini/$oggC->nome_cartella/$file\">"
                                             . "</div>";
                                     }
                                     $c = $c + 1;
