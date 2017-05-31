@@ -15,7 +15,7 @@ $tipo_sport = "INSERT INTO `tipo_sport`(`id_tipo_sport`, `descrizione`, `logo`, 
 $cat_utente = "INSERT INTO `cat_utente`(`id_cat_utente`, `nome_cat`) VALUES (NULL,'Admin'),(NULL,'Staff'),(NULL, 'Bar'),(NULL,'Utente')";
 $pass= "123456";
 $pass = password_hash($pass,PASSWORD_BCRYPT);
-$utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza` ,`mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`, `new_pas`, `new_pas`) "
+$utente = "INSERT INTO `utente`(`username`, `nome`, `cognome`, `data_nascita`, `codice_fiscale`, `luogo_nascita`, `sesso`, `residenza` ,`mail`, `tel`, `pass`, `attivo`, `foto`, `id_cat`,`card`, `new_pas`) "
     ."VALUES ('admin', 'admin', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '1', NULL,0),"
     ."('staff', 'staff', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '2', NULL,0),"
     ."('bar', 'bar', NULL, NULL, NULL, NULL, 'M', NULL, NULL, NULL, '$pass', '1', 'utente.gif', '3', NULL,0),"

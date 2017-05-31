@@ -7,7 +7,7 @@
  */
 ?>
 <html>
-    <head>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
         <?php
             include '../Componenti_Base/Head.php';
             LibrerieUnLog()
@@ -92,7 +92,7 @@
                                             if($timeOggi>$timeInizio){
                                                 echo "<strong>Stato torneo: </strong><strong class='text-rigth text-success'>&nbsp; In corso</strong></div>";
                                             } else {
-                                                echo "<strong>Stato torneo: </strong><strong class='text-rigth text-primary'>&nbsp; Prossimamente<strong/></div>";
+                                                echo "<strong>Stato torneo: </strong><strong class='text-rigth text-primary'>&nbsp; Prossimamente</strong></div>";
                                             }
                                         echo "</div>"
                                     ."</div>"

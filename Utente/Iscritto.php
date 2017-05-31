@@ -119,7 +119,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
                             }
 
                             if ($esito != 1) {
-                                echo "<h3 class='text-primary'>Ti abbiamo inviato una mail con i dati per accedere dell la tua squadra!</h3>"
+                                echo "<h3 class='text-primary'>Ti abbiamo inviato una mail con i dati per l'accesso al sito per la tua squadra!</h3>"
                                     . "<div class=\"row\">"
                                     . "<div class=\"col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12\">"
                                     . "<button onclick=\"window.location.href='../Home/home.php'\" class=\"btn btn-primary btn-block\">Home page</button>"

@@ -24,7 +24,7 @@ function navIndex()
         <ul class="nav navbar-top-links navbar-right">
             <li>
                 <a href="login-singup-logout/Sing_up.php">
-                    <i class="fa fa-user" aria-hidden="true"></i> Sing Up
+                    <i class="fa fa-user" aria-hidden="true"></i> Sign Up
                 </a>
             </li>
             <li>
@@ -58,7 +58,7 @@ function navUnLog()
         <ul class="nav navbar-top-links navbar-right">
             <li>
                 <a href="../login-singup-logout/Sing_up.php">
-                    <i class="fa fa-user" aria-hidden="true"></i> Sing Up
+                    <i class="fa fa-user" aria-hidden="true"></i> Sign Up
                 </a>
             </li>
             <li>

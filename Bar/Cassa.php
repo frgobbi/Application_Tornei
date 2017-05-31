@@ -208,7 +208,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                             <?php
                             include "../connessione.php";
                             try {
-                                foreach ($connessione->query("SELECT * FROM `prodotto` INNER JOIN cat_prodotto ON cat_prodotto.id_cat_prodotto = prodotto.id_cat_prodotto WHERE vendibile = 1") as $row) {
+                                foreach ($connessione->query("SELECT * FROM `prodotto` INNER JOIN cat_prodotto ON cat_prodotto.id_cat_prodotto = prodotto.id_cat_prodotto WHERE vendibile = 1 ORDER BY(prodotto.id_cat_prodotto) ASC") as $row) {
                                     $colore = $row['colore'];
                                     $prodotto = $row['nome_prodotto'];
                                     $prezzo = $row['prezzo'];

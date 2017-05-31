@@ -12,7 +12,7 @@ function LibrerieLogin() {
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
     . "<link rel=\"icon\" href=\"../Immagini/logo_app.png\" type=\"image/png\" />"
-    . "<title>Nuova App</title>";
+    . "<title>Tornei</title>";
     
     echo "<link href=\"../Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
     . "<link href=\"../Librerie/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">"
@@ -38,7 +38,7 @@ function index() {
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
     . "<link rel=\"icon\" href=\"Immagini/logo_app.png\" type=\"image/png\" />"
-    . "<title>Nuova App</title>";
+    . "<title>Tornei</title>";
     
     echo "<link href=\"Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
     . "<link href=\"Librerie/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">"
@@ -64,7 +64,7 @@ function LibrerieUnLog(){
     . "<meta name=\"description\" content=\"\">"
     . "<meta name=\"author\" content=\"\">"
     . "<link rel=\"icon\" href=\"../Immagini/logo_app.png\" type=\"image/png\" />"
-    . "<title>Nuova App</title>";
+    . "<title>Tornei</title>";
     
     echo "<link href=\"../Librerie/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">"
     . "<link href=\"../Librerie/vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">"

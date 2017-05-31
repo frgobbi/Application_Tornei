@@ -246,7 +246,7 @@
                         . "<ul class=\"hide-bullets\">";
                     for ($i = 0; $i < count($array_foto); $i++) {
                         //$percorso = "../Immagini/" . $array_cartelle[$num][1] . "/" . $array_foto[$i];
-                        $percorso = "../Immagini/Vecchi_tornei/" . $array_foto[$i];
+                        $percorso = "../Immagini/Vecchi_Tornei/" . $array_foto[$i];
                         if ($i == 0) {
                             echo "<li style='height: 90px;' class=\"col-sm-3\">"
                                 . "<a class=\"thumbnail\" id=\"carousel-selector-$i\">"
@@ -270,7 +270,7 @@
 
                     for ($i = 0; $i < count($array_foto); $i++) {
                         //$percorso = "../Immagini/" . $array_cartelle[$num][1] . "/" . $array_foto[$i];
-                        $percorso = "../Immagini/Vecchi_tornei/" . $array_foto[$i];
+                        $percorso = "../Immagini/Vecchi_Tornei/" . $array_foto[$i];
                         if ($i == 0) {
                             echo "<div class=\"active item\" data-slide-number=\"$i\">"
                                 . "<img src=\"$percorso\"></div>";

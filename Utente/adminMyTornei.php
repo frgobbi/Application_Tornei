@@ -287,7 +287,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id='titoloPartita' class="modal-title">fuhfuif</h4>
+                <h4 id='titoloPartita' class="modal-title">Classifica Tornei</h4>
             </div>
             <div id="body_classifica" class="modal-body">
 

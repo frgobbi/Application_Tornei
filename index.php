@@ -122,13 +122,18 @@ and open the template in the editor.
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                             <?php
-                            $c = 1;
-                            if ($handle = opendir("Immagini/Vecchi_tornei")) {
-                                while ($file = readdir($handle)) {
+							$c = 1;
+							include "connessione.php";
+                            try{
+                                $oggC = $connessione->query("SELECT `id_c`, `nome_cartella`, `colore` FROM `cartelle_f` WHERE nome_cartella = 'Vecchi_Tornei'")->fetch(PDO::FETCH_OBJ);
+                                foreach ($connessione->query("SELECT `id_foto`, `nome_foto`, `id_c` FROM `foto` WHERE id_c = '$oggC->id_c'") as $row){
                                     echo "<li data-target=\"#myCarousel\" data-slide-to=\"$c\"></li>";
                                     $c = $c + 1;
                                 }
+                            } catch (PDOException $e){
+                                echo $e->getMessage();
                             }
+                            $connessione = null;
                             ?>
                         </ol>
 

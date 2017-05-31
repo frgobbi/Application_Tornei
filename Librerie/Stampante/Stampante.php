@@ -9,8 +9,10 @@
 $comando = $_GET['comando'];
 
 set_time_limit(0);
-$address = '95.233.10.40';
-$port = 4096;
+$address = '79.23.194.8';
+//$address = 'localhost';
+$port = 4600;
+echo $address;
 $server = array('server' => $address, 'porta' => $port);
 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 if (!($conn = socket_connect($socket, $server['server'], $server['porta']))) {
