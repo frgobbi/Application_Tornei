@@ -14,10 +14,9 @@ try {
     $ogg_vC = $connessione->query("SELECT SUM(varie) AS TotaleVarie FROM ordine_v WHERE id_giorno = '$giorno->id_giorno' AND credito = 1")->fetch(PDO::FETCH_OBJ);
     $sql = "SELECT id_giorno, num_ordine, ora FROM ordine_p WHERE ordine_p.id_giorno = '$giorno->id_giorno' "
           ."UNION "
-          ."SELECT id_giorno, num_ordine, ora FROM ordine_p WHERE ordine_p.id_giorno = '$giorno->id_giorno'"
+          ."SELECT id_giorno, num_ordine, ora FROM ordine_v WHERE ordine_v.id_giorno = '$giorno->id_giorno'"
           ."ORDER BY(num_ordine) DESC";
-
-
+    
         $incasso = 0;
         $incasso = floatval($incasso)+floatval($ogg_P->Totale);
         $incasso = floatval($incasso)+floatval($ogg_v->TotaleVarie);

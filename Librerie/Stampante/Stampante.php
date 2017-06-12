@@ -9,7 +9,7 @@
 $comando = $_GET['comando'];
 
 set_time_limit(0);
-$address = '79.23.194.8';
+$address = 'localhost';
 //$address = 'localhost';
 $port = 4600;
 echo $address;

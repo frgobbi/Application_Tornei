@@ -520,10 +520,10 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
         . "<div class=\"modal-body\">";
     include "../connessione.php";
     try{
-        foreach ($connessione->query("SELECT * FROM squadra WHERE id_torneo = '$torneo' AND iscritta = 1") as $row){
+        foreach ($connessione->query("SELECT * FROM squadra WHERE id_torneo = '$torneo' ORDER BY(iscritta) DESC") as $row){
             $squadra = $row['id_sq'];
             $nome = $row['nome_sq'];
-            echo "<table class=\"table table-bordered table-responsive\">"
+            echo "<div class='table-responsive'><table class=\"table table-bordered\">"
                 ."<thead>"
                     ."<tr><th class='text-center' colspan=\"6\">$nome</th></tr>"
                     ."<tr>"
@@ -554,7 +554,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                     ."</tr>";
             }
             echo "</tbody>"
-        ."</table>";
+        ."</table></div>";
         }
     } catch (PDOException $e){
         echo "errore: ".$e->getMessage();
@@ -600,7 +600,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 ."<select class=\"form-control\" id=\"sq1\" name='sq1'>";
                 include "../connessione.php";
                 try{
-                    foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = '$torneo' AND iscritta = 1") as $row){
+                    foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = $torneo") as $row){
                         $id_sq = $row['id_sq'];
                         $nome_sq = $row['nome_sq'];
                         echo "<option value='$id_sq'>$nome_sq</option>";
@@ -615,7 +615,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 2)) {
                 ."<select class=\"form-control\" id=\"sq1\" name='sq2'>";
                     include "../connessione.php";
                     try{
-                        foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = '$torneo' AND iscritta = 1") as $row){
+                        foreach ($connessione->query("SELECT * FROM `squadra` WHERE id_torneo = $torneo") as $row){
                             $id_sq = $row['id_sq'];
                             $nome_sq = $row['nome_sq'];
                             echo "<option value='$id_sq'>$nome_sq</option>";

@@ -119,7 +119,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                     $('#modal_card').modal('show');
                     t_card="";
                     $('#display_code').empty();
-                    $('#display_code').apped(t_card);
+                    $('#display_code').append(t_card);
 
                 } else {
                     alert("Prima cocludi l'ordine!!");
@@ -147,7 +147,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                 totale_card(codice);
                 t_card="";
                 $('#display_code').empty();
-                $('#display_code').apped(t_card);
+                $('#display_code').append(t_card);
             }
         }
         function avvio_tot_card() {
@@ -213,7 +213,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                                     $prodotto = $row['nome_prodotto'];
                                     $prezzo = $row['prezzo'];
                                     $id = $row['id_prodotto'];
-                                    echo "<div class=\"col-lg-2 col-md-6\">"
+                                    echo "<div class=\"col-lg-3 col-md-6\">"
                                         . "<a href=\"#\" onclick=\"prodotto($id,$prezzo,'$prodotto')\">"
                                         . "<div class=\"panel panel-$colore \">"
                                         . "<div class=\"panel-heading\">"
@@ -288,7 +288,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                         </button>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
-                        <button type="button" onclick="totale_ord()" class="btn btn-lg btn-block btn-primary">Totale
+                        <button type="button" onclick="totale_ord()" class="btn btn-lg btn-block btn-primary">Tot
                         </button>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">

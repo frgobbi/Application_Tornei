@@ -335,6 +335,7 @@ function totale_card(codice_card) {
                 } else{
                     if(risposta==1){
                         var str = strStampa("SC-CARD");
+                        alert(str);
                         stampa(str);
                         $('#esito_pos').show();
                         $('#no_denaro').hide();
@@ -446,7 +447,7 @@ function strStampa(tipo) {
             cifra = toStringDecimale(resto);
             str += cifra + ":";
         }
-        str += ";4";
+        str += ";4;5";
     } else {
         if(tipo.localeCompare("SC-CARD") == 0) {
             str += "2;1                                   EURO;1";
@@ -468,13 +469,14 @@ function strStampa(tipo) {
                 var prezzo_str = toStringDecimale(prezzo); //tot prezzo
                 var sp4 = " ";//spazio4
                 str += sp1 + Tx + sp2 + molt + sp3 + prezzo_str + sp4 + ":";
-                str += ";2;1";
-                str += "TOTALE                           ";
-                var cifra = toStringDecimale(totale); //tot prezzo
-                str += cifra + ":;2;";
-                str += "1           TRANSAZIONE ESEGUITA           \n         CASTELVIETO EVENTS CARD          ";
-                str += ";4";
             }
+            //TOTALE SCONTRINO
+            str += ";2;1";
+            str += "TOTALE                           ";
+            var cifra = toStringDecimale(totale); //tot prezzo
+            str += cifra + ":;2;";
+            str += "1           TRANSAZIONE ESEGUITA           \n         CASTELVIETO EVENTS CARD          ";
+            str += ";4;5";
         }
     }
     return str;
@@ -553,6 +555,11 @@ function stampa_incassoG(incassoTOT, incassoCard, Diff) {
         stampa(str);
     }
 }
+//Apri Cassetto
+function apriCassetto() {
+    var comando = "5";
+    stampa(comando);
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 //                -------------------------- Parte Altro per cassa --------------------------
@@ -618,6 +625,9 @@ function creaInfo() {
                     + "</div>";
             }
             codice += "</div>";
+            codice += "<div class='panel-footer text-center'>" +
+                "<button class='btn btn-primary btn-block'onclick='apriCassetto();'>Apri Cassetto</button>" +
+                "</div>";
             codice += "</div>";
 
             codice += "<div class='panel panel-default'>" +
