@@ -283,17 +283,10 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <button type="button" onclick="subtotale()" class="btn btn-lg btn-block btn-primary">Sub
-                        </button>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <button type="button" onclick="totale_ord()" class="btn btn-lg btn-block btn-primary">Tot
-                        </button>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <button type="button" onclick="popupCard()" class="btn btn-lg btn-block btn-primary">Card
-                        </button>
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" onclick="subtotale()" class="btn btn-primary btn-lg">Sub</a>
+                        <a href="#" onclick="totale_ord()" class="btn btn-primary btn-lg">Totale</a>
+                        <a href="#" onclick="popupCard()" class="btn btn-primary btn-lg">Card</a>
                     </div>
                 </div>
             </div>
@@ -381,7 +374,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Varie</h4>
+                <h4 class="modal-title">Contanti</h4>
             </div>
             <div class="modal-body">
                 <div class="row">

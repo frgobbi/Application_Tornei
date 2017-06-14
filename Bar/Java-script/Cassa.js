@@ -41,9 +41,9 @@ function scontrino_v() {
         //console.log(arr_num.length);
         if (prezzi[i].toString().indexOf(".") != (-1)) {
             if (arr_num[1] < 10) {
-                codice += "<div class=\"col-lg-4 col-md-3 col-sm-4 col-xs-4 text-center\">" + quantita[i] + "X" + prezzi[i] + "0&euro;</div>";
+                codice += "<div class=\"col-lg-4 col-md-3 col-sm-4 col-xs-4 text-center\">" + quantita[i] + "X" + prezzi[i] + "0 &euro;</div>";
             } else {
-                codice += "<div class=\"col-lg-4 col-md-3 col-sm-4 col-xs-4 text-center\">" + quantita[i] + "X" + prezzi[i] + "&euro;</div>";
+                codice += "<div class=\"col-lg-4 col-md-3 col-sm-4 col-xs-4 text-center\">" + quantita[i] + "X" + prezzi[i] + " &euro;</div>";
             }
         } else {
             //console.log("va");
@@ -187,6 +187,7 @@ function annullaVarie() {
 //subtotale
 function subtotale() {
     if (indice_p > 0) {
+        $('#display_sub').empty();
         booleanSub = true;
         $('#modal_subtot').modal('show');
     } else {

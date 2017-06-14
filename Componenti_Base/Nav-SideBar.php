@@ -83,34 +83,78 @@ function sideBar()
         $oggUtente = $connessione->query("SELECT * FROM utente WHERE username = '$utente'")->fetch(PDO::FETCH_OBJ);
 
 
-    echo "<div class=\"navbar-default sidebar\" role=\"navigation\">"
-        . "<div class=\"sidebar-nav navbar-collapse\">"
-        . "<ul class=\"nav\" id=\"side-menu\">"
-        . "<li class=\"text-center h5\">"
-        . "<a href = \"../Utente/Profilo.php\">"
-        . "<img src=\"../Immagini/Immagini_Profilo/$oggUtente->foto\" class=\"img-rounded img-thumbnail img\" width=\"35px\"/>&nbsp; $oggUtente->nome $oggUtente->cognome"
-        . "</a>"
-        . "</li>"
+        echo "<div id='sidebarLargo' class=\"navbar-default sidebar\" role=\"navigation\">"
+            . "<div class=\"sidebar-nav navbar-collapse\">"
+            . "<div id='buttonSidebar' class='row' style='padding:5px;'>"
+            . "<div class='text-right col-xs-12'>"
+            . "<button onclick='stringiSidebar()' type=\"button\" class=\"btn\">"
+            . "<i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i>"
+            . "</button>"
+            . "</div>"
+            . "</div>"
+            . "<ul class=\"nav\" id=\"side-menu\">"
+            . "<li class=\"text-left h5\">"
+            . "<a href = \"../Utente/Profilo.php\">"
+            . "<img src=\"../Immagini/Immagini_Profilo/$oggUtente->foto\" class=\"img-rounded img-thumbnail img\" width=\"35px\"/>&nbsp; $oggUtente->nome $oggUtente->cognome"
+            . "</a>"
+            . "</li>"
 
-        . "<li>"
-        . "<a href=\"../Home/home.php\"><i class=\"fa fa-dashboard fa-fw\"></i> Dashboard</a>"
-        . "</li>";
+            . "<li>"
+            . "<a href=\"../Home/home.php\"><i class=\"fa fa-dashboard fa-fw\"></i> Dashboard</a>"
+            . "</li>";
 
-            foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona` FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $oggUtente->id_cat") as $row){
-                $src = $row['src'];
-                $n_funzione = $row['nome_funzione'];
-                $icona = $row['icona'];
-                echo "<li>"
+        foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona` FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $oggUtente->id_cat") as $row) {
+            $src = $row['src'];
+            $n_funzione = $row['nome_funzione'];
+            $icona = $row['icona'];
+            echo "<li>"
                 . "<a href=\"../$src\"><i class=\"fa $icona fa-fw\"></i> $n_funzione</a>"
                 . "</li>";
-            }
+        }
 
         echo "<li>"
-        . "<a href=\"../Utente/Profilo.php\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i> My Profile</a>"
-        . "</li>"
-        . "</ul>"
-        . "</div>"
-        . "</div>";
+            . "<a href=\"../Utente/Profilo.php\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i> My Profile</a>"
+            . "</li>"
+            . "</ul>"
+            . "</div>"
+            . "</div>";
+
+
+        //SECONDA SIDE BAR
+        echo "<div style='display:none;' id='sidebarStretto' class=\"navbar-default sidebar\" role=\"navigation\">"
+            . "<div class=\"sidebar-nav navbar-collapse\">"
+            . "<ul class=\"nav\" id=\"side-menu\">"
+            /*. "<li class=\"text-left h5\">"
+            . "<a href = \"../Utente/Profilo.php\">"
+            . "<img src=\"../Immagini/Immagini_Profilo/$oggUtente->foto\" class=\"img-rounded img-thumbnail img\" width=\"35px\"/>"
+            . "</a>"
+            . "</li>"*/
+            . "<li>"
+            . "<a href = \"#\" onclick='allargaSidebar()'>"
+            . "<i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i>"
+            . "</a>"
+            . "</li>"
+
+            . "<li>"
+            . "<a href=\"../Home/home.php\"><i class=\"fa fa-dashboard fa-fw\"></i></a>"
+            . "</li>";
+
+        foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona` FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $oggUtente->id_cat") as $row) {
+            $src = $row['src'];
+            $n_funzione = $row['nome_funzione'];
+            $icona = $row['icona'];
+            echo "<li>"
+                . "<a href=\"../$src\"><i class=\"fa $icona fa-fw\"></i></a>"
+                . "</li>";
+        }
+
+        echo "<li>"
+            . "<a href=\"../Utente/Profilo.php\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>"
+            . "</li>"
+            . "</ul>"
+            . "</div>"
+
+            . "</div>";
 
     } catch (PDOException $e) {
         echo "error: " . $e->getMessage();
@@ -133,7 +177,6 @@ function navLogin()
             <a class="navbar-brand" href="../Home/home.php">Tornei</a>
         </div>
         <!-- /.navbar-header -->
-
         <ul class="nav navbar-top-links navbar-right">
             <li>
                 <a href="../login-singup-logout/Logout.php">
@@ -206,7 +249,7 @@ function sideBarNotMail()
             . "<a href=\"../Home/home.php\"><i class=\"fa fa-dashboard fa-fw\"></i> Dashboard</a>"
             . "</li>";
 
-        foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona` FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $oggUtente->id_cat") as $row){
+        foreach ($connessione->query("SELECT `nome_funzione`, `src`,`icona` FROM funzioni INNER JOIN funzioni_cat_utente ON funzioni.id_funzione = funzioni_cat_utente.id_funzione WHERE id_cat_utente = $oggUtente->id_cat") as $row) {
             $src = $row['src'];
             $n_funzione = $row['nome_funzione'];
             $icona = $row['icona'];

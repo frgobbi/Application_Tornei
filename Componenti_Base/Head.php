@@ -24,6 +24,7 @@ function LibrerieLogin() {
     
     echo "<script src=\"../Librerie/vendor/jquery/jquery.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/bootstrap/js/bootstrap.min.js\"></script>"
+    ."<script src=\"../Librerie/Java-script/Base.js\"></script>"
     ."<script src=\"../Librerie/vendor/metisMenu/metisMenu.min.js\"></script>"
     ."<script src=\"../Librerie/vendor/raphael/raphael.min.js\"></script>"
     //."<script src=\"../Librerie/vendor/morrisjs/morris.min.js\"></script>"
