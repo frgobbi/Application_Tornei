@@ -52,7 +52,7 @@ function creaFormSoldi(username) {
                     + "<form method='post' action=\"metodi/assegna_carta.php?user=" + username + "\">"
                     + "<div class=\"form-group\">"
                     + "<label for=\"codice\">Codice Carta</label>"
-                    + "<input type=\"text\" class=\"form-control\" name='codice' id=\"codice\" required>"
+                    + "<input type=\"text\" class=\"form-control\"maxlength=\"100\" name='codice' id=\"codice\" required>"
                     + "</div>"
                     + "<div class=\"form-group\">"
                     + "<button class='btn btn-primary btn-block' type='submit'>Asseggna Carta</button>"

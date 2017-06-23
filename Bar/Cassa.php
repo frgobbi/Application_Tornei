@@ -134,6 +134,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
                 $('#display_code').prop("disabled", false);
                 document.getElementById("display_code").focus();
             } else {
+                $('#display_code').css("font-size","36px");
                 $('#conf_code').show();
                 $('#tastiera_code').show();
                 $('#button_code').hide();
