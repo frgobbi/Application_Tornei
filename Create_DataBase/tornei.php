@@ -66,7 +66,7 @@ $utente = "CREATE TABLE utente ("
     ."foto TEXT,"
     ."id_cat INT,"
     ."FOREIGN KEY(id_cat) REFERENCES cat_utente(id_cat_utente),"
-    ."card VARCHAR(30),"
+    ."card VARCHAR(10),"
     ."saldo DOUBLE NOT NULL DEFAULT '0',"
     ."new_pas INT NOT NULL DEFAULT '0'"
 .")";
