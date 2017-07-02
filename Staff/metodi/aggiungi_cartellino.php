@@ -16,15 +16,15 @@ try{
     if(strcmp($giocatore,"0")!=0) {
         $oggSQ_utente = $connessione->query("SELECT `id_sq_utente` FROM `sq_utente` WHERE `id_sq` = '$squadra' AND `username` = '$giocatore'")->fetch(PDO::FETCH_OBJ);
         if (strcmp($colore, "G") == 0) {
-            $sql_infoTempo = "INSERT INTO `info_tempo`(`id_info`, `id_sq_utente`, `id_tempo`, `id_partita`, `punto`, `cartellino_giallo`, `cartellino_rosso`) " .
-                "VALUES (NULL,'$oggSQ_utente->id_sq_utente','$tempo','$partita','0','1','0')";
+            $sql_infoTempo = "INSERT INTO `info_tempo`(`id_info`, `id_sq_utente`, `id_tempo`, `id_partita`, `punto`, `cartellino_giallo`, `cartellino_rosso`,`valido`) " .
+                "VALUES (NULL,'$oggSQ_utente->id_sq_utente','$tempo','$partita','0','1','0','1')";
             $sq_cartellino = "SELECT MAX(id_info) AS id_cartellino, nome, cognome FROM `info_tempo`"
                 . "INNER JOIN sq_utente ON sq_utente.id_sq_utente = info_tempo.id_sq_utente "
                 . "INNER JOIN utente ON utente.username = sq_utente.username "
                 . "WHERE info_tempo.id_sq_utente = '$oggSQ_utente->id_sq_utente' AND info_tempo.id_tempo = '$tempo' AND info_tempo.id_partita = '$partita' AND info_tempo.cartellino_giallo = '1'";
         } else {
-            $sql_infoTempo = "INSERT INTO `info_tempo`(`id_info`, `id_sq_utente`, `id_tempo`, `id_partita`, `punto`, `cartellino_giallo`, `cartellino_rosso`) " .
-                "VALUES (NULL,'$oggSQ_utente->id_sq_utente','$tempo','$partita','0','0','1')";
+            $sql_infoTempo = "INSERT INTO `info_tempo`(`id_info`, `id_sq_utente`, `id_tempo`, `id_partita`, `punto`, `cartellino_giallo`, `cartellino_rosso`,`valido`) " .
+                "VALUES (NULL,'$oggSQ_utente->id_sq_utente','$tempo','$partita','0','0','1','1')";
             $sq_cartellino = "SELECT MAX(id_info) AS id_cartellino, nome, cognome FROM `info_tempo`"
                 . "INNER JOIN sq_utente ON sq_utente.id_sq_utente = info_tempo.id_sq_utente "
                 . "INNER JOIN utente ON utente.username = sq_utente.username "

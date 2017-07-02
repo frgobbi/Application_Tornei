@@ -336,7 +336,7 @@ function totale_card(codice_card) {
                 } else{
                     if(risposta==1){
                         var str = strStampa("SC-CARD");
-                        alert(str);
+                        //alert(str);
                         stampa(str);
                         $('#esito_pos').show();
                         $('#no_denaro').hide();

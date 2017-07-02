@@ -21,6 +21,11 @@ try{
         }
     }
     $connessione->exec("UPDATE `torneo` SET `fase_finale` = '1' WHERE `torneo`.`id_torneo` = '$id'");
+    foreach ($connessione->query("SELECT * FROM `sq_utente` INNER JOIN squadra on squadra.id_sq = sq_utente.id_sq WHERE squadra.id_torneo = '$id'") as $row){
+        $id_g = $row['id_sq_utente'];
+        $connessione->exec("UPDATE `info_tempo` SET `valido`= '0' WHERE id_sq_utente = '$id_g' AND cartellino_giallo = '1'");
+        $connessione->exec("UPDATE `info_tempo` SET `valido`= '0' WHERE id_sq_utente = '$id_g' AND cartellino_rosso = '1'");
+    }
 } catch (PDOException $e){
     echo $e->getMessage();
 }

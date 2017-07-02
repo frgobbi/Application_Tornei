@@ -247,7 +247,7 @@ try {
                 ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
                 ."INNER JOIN utente ON utente.username = sq_utente.username "
                 ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
-                ."WHERE cartellino_giallo = 1 AND fase_finale = 0 AND id_girone = '$id_girone' GROUP BY (utente.username)";
+                ."WHERE cartellino_giallo = 1 AND fase_finale = 0 AND id_girone = ' $id_girone'AND valido = '1' GROUP BY (utente.username)";
             echo "\"cartellino_G_nome\":[0";
             foreach ($connessione->query($query_cartellino_g) as $row){
                 $nome = $row['nome'];
@@ -274,7 +274,7 @@ try {
                 ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
                 ."INNER JOIN utente ON utente.username = sq_utente.username "
                 ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
-                ."WHERE cartellino_rosso = 1 AND fase_finale = 0 AND id_girone = '$id_girone' GROUP BY (utente.username)";
+                ."WHERE cartellino_rosso = 1 AND fase_finale = 0 AND id_girone = '$id_girone' AND valido = '1' GROUP BY (utente.username)";
             echo "\"cartellino_R_nome\":[0";
             foreach ($connessione->query($query_cartellino_r) as $row){
                 $nome = $row['nome'];
@@ -526,7 +526,7 @@ try {
             ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
             ."INNER JOIN utente ON utente.username = sq_utente.username "
             ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
-            ."WHERE cartellino_giallo = 1 AND fase_finale = 0 GROUP BY (utente.username)";
+            ."WHERE cartellino_giallo = 1 AND fase_finale = 0 AND valido = '1' GROUP BY (utente.username)";
         echo "\"cartellino_G_nome\":[0";
         foreach ($connessione->query($query_cartellino_g) as $row){
             $nome = $row['nome'];
@@ -553,7 +553,7 @@ try {
             ."INNER JOIN squadra ON sq_utente.id_sq = squadra.id_sq "
             ."INNER JOIN utente ON utente.username = sq_utente.username "
             ."INNER JOIN partita on partita.id_partita = info_tempo.id_partita "
-            ."WHERE cartellino_rosso = 1 AND fase_finale = 0 GROUP BY (utente.username)";
+            ."WHERE cartellino_rosso = 1 AND fase_finale = 0 AND valido = '1' GROUP BY (utente.username)";
         echo "\"cartellino_R_nome\":[0";
         foreach ($connessione->query($query_cartellino_r) as $row){
             $nome = $row['nome'];
