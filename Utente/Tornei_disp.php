@@ -25,7 +25,7 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
     <script type="text/javascript">
         function info_t(id) {
             torneo(id);
-           $('#modal_info_T').modal('show');
+            $('#modal_info_T').modal('show');
         }
     </script>
 </head>
@@ -38,40 +38,39 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
     <div id="page-wrapper">
         <div style="padding-top: 30px; height: 700px; overflow-y: auto" class="row">
             <?php
-                include "../connessione.php";
-                try{
-                    $sql = "SELECT id_torneo, nome_torneo, tipo_sport.logo, tipo_sport.descrizione, tipo_sport.colore FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport=torneo.id_sport WHERE torneo.finished =0";
-                    foreach ($connessione->query($sql) as $row){
-                        $id_t = $row['id_torneo'];
-                        $nome_t = $row['nome_torneo'];
-                        $logo = $row['logo'];
-                        $colore = $row['colore'];
-                        echo "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">"
-                            ."<a href=\"#\" onclick=\"info_t($id_t)\">"
-                            ."<div class=\"panel panel-$colore\">"
-                            ."<div class=\"panel-heading\">"
-                            ."<div class=\"row\">"
-                            ."<div class=\"col-md-3\">"
-                            ."<i class=\"fa $logo fa-5x\" aria-hidden=\"true\"></i>"
-                            ."</div>"
-                            ."<div class=\"col-md-9 text-right\">"
-                            ."<h3>$nome_t</h3>"
-                            ."</div>"
-                            ."</div>"
-                            ."</div>"
-                            ."<div class=\"panel-footer\"></div>"
-                            ."</div>"
-                            ."</a>"
-                            ."</div>";
-                    }
-                } catch (PDOException $e){
-                    echo $e->getMessage();
+            include "../connessione.php";
+            try {
+                $sql = "SELECT id_torneo, nome_torneo, tipo_sport.logo, tipo_sport.descrizione, tipo_sport.colore FROM `torneo` INNER JOIN tipo_sport ON tipo_sport.id_tipo_sport=torneo.id_sport WHERE torneo.finished =0";
+                foreach ($connessione->query($sql) as $row) {
+                    $id_t = $row['id_torneo'];
+                    $nome_t = $row['nome_torneo'];
+                    $logo = $row['logo'];
+                    $colore = $row['colore'];
+                    echo "<div class=\"col-lg-4 col-md-4 col-sm-12 col-xs-12\">"
+                        . "<a href=\"#\" onclick=\"info_t($id_t)\">"
+                        . "<div class=\"panel panel-$colore\">"
+                        . "<div class=\"panel-heading\">"
+                        . "<div class=\"row\">"
+                        . "<div class=\"col-md-3\">"
+                        . "<i class=\"fa $logo fa-5x\" aria-hidden=\"true\"></i>"
+                        . "</div>"
+                        . "<div class=\"col-md-9 text-right\">"
+                        . "<h3>$nome_t</h3>"
+                        . "</div>"
+                        . "</div>"
+                        . "</div>"
+                        . "<div class=\"panel-footer\"></div>"
+                        . "</div>"
+                        . "</a>"
+                        . "</div>";
                 }
-                $connessione = null;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+            $connessione = null;
             ?>
         </div>
     </div>
-
 
 
     <!-- Modal -->
@@ -94,8 +93,9 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
 
         </div>
     </div>
-
-
+    <?php
+    controlloDimensione();
+    ?>
 </div>
 </body>
 </html>

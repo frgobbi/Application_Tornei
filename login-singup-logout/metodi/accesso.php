@@ -21,6 +21,7 @@ try{
                 $_SESSION['tipo_utente'] = $utente->id_cat;
                 $_SESSION['nome_utente'] = $utente->nome . " " . $utente->cognome;
                 $_SESSION['username'] = $utente->username;
+                $_SESSION['dim_barra'] = "off";
             }else {
                 $esito =2;
             }

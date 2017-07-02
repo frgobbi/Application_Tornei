@@ -135,5 +135,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 4)) {
 
     </div>
 </div>
+<?php
+controlloDimensione();
+?>
 </body>
 </html>

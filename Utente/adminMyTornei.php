@@ -316,6 +316,8 @@ echo "<div class=\"modal fade\" id=\"partita\" role=\"dialog\">"
     ."</div>"
     ."</div>"
     ."</div>";
+
+controlloDimensione();
 ?>
 
 </body>

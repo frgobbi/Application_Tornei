@@ -155,7 +155,7 @@ function sideBar()
             . "</div>"
 
             . "</div>";
-
+        
     } catch (PDOException $e) {
         echo "error: " . $e->getMessage();
     }
@@ -271,4 +271,15 @@ function sideBarNotMail()
     $connessione = null;
 }
 
+function controlloDimensione(){
+    if(strcmp($_SESSION['dim_barra'],"on")==0){
+        echo "<script type='application/javascript'>"
+            ."$('#sidebarLargo').toggle();"
+            ."$('#sidebarStretto').toggle();"
+            ."$('#page-wrapper').css('margin', '0 0 0 50px');"
+            ."$('#sidebarLargo').css('width', '50px');"
+            ."$('#sidebarStretto').css('width', '50px');"
+            ."</script>";
+    }
+}
 

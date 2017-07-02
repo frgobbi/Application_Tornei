@@ -468,6 +468,8 @@ if (!($_SESSION['tipo_utente'] == 1 || $_SESSION['tipo_utente'] == 3)) {
         </div>
     </div>
 </div>
-
+<?php
+controlloDimensione();
+?>
 </body>
 </html>

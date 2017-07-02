@@ -206,5 +206,8 @@ if (!$_SESSION['login']) {
             </div>
         </div>
     </div>
+    <?php
+    controlloDimensione();
+    ?>
 </body>
 </html>

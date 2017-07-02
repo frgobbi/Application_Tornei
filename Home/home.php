@@ -99,6 +99,8 @@ try {
                 echo "error: " . $e->getMessage();
             }
             $connessione = null;
+            
+            controlloDimensione();
             ?>
         </div>
     </div>
