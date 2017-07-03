@@ -9,8 +9,8 @@
 $comando = $_GET['comando'];
 
 set_time_limit(0);
-$address = '79.56.184.64';
-//$address = 'localhost';
+//$address = '79.56.184.64';
+$address = 'localhost';
 $port = 4600;
 echo $address;
 $server = array('server' => $address, 'porta' => $port);
